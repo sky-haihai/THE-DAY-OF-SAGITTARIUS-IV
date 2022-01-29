@@ -7,66 +7,40 @@ public class ViewFieldFeature : ScriptableRendererFeature {
     class ViewFieldPass : ScriptableRenderPass {
         private RenderTargetHandle m_TempRt;
 
-        private RenderTexture m_BattleCamRt;
-        private RenderTexture m_ViewFieldMaskRt;
-
+        //private RenderTexture m_BattleCamRt;
         private Material m_BlitMaterial;
-        private ComputeShader m_ComputeShader;
 
-        private ShipComputeData[] m_ComputeData;
-        private ComputeBuffer m_ShipBuffer;
+        private RenderTargetIdentifier m_BattleCamTarget;
 
-        public ViewFieldPass(Material blitMaterial, RenderTexture camRt, RenderTexture viewFieldMaskRt, ComputeShader viewFieldShader) {
+        private string m_BattleCamName;
+
+        public ViewFieldPass(Material blitMaterial, string battleCamName) {
             m_BlitMaterial = blitMaterial;
-            m_BattleCamRt = camRt;
-            m_ComputeShader = viewFieldShader;
-            m_ViewFieldMaskRt = viewFieldMaskRt;
+            this.m_BattleCamName = battleCamName;
         }
 
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData) {
-            //setup compute buffer
-            m_ComputeData = GameManager.GetModule<ShipModule>().UpdateComputeData();
-
-            if (m_ComputeData == null) {
-                return;
-            }
-
-            var size = sizeof(float) * 4; //position + radius
-            m_ShipBuffer = new ComputeBuffer(m_ComputeData.Length, size);
-
             //get temp rt
-            var desc = renderingData.cameraData.cameraTargetDescriptor;
-            desc.enableRandomWrite = true;
-            cmd.GetTemporaryRT(m_TempRt.id, desc);
+            //var desc = renderingData.cameraData.cameraTargetDescriptor;
+            //desc.enableRandomWrite = true;
+            cmd.GetTemporaryRT(m_TempRt.id, renderingData.cameraData.cameraTargetDescriptor);
+
+            m_BattleCamTarget = renderingData.cameraData.renderer.cameraColorTarget;
         }
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
-            if (m_ComputeData == null) {
-                return;
-            }
-
             if (renderingData.cameraData.isSceneViewCamera) {
                 return;
             }
 
-            Debug.Log("exe " + (m_ShipBuffer == null));
+            if (renderingData.cameraData.camera.name != m_BattleCamName) {
+                return;
+            }
 
-            CommandBuffer cmd = CommandBufferPool.Get();
+            CommandBuffer cmd = CommandBufferPool.Get("BattleCamBlit");
 
-            cmd.SetComputeBufferParam(m_ComputeShader, 0, "Ships", m_ShipBuffer);
-            cmd.SetComputeBufferData(m_ShipBuffer, m_ComputeData);
-
-            // cmd.SetComputeMatrixParam(m_ComputeShader, "_CameraToWorld", renderingData.cameraData.camera.cameraToWorldMatrix);
-            // cmd.SetComputeMatrixParam(m_ComputeShader, "_CameraInverseProjection", renderingData.cameraData.camera.projectionMatrix.inverse);
-            // cmd.SetComputeTextureParam(m_ComputeShader, 0, "Result", m_TempRt.Identifier());
-
-            cmd.SetComputeTextureParam(m_ComputeShader, 0, "Result", m_TempRt.Identifier());
-            int threadGroupsX = Mathf.CeilToInt(m_ViewFieldMaskRt.width / 8.0f);
-            int threadGroupsY = Mathf.CeilToInt(m_ViewFieldMaskRt.height / 8.0f);
-            cmd.DispatchCompute(m_ComputeShader, 0, threadGroupsX, threadGroupsY, 1);
-
-            //cmd.Blit(battleCamRt, m_TempRt.Identifier(), m_BlitMaterial);
-            cmd.Blit(m_TempRt.Identifier(), m_ViewFieldMaskRt, m_BlitMaterial);
+            cmd.Blit(m_BattleCamTarget, m_TempRt.id, m_BlitMaterial);
+            cmd.Blit(m_TempRt.id, m_BattleCamTarget);
 
             context.ExecuteCommandBuffer(cmd);
             cmd.Clear();
@@ -75,27 +49,22 @@ public class ViewFieldFeature : ScriptableRendererFeature {
 
 
         public override void OnCameraCleanup(CommandBuffer cmd) {
-            if (m_ComputeData == null) {
-                return;
-            }
-
             cmd.ReleaseTemporaryRT(m_TempRt.id);
-            m_ShipBuffer.Dispose();
         }
     }
 
     ViewFieldPass m_ScriptablePass;
 
-    public ComputeShader viewFieldShader;
-    public RenderTexture battleCamRt;
-    public RenderTexture maskRt;
+    public string cameraName;
+
+    //public RenderTexture battleCamRt;
     public Material blitMaterial;
     public RenderPassEvent renderPassEvent;
     public bool enable = false;
 
     /// <inheritdoc/>
     public override void Create() {
-        m_ScriptablePass = new ViewFieldPass(blitMaterial, battleCamRt, maskRt, viewFieldShader);
+        m_ScriptablePass = new ViewFieldPass(blitMaterial, cameraName);
 
         // Configures where the render pass should be injected.
         m_ScriptablePass.renderPassEvent = renderPassEvent;
@@ -105,10 +74,6 @@ public class ViewFieldFeature : ScriptableRendererFeature {
     // This method is called when setting up the renderer once per-camera.
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
         if (!enable) {
-            return;
-        }
-
-        if (!Application.isPlaying) {
             return;
         }
 

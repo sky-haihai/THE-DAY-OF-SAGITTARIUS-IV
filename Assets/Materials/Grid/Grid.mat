@@ -21,6 +21,8 @@ Material:
     m_TexEnvs: []
     m_Floats:
     - _AlphaCutoff: 0.5
+    - _StencilID: 0
+    - _StencilId: 1
     - _TessEdgeLength: 16
     - _TessMax: 25
     - _TessMaxDisp: 25
@@ -28,6 +30,7 @@ Material:
     - _TessPhongStrength: 0.5
     - _TessValue: 16
     m_Colors:
+    - _BaseColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _GridColor: {r: 0.43108073, g: 0.745283, b: 0.35506406, a: 0}
+    - _GridColor: {r: 0.36510888, g: 0.764151, b: 0.27033645, a: 0}
   m_BuildTextureStacks: []

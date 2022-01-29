@@ -56,11 +56,6 @@ namespace AmplifyShaderEditor
 		{
 			AmplifyShaderEditorWindow.CreateConfirmationTemplateShader( "e1de45c0d41f68c41b2cc20c8b9c05ef" );
 		}
-		[MenuItem( "Assets/Create/Amplify Shader/ASETemplateShaders/DefaultUnlit", false, 85 )]
-		public static void ApplyTemplateASETemplateShadersDefaultUnlit()
-		{
-			AmplifyShaderEditorWindow.CreateConfirmationTemplateShader( "e94913272661e2e4bae6388aae22e59e" );
-		}
 		[MenuItem( "Assets/Create/Amplify Shader/Legacy/Lit", false, 85 )]
 		public static void ApplyTemplateLegacyLit()
 		{
@@ -76,10 +71,10 @@ namespace AmplifyShaderEditor
 		{
 			AmplifyShaderEditorWindow.CreateConfirmationTemplateShader( "cf964e524c8e69742b1d21fbe2ebcc4a" );
 		}
-		[MenuItem( "Assets/Create/Amplify Shader/Xihe/FovObjectUnlit", false, 85 )]
-		public static void ApplyTemplateXiheFovObjectUnlit()
+		[MenuItem( "Assets/Create/Amplify Shader/Xihe/Template", false, 85 )]
+		public static void ApplyTemplateXiheTemplate()
 		{
-			AmplifyShaderEditorWindow.CreateConfirmationTemplateShader( "536cc8e0b38a4b14e9715745f157a519" );
+			AmplifyShaderEditorWindow.CreateConfirmationTemplateShader( "6153c0bc92ce612469e81608266e1f68" );
 		}
 	}
 }

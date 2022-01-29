@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EnemyShip
-  m_Shader: {fileID: 4800000, guid: a4a0512376db8cd458603f3e86e70eba, type: 3}
+  m_Name: StencilTEst
+  m_Shader: {fileID: 4800000, guid: c21a12426a42da549aa645a7f418349a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -29,5 +29,4 @@ Material:
     - _TessValue: 16
     m_Colors:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShipColor: {r: 0.8396226, g: 0.47921857, b: 0.47921857, a: 0}
   m_BuildTextureStacks: []

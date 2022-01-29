@@ -13,6 +13,9 @@ namespace XiheFramework {
         private Vector2 m_MouseDeltaPosition;
         private Vector2 m_LastFrameMousePosition;
 
+        private float m_WASDInputMultiplier = 0f;
+        private float m_WASDInputAcceleration = 1f;
+
         public bool allowInput = true;
 
         protected override void Awake() {
@@ -68,12 +71,39 @@ namespace XiheFramework {
         public Vector2 GetXZInput() => new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         public Vector2 GetWASDInput() {
-            float w = Input.GetKey(KeyCode.W) ? 1f : 0f;
-            float a = Input.GetKey(KeyCode.A) ? -1f : 0f;
-            float s = Input.GetKey(KeyCode.S) ? -1f : 0f;
-            float d = Input.GetKey(KeyCode.D) ? 1f : 0f;
+            Vector2 input = Vector2.zero; //w,s,a,d
+            bool holdWASD = false;
+            if (Input.GetKey(KeyCode.W)) {
+                input.y += m_WASDInputMultiplier;
+                holdWASD = true;
+            }
 
-            return new Vector2(a + d, w + s);
+            if (Input.GetKey(KeyCode.S)) {
+                input.y -= m_WASDInputMultiplier;
+                holdWASD = true;
+            }
+
+            if (Input.GetKey(KeyCode.A)) {
+                input.x -= m_WASDInputMultiplier;
+                holdWASD = true;
+            }
+
+            if (Input.GetKey(KeyCode.D)) {
+                input.x += m_WASDInputMultiplier;
+                holdWASD = true;
+            }
+
+            if (holdWASD) {
+                m_WASDInputMultiplier += Time.deltaTime * m_WASDInputAcceleration;
+            }
+            else {
+                m_WASDInputMultiplier -= Time.deltaTime * m_WASDInputAcceleration;
+            }
+
+
+            m_WASDInputMultiplier = Mathf.Clamp01(m_WASDInputMultiplier);
+
+            return input;
         }
 
         public Vector2 GetMouseDeltaPosition() {

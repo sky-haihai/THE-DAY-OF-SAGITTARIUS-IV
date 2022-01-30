@@ -12,7 +12,7 @@ public class AIMiniShip : ShipBase {
     private int localId; //id inside the fleet
 
     private Vector3 m_Destination;
-    
+
     protected override void Start() {
         base.Start();
 
@@ -28,13 +28,12 @@ public class AIMiniShip : ShipBase {
         }
 
         if (s == m_MotherShip) {
-            var ne = (ShipFormation) e;
+            var ne = (IFormationStrategy) e;
             TryGotoPosition(ne, localId);
         }
     }
 
-    private void TryGotoPosition(ShipFormation formation, int id) {
-        
+    private void TryGotoPosition(IFormationStrategy formation, int id) {
     }
 
     protected override void Update() {

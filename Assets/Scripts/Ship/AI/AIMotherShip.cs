@@ -34,7 +34,7 @@ public class AIMotherShip : ShipBase {
         }
     }
 
-    public void SetFormation(ShipFormation shipFormation) {
+    public void SetFormation(IFormationStrategy shipFormation) {
         Game.Event.Invoke("OnSetFormation", this, shipFormation);
     }
 

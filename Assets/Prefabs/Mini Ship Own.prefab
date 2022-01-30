@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   shipData:
-    shipColor: {r: 1, g: 0.8117647, b: 0.38039216, a: 0}
+    shipColor: {r: 1, g: 0.6423797, b: 0.1462264, a: 0}
     viewRadius: 1.5
     offense: 2
     defense: 5

@@ -2,22 +2,13 @@
 
 namespace XiheFramework {
     [Serializable]
-    public enum KeyActionTypes
-    {
+    public enum KeyActionTypes {
+        YUKI,
         MoveForward,
         MoveBackward,
-        MoveLeft,
-        MoveRight,
         TurnLeft,
         TurnRight,
-        Jump,
-        Crouch,
-        Interact,
-        Fire,
-        Dash,
-        Map,
-        SwitchCharacter,
-        
+        AutoLock,
         //...
     }
 }

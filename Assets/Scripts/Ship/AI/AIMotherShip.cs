@@ -7,7 +7,7 @@ public class AIMotherShip : ShipBase {
     private Vector4 m_Bound;
 
     private static readonly int Color = Shader.PropertyToID("_Color");
-    
+
     public Renderer meshRenderer;
 
     public bool autoLock;
@@ -32,6 +32,10 @@ public class AIMotherShip : ShipBase {
                 TryLockTarget(target.transform.position);
             }
         }
+    }
+
+    public void SetFormation(ShipFormation shipFormation) {
+        Game.Event.Invoke("OnSetFormation", this, shipFormation);
     }
 
     private void OnAutoLock(object sender, object e) {

@@ -12,9 +12,7 @@ public class ShipModule : GameModule {
 
     private bool m_PlayerAutoLock = false;
 
-    protected override void Awake() {
-        base.Awake();
-        
+    public override void Setup() {
         Game.Blackboard.SetData("bound", bound, BlackBoardDataType.Runtime);
     }
 
@@ -45,7 +43,7 @@ public class ShipModule : GameModule {
     }
 
     public override void Update() {
-        if (Game.Input.GetKeyDown(KeyActionTypes.Jump)) {
+        if (Game.Input.GetKeyDown(KeyActionTypes.AutoLock)) {
             m_PlayerAutoLock = !m_PlayerAutoLock;
             Game.Event.Invoke("OnAutoLock", this, m_PlayerAutoLock);
         }

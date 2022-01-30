@@ -7,6 +7,8 @@ public class PlayerMotherShip : ShipBase {
     private float m_ThrustLevel;
     private float m_CurrentThrust;
 
+    public Vector2 thrustLevelLimit;
+
     public Transform stencilSphere;
     public Renderer stencilMaskRenderer;
     public Renderer stencilObjectRenderer;
@@ -77,10 +79,12 @@ public class PlayerMotherShip : ShipBase {
 
         if (Game.Input.GetKeyDown(KeyActionTypes.MoveForward)) {
             m_ThrustLevel += 1f;
+            m_ThrustLevel = Mathf.Clamp(m_ThrustLevel, thrustLevelLimit.x, thrustLevelLimit.y);
         }
 
         if (Game.Input.GetKeyDown(KeyActionTypes.MoveBackward)) {
             m_ThrustLevel -= 1f;
+            m_ThrustLevel = Mathf.Clamp(m_ThrustLevel, thrustLevelLimit.x, thrustLevelLimit.y);
         }
 
         m_Destination = transform.position + transform.forward * (m_CurrentThrust * Time.deltaTime * shipData.moveSpeed);

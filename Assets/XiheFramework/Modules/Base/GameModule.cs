@@ -8,6 +8,10 @@ namespace XiheFramework {
             GameManager.RegisterComponent(this);
         }
 
+        public virtual void Setup() {
+            
+        }
+
         public abstract void Update();
 
         public abstract void ShutDown();

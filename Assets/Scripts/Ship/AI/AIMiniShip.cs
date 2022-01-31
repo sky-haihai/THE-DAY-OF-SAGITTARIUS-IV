@@ -9,7 +9,7 @@ public class AIMiniShip : ShipBase {
     private static readonly int Color = Shader.PropertyToID("_Color");
 
     private AIMotherShip m_MotherShip;
-    private int localId; //id inside the fleet
+    private int localId = -1; //id inside the fleet
 
     private Vector3 m_Destination;
 
@@ -29,19 +29,44 @@ public class AIMiniShip : ShipBase {
 
         if (s == m_MotherShip) {
             var ne = (IFormationStrategy) e;
-            TryGotoPosition(ne, localId);
+            //set destination
+            var trans = m_MotherShip.transform;
+            var trs = Matrix4x4.TRS(trans.position, trans.rotation, trans.localScale);
+            m_Destination = ne.GetDestination(trs, localId, m_MotherShip.GetMiniShipCount());
         }
     }
 
-    private void TryGotoPosition(IFormationStrategy formation, int id) {
+    void TryGoToDestination() {
+        var delta = m_Destination - transform.position;
+
+        var angleSigned = Vector3.SignedAngle(transform.forward, delta, Vector3.up);
+
+        //rotate
+        if (!Mathf.Approximately(angleSigned, 0f)) {
+            transform.Rotate(Vector3.up, angleSigned / Mathf.Abs(angleSigned) * Time.deltaTime * shipData.rotateSpeed);
+        }
+
+        //thrust strategy might change later
+        runtimeData.thrustLevel = shipData.thrustLevelLimit.y / 10;
+
+        if (Mathf.Abs(angleSigned) < 90) {
+            runtimeData.thrustLevel = shipData.thrustLevelLimit.y / 5;
+        }
+
+        if (Mathf.Abs(angleSigned) < 60) {
+            runtimeData.thrustLevel = shipData.thrustLevelLimit.y / 3;
+        }
+
+        if (Mathf.Abs(angleSigned) < 30) {
+            runtimeData.thrustLevel = shipData.thrustLevelLimit.y;
+        }
     }
 
     protected override void Update() {
         base.Update();
 
-        if (target) {
-            TryLockTarget(target.transform.position);
-        }
+        //only one thing to do: formation
+        TryGoToDestination();
     }
 
     public void SetMotherShip(AIMotherShip motherShip) {
@@ -58,5 +83,12 @@ public class AIMiniShip : ShipBase {
         }
 
         transform.Rotate(Vector3.up, angleSigned / Mathf.Abs(angleSigned) * Time.deltaTime * shipData.rotateSpeed);
+    }
+
+    protected override void OnDrawGizmos() {
+        base.OnDrawGizmos();
+
+        Gizmos.color = UnityEngine.Color.red;
+        GizmosUtil.DrawCircle(transform.position, shipData.attackRadius, 25);
     }
 }

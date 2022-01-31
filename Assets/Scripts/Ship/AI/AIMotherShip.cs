@@ -6,12 +6,17 @@ public class AIMotherShip : ShipBase {
     private Quaternion m_TargetRotaion;
     private Vector4 m_Bound;
 
+    private StateMachine m_StateMachine;
+
+    private int miniShipCount;
+
     private static readonly int Color = Shader.PropertyToID("_Color");
 
     public Renderer meshRenderer;
 
     public bool autoLock;
-
+    public Formations defaultStrategy = Formations.Spread;
+    
     public override int ClubId => 2;
 
     protected override void Start() {
@@ -20,6 +25,8 @@ public class AIMotherShip : ShipBase {
         m_Bound = Game.Blackboard.GetData<Vector4>("bound");
 
         meshRenderer.material.SetColor(Color, shipData.shipColor);
+
+        GameManager.GetModule<ShipModule>().RegisterAI(this,defaultStrategy);
     }
 
     protected override void Update() {
@@ -34,6 +41,10 @@ public class AIMotherShip : ShipBase {
         }
     }
 
+    public int GetMiniShipCount() {
+        return miniShipCount;
+    }
+    
     public void SetFormation(IFormationStrategy shipFormation) {
         Game.Event.Invoke("OnSetFormation", this, shipFormation);
     }
@@ -59,5 +70,12 @@ public class AIMotherShip : ShipBase {
     }
 
     void HandleAIDecision() {
+    }
+
+    protected override void OnDrawGizmos() {
+        base.OnDrawGizmos();
+        
+        Gizmos.color = UnityEngine.Color.red;
+        GizmosUtil.DrawCircle(transform.position, shipData.attackRadius, 25);
     }
 }

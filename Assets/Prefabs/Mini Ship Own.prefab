@@ -46,14 +46,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  runtimeData:
+    hp: 0
+    thrustLevel: 0
   shipData:
+    shipName: 
     shipColor: {r: 1, g: 0.6423797, b: 0.1462264, a: 0}
     viewRadius: 1.5
+    attackRadius: 2
+    tolerantAngle: 5
     offense: 2
     defense: 5
     initialHp: 20
     moveSpeed: 2
     rotateSpeed: 30
+    thrustLevelLimit: {x: -3, y: 5}
   stencilSphere: {fileID: 9217417333622259558}
   stencilObjectRenderer: {fileID: 3820394352506116967}
 --- !u!1001 &2505498711995156451

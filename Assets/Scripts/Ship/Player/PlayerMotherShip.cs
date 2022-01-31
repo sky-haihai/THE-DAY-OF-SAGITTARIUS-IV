@@ -4,10 +4,14 @@ using XiheFramework;
 public class PlayerMotherShip : ShipBase {
     private Vector3 m_Destination;
     private Vector4 m_Bound;
-    private float m_ThrustLevel;
-    private float m_CurrentThrust;
 
-    public Vector2 thrustLevelLimit;
+    private float m_ThrustDestination; //thrust destination
+
+    private int miniShipCount;
+
+    private Formations m_CurrentFormation;
+
+    public PlayerMiniShip miniShipTemplate;
 
     public Transform stencilSphere;
     public Renderer stencilMaskRenderer;
@@ -43,11 +47,25 @@ public class PlayerMotherShip : ShipBase {
 
         HandleInput();
 
-        if (target != null) {
-            if (autoLock) {
-                TryLockTarget(target.transform.position);
-            }
+        UpdateTarget();
+
+        if (target != null && autoLock) {
+            TryLockTarget(target.transform.position);
         }
+    }
+
+    public int GetMiniShipCount() {
+        return miniShipCount;
+    }
+
+    public void SeparateMiniShipFromMother() {
+        var root = GameObject.FindWithTag("PlayerShipRoot");
+        var go = Instantiate(miniShipTemplate, transform.position, transform.rotation, root.transform);
+    }
+
+    public void SetFormation() {
+        //TODO: implement dynamic id for mini ships
+        Game.Event.Invoke("OnSetFormation", this, m_CurrentFormation);
     }
 
     private void OnAutoLock(object sender, object e) {
@@ -78,18 +96,17 @@ public class PlayerMotherShip : ShipBase {
         }
 
         if (Game.Input.GetKeyDown(KeyActionTypes.MoveForward)) {
-            m_ThrustLevel += 1f;
-            m_ThrustLevel = Mathf.Clamp(m_ThrustLevel, thrustLevelLimit.x, thrustLevelLimit.y);
+            m_ThrustDestination += 1f;
         }
 
         if (Game.Input.GetKeyDown(KeyActionTypes.MoveBackward)) {
-            m_ThrustLevel -= 1f;
-            m_ThrustLevel = Mathf.Clamp(m_ThrustLevel, thrustLevelLimit.x, thrustLevelLimit.y);
+            m_ThrustDestination -= 1f;
         }
 
-        m_Destination = transform.position + transform.forward * (m_CurrentThrust * Time.deltaTime * shipData.moveSpeed);
+        m_Destination = transform.position + transform.forward * (runtimeData.thrustLevel * Time.deltaTime * shipData.moveSpeed);
 
-        m_CurrentThrust = Mathf.Lerp(m_CurrentThrust, m_ThrustLevel, 1 / 10f);
+        m_ThrustDestination = Mathf.Clamp(m_ThrustDestination, shipData.thrustLevelLimit.x, shipData.thrustLevelLimit.y);
+        runtimeData.thrustLevel = Mathf.Lerp(runtimeData.thrustLevel, m_ThrustDestination, 1 / 10f);
 
         if (m_Destination.x < m_Bound.x) {
             m_Destination.x = m_Bound.x;
@@ -110,7 +127,28 @@ public class PlayerMotherShip : ShipBase {
         transform.position = Vector3.Lerp(transform.position, m_Destination, 1 / 10f);
     }
 
-    private void WatchSurroundings() {
-        //sphere cast around
+    private float m_UpdateTargetTimer = 0f;
+
+    private void UpdateTarget() {
+        // if (m_UpdateTargetTimer < 0.5f / Time.deltaTime) {
+        //     m_UpdateTargetTimer += Time.deltaTime;
+        //     return;
+        // }
+        //
+        // m_UpdateTargetTimer -= 0.5f / Time.deltaTime;
+
+        target = GameManager.GetModule<ShipModule>().GuessBestTarget(this, shipData.viewRadius);
+    }
+
+    protected override void OnDrawGizmos() {
+        base.OnDrawGizmos();
+
+        Gizmos.color = UnityEngine.Color.yellow;
+        GizmosUtil.DrawCircle(transform.position, shipData.attackRadius, 25);
+
+        if (!Application.isPlaying) {
+            var radius = shipData.viewRadius * 2;
+            stencilSphere.localScale = new Vector3(radius, radius, radius);
+        }
     }
 }

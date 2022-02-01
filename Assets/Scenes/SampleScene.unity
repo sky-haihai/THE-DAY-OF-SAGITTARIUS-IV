@@ -4615,6 +4615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040a70b4c29f3514796d0e0d758608eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiName: 
   globalMessage: {fileID: 1538321925}
   clubName: {fileID: 0}
   playerName: {fileID: 0}

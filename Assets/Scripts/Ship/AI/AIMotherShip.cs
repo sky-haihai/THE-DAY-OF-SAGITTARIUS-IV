@@ -16,7 +16,7 @@ public class AIMotherShip : ShipBase {
 
     public bool autoLock;
     public Formations defaultStrategy = Formations.Spread;
-    
+
     public override int ClubId => 2;
 
     protected override void Start() {
@@ -26,13 +26,15 @@ public class AIMotherShip : ShipBase {
 
         meshRenderer.material.SetColor(Color, shipData.shipColor);
 
-        GameManager.GetModule<ShipModule>().RegisterAI(this,defaultStrategy);
+        GameManager.GetModule<ShipModule>().RegisterAI(this, defaultStrategy);
     }
 
     protected override void Update() {
         base.Update();
 
         HandleAIDecision(); //handle ai decision
+
+        UpdateTarget();
 
         if (target != null) {
             if (autoLock) {
@@ -41,10 +43,11 @@ public class AIMotherShip : ShipBase {
         }
     }
 
+
     public int GetMiniShipCount() {
         return miniShipCount;
     }
-    
+
     public void SetFormation(IFormationStrategy shipFormation) {
         Game.Event.Invoke("OnSetFormation", this, shipFormation);
     }
@@ -56,6 +59,7 @@ public class AIMotherShip : ShipBase {
 
         autoLock = ne;
     }
+
 
     private void TryLockTarget(Vector3 worldPosition) {
         var delta = worldPosition - transform.position;
@@ -69,12 +73,16 @@ public class AIMotherShip : ShipBase {
         transform.Rotate(Vector3.up, angleSigned / Mathf.Abs(angleSigned) * Time.deltaTime * shipData.rotateSpeed);
     }
 
+    private void UpdateTarget() {
+        target = GameManager.GetModule<ShipModule>().GuessBestTarget(this, shipData.viewRadius);
+    }
+
     void HandleAIDecision() {
     }
 
     protected override void OnDrawGizmos() {
         base.OnDrawGizmos();
-        
+
         Gizmos.color = UnityEngine.Color.red;
         GizmosUtil.DrawCircle(transform.position, shipData.attackRadius, 25);
     }

@@ -14,12 +14,10 @@ public class PlayerMotherShip : ShipBase {
     public PlayerMiniShip miniShipTemplate;
 
     public Transform stencilSphere;
-    public Renderer stencilMaskRenderer;
     public Renderer stencilObjectRenderer;
 
     public bool autoLock;
 
-    private static readonly int StencilId = Shader.PropertyToID("_StencilID");
     private static readonly int Color = Shader.PropertyToID("_Color");
 
     public override int ClubId => 1;
@@ -31,21 +29,23 @@ public class PlayerMotherShip : ShipBase {
 
         Game.Event.Subscribe("OnAutoLock", OnAutoLock);
 
+        InitStencilMeshScale();
+        InitShipColor();
+    }
+
+    void InitStencilMeshScale() {
         var radius = shipData.viewRadius * 2;
         stencilSphere.localScale = new Vector3(radius, radius, radius);
+    }
 
-        stencilMaskRenderer.material.SetInt(StencilId, ClubId);
-        //fovMaskRenderer.material.renderQueue = (int) RenderQueue.Geometry + shipData.clubId;
-
-        stencilObjectRenderer.material.SetInt(StencilId, ClubId);
+    void InitShipColor() {
         stencilObjectRenderer.material.SetColor(Color, shipData.shipColor);
-        // fovObjectRenderer.material.renderQueue = (int) RenderQueue.Geometry - shipData.clubId;
     }
 
     protected override void Update() {
         base.Update();
 
-        HandleInput();
+        HandlePlayerInput();
 
         UpdateTarget();
 
@@ -88,7 +88,7 @@ public class PlayerMotherShip : ShipBase {
         transform.Rotate(Vector3.up, angleSigned / Mathf.Abs(angleSigned) * Time.deltaTime * shipData.rotateSpeed);
     }
 
-    private void HandleInput() {
+    private void HandlePlayerInput() {
         var input = Game.Input.GetWASDInput();
 
         if (!autoLock) {
@@ -127,7 +127,7 @@ public class PlayerMotherShip : ShipBase {
         transform.position = Vector3.Lerp(transform.position, m_Destination, 1 / 10f);
     }
 
-    private float m_UpdateTargetTimer = 0f;
+    // private float m_UpdateTargetTimer = 0f;
 
     private void UpdateTarget() {
         // if (m_UpdateTargetTimer < 0.5f / Time.deltaTime) {

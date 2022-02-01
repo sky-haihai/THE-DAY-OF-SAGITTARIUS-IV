@@ -30,6 +30,7 @@ public class PlayerMiniShip : ShipBase {
     protected override void Update() {
         base.Update();
 
+        TryGoToDestination();
 
         // if (target) {
         //     TryLockTarget(target.transform.position);
@@ -60,7 +61,7 @@ public class PlayerMiniShip : ShipBase {
         }
     }
 
-    void TryGoToDestination() {
+    private void TryGoToDestination() {
         var delta = m_Destination - transform.position;
 
         var angleSigned = Vector3.SignedAngle(transform.forward, delta, Vector3.up);

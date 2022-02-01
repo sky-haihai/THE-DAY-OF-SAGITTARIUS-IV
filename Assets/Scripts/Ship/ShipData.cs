@@ -12,7 +12,7 @@ public class ShipData {
 
     public float viewRadius = 1f;
     public float attackRadius = 1.5f;
-    public float tolerantAngle = 5f;
+    public float tolerantAngle = 15f;
 
     public float offense;
     public float defense;

@@ -27,12 +27,4 @@ public class YUKIUI : UIBehaviour {
             cmdWindow.SetActive(!cmdWindow.activeSelf);
         }
     }
-
-    public override void Active() {
-        base.Active();
-    }
-
-    public override void UnActive() {
-        base.UnActive();
-    }
 }

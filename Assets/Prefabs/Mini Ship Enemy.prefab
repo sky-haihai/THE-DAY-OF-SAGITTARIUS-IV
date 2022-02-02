@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   runtimeData:
+    shipName: 
     hp: 0
     isDead: 0
     thrustLevel: 0
@@ -54,13 +55,13 @@ MonoBehaviour:
     defense: 0
   shipData:
     shipName: 
-    shipColor: {r: 1, g: 0, b: 0.85331345, a: 0}
+    shipColor: {r: 1, g: 0.39607844, b: 0.9137255, a: 0}
     viewRadius: 1.5
-    attackRadius: 1.5
+    attackRadius: 2
     tolerantAngle: 15
-    offense: 2
-    defense: 5
-    initialHp: 20
+    offense: 10
+    defense: 10
+    initialHp: 750
     moveSpeed: 2
     rotateSpeed: 30
     thrustLevelLimit: {x: -3, y: 5}

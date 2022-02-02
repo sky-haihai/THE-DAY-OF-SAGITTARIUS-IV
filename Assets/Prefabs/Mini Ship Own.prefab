@@ -60,15 +60,16 @@ MonoBehaviour:
     viewRadius: 1.5
     attackRadius: 2
     tolerantAngle: 5
-    offense: 2
-    defense: 5
-    initialHp: 3
+    offense: 10
+    defense: 10
+    initialHp: 750
     moveSpeed: 2
-    rotateSpeed: 30
+    rotateSpeed: 40
     thrustLevelLimit: {x: -3, y: 5}
   attackLine: {fileID: 5988745203396494496}
   stencilSphere: {fileID: 9217417333622259558}
   stencilObjectRenderer: {fileID: 3820394352506116967}
+  pow: 3
 --- !u!1001 &2505498711995156451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -303,6 +304,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4525da9f6ed19b14ea2f3db43298c6c1, type: 3}
       propertyPath: m_Name
       value: Fov Mask
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4525da9f6ed19b14ea2f3db43298c6c1, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 4525da9f6ed19b14ea2f3db43298c6c1, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4525da9f6ed19b14ea2f3db43298c6c1, type: 3}

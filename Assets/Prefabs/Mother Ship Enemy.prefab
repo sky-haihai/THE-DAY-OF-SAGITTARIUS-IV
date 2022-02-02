@@ -59,9 +59,9 @@ MonoBehaviour:
     viewRadius: 2.5
     attackRadius: 3.5
     tolerantAngle: 5
-    offense: 5
-    defense: 10
-    initialHp: 100
+    offense: 200
+    defense: 200
+    initialHp: 15000
     moveSpeed: 1
     rotateSpeed: 20
     thrustLevelLimit: {x: -3, y: 5}

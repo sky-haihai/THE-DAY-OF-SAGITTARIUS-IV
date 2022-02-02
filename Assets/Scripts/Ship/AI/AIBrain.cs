@@ -36,23 +36,4 @@ public class AIBrain {
 
     void RefreshDecision() {
     }
-
-    IFormationStrategy GetStrategyByName(Formations formation) {
-        switch (formation) {
-            case Formations.Spread:
-                return new SpreadFormation();
-            case Formations.Line:
-                return new LineFormation();
-            case Formations.Wedge:
-                return new WedgeFormation();
-            case Formations.Circular:
-                return new CircularFormation();
-            case Formations.BentLine:
-                return new BentLineFormation();
-            case Formations.Horseshoe:
-                return new HorseshoeFormation();
-            default:
-                return new SpreadFormation();
-        }
-    }
 }

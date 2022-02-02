@@ -10,7 +10,7 @@ public class LineFormation : IFormationStrategy {
             return motherPos;
         }
 
-        const float interval = 0.1f;
+        const float interval = 3f;
 
         Vector3 result = motherPos;
         var d = count / 2 - localId;

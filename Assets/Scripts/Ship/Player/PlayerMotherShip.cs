@@ -28,9 +28,26 @@ public class PlayerMotherShip : ShipBase {
         m_Bound = Game.Blackboard.GetData<Vector4>("bound");
 
         Game.Event.Subscribe("OnAutoLock", OnAutoLock);
+        Game.Event.Subscribe("OnSendPlayerScout", OnSendPlayerScout);
+        Game.Event.Subscribe("OnFormationUIValueChanged", OnFormationUIValueChanged);
 
         InitStencilMeshScale();
         InitShipColor();
+    }
+
+    private void OnFormationUIValueChanged(object sender, object e) {
+        var ne = (int) e;
+        m_CurrentFormation = (Formations) ne;
+
+        UpdateFormationToMiniShips();
+    }
+
+    public Formations GetFormation() {
+        return m_CurrentFormation;
+    }
+
+    private void OnSendPlayerScout(object sender, object e) {
+        SeparateMiniShipFromMother();
     }
 
     void InitStencilMeshScale() {
@@ -58,13 +75,14 @@ public class PlayerMotherShip : ShipBase {
         return miniShipCount;
     }
 
-    public void SeparateMiniShipFromMother() {
+    private void SeparateMiniShipFromMother() {
         var root = GameObject.FindWithTag("PlayerShipRoot");
         var go = Instantiate(miniShipTemplate, transform.position, transform.rotation, root.transform);
+        go.Setup(this, miniShipCount++);
+        this.runtimeData.hp -= 750f;
     }
 
-    public void SetFormation() {
-        //TODO: implement dynamic id for mini ships
+    public void UpdateFormationToMiniShips() {
         Game.Event.Invoke("OnSetFormation", this, m_CurrentFormation);
     }
 

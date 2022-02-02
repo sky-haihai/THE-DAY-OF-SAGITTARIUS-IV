@@ -21,6 +21,19 @@ public class ShipModule : GameModule {
         m_AIBrain = new AIBrain();
 
         m_DamageDisplayStructs = new List<DamageDisplayStruct>();
+
+        InitFormationOptions();
+    }
+
+    private void InitFormationOptions() {
+        var formationOptions = Enum.GetValues(typeof(Formations));
+        List<string> result = new List<string>();
+        foreach (var option in formationOptions) {
+            result.Add(option.ToString());
+        }
+
+        //formationOptions = (string[]) formationOptions;
+        Game.Blackboard.SetData("FormationOptions", result.ToArray(), BlackBoardDataType.Runtime);
     }
 
     /// <summary>
@@ -49,6 +62,10 @@ public class ShipModule : GameModule {
         var smallest = 180f;
         foreach (var ship in m_ShipList) {
             if (ship == originShip) {
+                continue;
+            }
+
+            if (ship.ClubId == originShip.ClubId) {
                 continue;
             }
 

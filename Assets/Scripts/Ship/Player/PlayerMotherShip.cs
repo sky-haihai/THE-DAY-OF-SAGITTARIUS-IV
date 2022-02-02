@@ -78,7 +78,6 @@ public class PlayerMotherShip : ShipBase {
         ShipRuntimeData data = new ShipRuntimeData(runtimeData.shipName, shipLeft,
             Mathf.Round(m_ThrustDestination), runtimeData.offense, runtimeData.defense);
         Game.Blackboard.SetData("PlayerRuntimeData", data, BlackBoardDataType.Runtime);
-        Debug.Log(data.hp);
     }
 
     public int GetMiniShipCount() {

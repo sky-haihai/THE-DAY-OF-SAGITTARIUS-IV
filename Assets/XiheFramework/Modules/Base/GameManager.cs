@@ -16,7 +16,6 @@ namespace XiheFramework {
         private Queue<GameModule> m_RegisterGameModulesQueue = new Queue<GameModule>();
 
         private void Awake() {
-            Debug.LogFormat("{0} Instantiated", Instance.ToString());
             Application.targetFrameRate = frameRate;
 
             RegisterAllComponent();
@@ -24,6 +23,8 @@ namespace XiheFramework {
             foreach (var component in m_GameModules.Values) {
                 component.Setup();
             }
+
+            Debug.LogFormat("XiheFramework Initialized");
         }
 
         private void Start() {

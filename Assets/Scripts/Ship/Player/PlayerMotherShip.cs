@@ -69,6 +69,16 @@ public class PlayerMotherShip : ShipBase {
         if (target != null && autoLock) {
             TryLockTarget(target.transform.position);
         }
+
+        UpdatePlayerRuntimeData();
+    }
+
+    private void UpdatePlayerRuntimeData() {
+        var shipLeft = GameManager.GetModule<ShipModule>().GetShipLeftOwnedBy(shipData.shipOwner);
+        ShipRuntimeData data = new ShipRuntimeData(runtimeData.shipName, shipLeft,
+            Mathf.Round(m_ThrustDestination), runtimeData.offense, runtimeData.defense);
+        Game.Blackboard.SetData("PlayerRuntimeData", data, BlackBoardDataType.Runtime);
+        Debug.Log(data.hp);
     }
 
     public int GetMiniShipCount() {
@@ -76,10 +86,14 @@ public class PlayerMotherShip : ShipBase {
     }
 
     private void SeparateMiniShipFromMother() {
+        if (runtimeData.hp <= shipData.initialHp / 20f) {
+            return;
+        }
+
         var root = GameObject.FindWithTag("PlayerShipRoot");
         var go = Instantiate(miniShipTemplate, transform.position, transform.rotation, root.transform);
         go.Setup(this, miniShipCount++);
-        this.runtimeData.hp -= 750f;
+        runtimeData.hp -= 750f;
     }
 
     public void UpdateFormationToMiniShips() {
@@ -145,17 +159,8 @@ public class PlayerMotherShip : ShipBase {
         transform.position = Vector3.Lerp(transform.position, m_Destination, 1 / 10f);
     }
 
-    // private float m_UpdateTargetTimer = 0f;
-
     private void UpdateTarget() {
-        // if (m_UpdateTargetTimer < 0.5f / Time.deltaTime) {
-        //     m_UpdateTargetTimer += Time.deltaTime;
-        //     return;
-        // }
-        //
-        // m_UpdateTargetTimer -= 0.5f / Time.deltaTime;
-
-        target = GameManager.GetModule<ShipModule>().GuessBestTarget(this, shipData.viewRadius);
+        target = GameManager.GetModule<ShipModule>().GuessBestTarget(this);
     }
 
     protected override void OnDrawGizmos() {

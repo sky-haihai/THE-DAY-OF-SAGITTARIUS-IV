@@ -74,7 +74,7 @@ public class AIMotherShip : ShipBase {
     }
 
     private void UpdateTarget() {
-        target = GameManager.GetModule<ShipModule>().GuessBestTarget(this, shipData.viewRadius);
+        target = GameManager.GetModule<ShipModule>().GuessBestTarget(this);
     }
 
     void HandleAIDecision() {

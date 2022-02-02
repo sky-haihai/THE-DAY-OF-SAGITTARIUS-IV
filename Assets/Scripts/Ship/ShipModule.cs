@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using XiheFramework;
+using XiheFramework.Util;
 
 public class ShipModule : GameModule {
     private List<ShipBase> m_ShipList = new List<ShipBase>();
     private AIBrain m_AIBrain;
 
+    private MultiDictionary<int, ShipBase> m_VisibilityTree; //club id, visible ships
+
     public Vector4 bound;
 
     private bool m_PlayerAutoLock = false;
-
-    private List<DamageDisplayStruct> m_DamageDisplayStructs;
-
-    // private ShipComputeData[] m_ShipComputeData;
 
     public override void Setup() {
         Game.Blackboard.SetData("bound", bound, BlackBoardDataType.Runtime);
 
         m_AIBrain = new AIBrain();
 
-        m_DamageDisplayStructs = new List<DamageDisplayStruct>();
+        m_VisibilityTree = new MultiDictionary<int, ShipBase>();
+
+        // m_DamageDisplayStructs = new List<DamageDisplayStruct>();
 
         InitFormationOptions();
     }
@@ -36,59 +38,57 @@ public class ShipModule : GameModule {
         Game.Blackboard.SetData("FormationOptions", result.ToArray(), BlackBoardDataType.Runtime);
     }
 
-    /// <summary>
-    /// generate a new mini ship from mother ship
-    /// </summary>
-    public void RequestPlayerMiniShip() {
-        //init new player mini ship
-    }
-
-    public ShipBase[] GetViewableShips(ShipBase originShip, float radius) {
-        var result = new List<ShipBase>();
-        foreach (var ship in m_ShipList) {
-            var delta = ship.transform.position - originShip.transform.position;
-            delta.y = 0;
-            if (delta.magnitude < radius) {
-                result.Add(ship);
-            }
-        }
-
-        return result.ToArray();
-    }
-
-    //return the ship within attack range which have least angle between the delta and transform.forward
-    public ShipBase GuessBestTarget(ShipBase originShip, float radius) {
+    public ShipBase GuessBestTarget(ShipBase originShip) {
         ShipBase result = null;
         var smallest = 180f;
-        foreach (var ship in m_ShipList) {
-            if (ship == originShip) {
-                continue;
-            }
+        if (!m_VisibilityTree.ContainsKey(originShip.ClubId)) {
+            return null;
+        }
 
-            if (ship.ClubId == originShip.ClubId) {
-                continue;
-            }
-
-            var delta = ship.transform.position - originShip.transform.position;
+        var candidates = m_VisibilityTree[originShip.ClubId];
+        foreach (var ship in candidates) {
+            var origin = originShip.transform;
+            var delta = ship.transform.position - origin.position;
             delta.y = 0;
-            if (delta.magnitude < radius) {
-                //angle
-                var angle = Vector3.Angle(originShip.transform.forward, delta);
-                if (angle < smallest) {
-                    smallest = angle;
-                    result = ship;
-                }
+
+            //angle
+            var angle = Vector3.Angle(origin.forward, delta);
+            if (angle < smallest) {
+                smallest = angle;
+                result = ship;
             }
         }
 
         return result;
     }
 
+    public ShipBase[] GetAllShipsOwnedBy(string owner) {
+        var result = new List<ShipBase>();
+        foreach (var shipBase in m_ShipList) {
+            if (shipBase.shipData.shipOwner.Equals(owner)) {
+                result.Add(shipBase);
+            }
+        }
+
+        return result.ToArray();
+    }
+
+    public float GetShipLeftOwnedBy(string owner) {
+        float sum = 0f;
+        foreach (var shipBase in m_ShipList) {
+            if (shipBase.shipData.shipOwner.Equals(owner)) {
+                sum += shipBase.runtimeData.hp;
+            }
+        }
+
+        return sum;
+    }
+
     public void ApplyAttack(ShipBase from, ShipBase to) {
         var damage = from.shipData.offense / to.shipData.defense * Time.deltaTime;
         to.ReceiveDamage(damage);
 
-        m_DamageDisplayStructs.Add(new DamageDisplayStruct(from.transform.position, to.transform.position));
+        //m_DamageDisplayStructs.Add(new DamageDisplayStruct(from.transform.position, to.transform.position));
     }
 
     public void Register(ShipBase shipBase) {
@@ -107,32 +107,46 @@ public class ShipModule : GameModule {
         m_AIBrain.Register(ai, defaultStrategy);
     }
 
-    // public ShipComputeData[] UpdateComputeData() {
-    //     m_ShipComputeData = new ShipComputeData[m_ShipList.Count];
-    //     for (int i = 0; i < m_ShipComputeData.Length; i++) {
-    //         var ship = m_ShipList[i];
-    //         m_ShipComputeData[i] = new ShipComputeData(ship.transform.position, ship.shipData.viewRadius);
-    //     }
-    //
-    //     return m_ShipComputeData;
-    // }
-    //
-    // public ShipComputeData[] GetShipComputeData() {
-    //     return m_ShipComputeData;
-    // }
-
     public override void Update() {
         if (Game.Input.GetKeyDown(KeyActionTypes.AutoLock)) {
             m_PlayerAutoLock = !m_PlayerAutoLock;
             Game.Event.Invoke("OnAutoLock", this, m_PlayerAutoLock);
         }
 
-        DisplayDamageData();
+        UpdateVisibility();
     }
 
-    private void DisplayDamageData() {
-        Game.Blackboard.SetData("DamageDisplayData", m_DamageDisplayStructs.ToArray(), BlackBoardDataType.Runtime);
-        m_DamageDisplayStructs.Clear();
+    private void UpdateVisibility() {
+        m_VisibilityTree.Clear();
+
+        foreach (var ship in m_ShipList) {
+            AddViewableShips(ship, false);
+        }
+    }
+
+    //TODO: wrong, fix
+    private ShipBase[] GetViewableShips(int clubId) {
+        return m_VisibilityTree[clubId].ToArray();
+    }
+
+    private void AddViewableShips(ShipBase originShip, bool friendlyInclusive) {
+        foreach (var ship in m_ShipList) {
+            if (m_VisibilityTree.ContainsKey(originShip.ClubId)) {
+                if (m_VisibilityTree.ContainsValue(originShip.ClubId, ship)) {
+                    continue;
+                }
+            }
+
+            if (!friendlyInclusive && ship.ClubId == originShip.ClubId) {
+                continue;
+            }
+
+            var delta = ship.transform.position - originShip.transform.position;
+            delta.y = 0;
+            if (delta.magnitude < originShip.shipData.viewRadius) {
+                m_VisibilityTree.Add(originShip.ClubId, ship);
+            }
+        }
     }
 
     public override void ShutDown() {

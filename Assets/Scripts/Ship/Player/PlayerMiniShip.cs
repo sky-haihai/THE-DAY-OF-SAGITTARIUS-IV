@@ -50,12 +50,17 @@ public class PlayerMiniShip : ShipBase {
         }
 
         UpdateDestination();
-
         TryGoToDestination();
+
+        UpdateTarget();
 
         if (target && m_IsStandby) {
             TryLockTarget(target.transform.position);
         }
+    }
+
+    private void UpdateTarget() {
+        target = GameManager.GetModule<ShipModule>().GuessBestTarget(this);
     }
 
     protected override void Die() {
@@ -92,7 +97,7 @@ public class PlayerMiniShip : ShipBase {
             m_Strategy = FormationStrategyHelper.GetStrategyByFormation(ne);
         }
     }
-    
+
     private void TryGoToDestination() {
         var delta = m_Destination - transform.position;
 
@@ -110,14 +115,13 @@ public class PlayerMiniShip : ShipBase {
             transform.Rotate(Vector3.up, angleSigned / Mathf.Abs(angleSigned) * Time.deltaTime * shipData.rotateSpeed);
         }
 
-        //thrust strategy might change later
+        //y=-m\left(\frac{x}{\pi}\right)^{\frac{1}{a}}+m
+        //TODO: thrust strategy might be changed later
         var rad = Mathf.Deg2Rad * Mathf.Abs(angleSigned);
         var max = shipData.thrustLevelLimit.y;
         var min = shipData.thrustLevelLimit.x;
         const float pow = 3;
-        // var level = -max / Mathf.PI * rad + max;
         var level = -max * Mathf.Pow(rad / Mathf.PI, 1 / pow) + max;
-        //level = Mathf.Round(level);
         level = Mathf.Clamp(level, min, max);
         runtimeData.thrustLevel = level;
 

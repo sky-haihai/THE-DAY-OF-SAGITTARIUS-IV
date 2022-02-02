@@ -17,4 +17,14 @@ public class ShipRuntimeData {
         this.offense = offense;
         this.defense = defense;
     }
+
+    public ShipRuntimeData(string shipName, float hp, float thrustLevel, float offense, float defense) {
+        this.shipName = shipName;
+        this.hp = hp;
+        this.thrustLevel = thrustLevel;
+        this.offense = offense;
+        this.defense = defense;
+
+        isDead = false;
+    }
 }

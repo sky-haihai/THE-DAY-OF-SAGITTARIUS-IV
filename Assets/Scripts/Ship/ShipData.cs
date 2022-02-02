@@ -9,6 +9,7 @@ public class ShipData {
     // public int clubId;
     public string shipName;
     public Color shipColor;
+    public string shipOwner;
 
     public float viewRadius = 1f;
     public float attackRadius = 1.5f;

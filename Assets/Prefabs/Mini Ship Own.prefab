@@ -58,7 +58,7 @@ MonoBehaviour:
     shipName: 
     shipColor: {r: 1, g: 0.45880437, b: 0.14509803, a: 0}
     viewRadius: 1.5
-    attackRadius: 2
+    attackRadius: 3
     tolerantAngle: 5
     offense: 10
     defense: 10
@@ -69,7 +69,6 @@ MonoBehaviour:
   attackLine: {fileID: 5988745203396494496}
   stencilSphere: {fileID: 9217417333622259558}
   stencilObjectRenderer: {fileID: 3820394352506116967}
-  pow: 3
 --- !u!1001 &2505498711995156451
 PrefabInstance:
   m_ObjectHideFlags: 0

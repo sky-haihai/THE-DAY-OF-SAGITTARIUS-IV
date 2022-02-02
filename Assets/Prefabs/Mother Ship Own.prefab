@@ -58,7 +58,7 @@ MonoBehaviour:
     shipName: 
     shipColor: {r: 1, g: 0.6431373, b: 0.14509805, a: 0}
     viewRadius: 2.5
-    attackRadius: 3.5
+    attackRadius: 7.5
     tolerantAngle: 15
     offense: 200
     defense: 200

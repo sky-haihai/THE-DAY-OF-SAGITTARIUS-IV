@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 using XiheFramework;
@@ -29,10 +31,31 @@ public class HUDBehaviour : UIBehaviour {
 
         Game.Event.Subscribe("OnUpdateGlobalMessage", OnUpdateGlobalMessage);
 
+        //command
         sendScoutBtn.onClick.AddListener(OnSendScoutBtn);
         sendScoutBtn.onClick.AddListener(OnRetrieveScoutBtn);
         formationDropdown.onValueChanged.AddListener(OnFormationChanged);
         InitFormationOptions();
+    }
+
+    private void Update() {
+        UpdateStatus();
+    }
+
+    private void UpdateStatus() {
+        var data = Game.Blackboard.GetData<ShipRuntimeData>("PlayerRuntimeData");
+        if (data == null) {
+            shipLeft.text = string.Empty;
+            speed.text = string.Empty;
+            offense.text = string.Empty;
+            defense.text = string.Empty;
+            return;
+        }
+
+        shipLeft.text = data.hp.ToString();
+        speed.text = data.thrustLevel.ToString();
+        offense.text = data.offense.ToString();
+        defense.text = data.defense.ToString();
     }
 
     private void InitFormationOptions() {

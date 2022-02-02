@@ -6,8 +6,8 @@ using XiheFramework;
 [Serializable]
 public abstract class ShipBase : MonoBehaviour {
     [SerializeField] protected ShipBase target;
-    [SerializeField] protected ShipRuntimeData runtimeData;
-
+    
+    [SerializeField] public ShipRuntimeData runtimeData;
     [SerializeField] public ShipData shipData;
 
     //attack line
@@ -90,7 +90,7 @@ public abstract class ShipBase : MonoBehaviour {
             return false;
         }
 
-        if (Vector3.Angle(transform.forward, offset) > shipData.tolerantAngle) {
+        if (Vector3.Angle(transform.forward, offset) > shipData.tolerantAngle / 2) {
             return false;
         }
 

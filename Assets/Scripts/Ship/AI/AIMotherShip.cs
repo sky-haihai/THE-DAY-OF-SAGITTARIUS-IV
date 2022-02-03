@@ -9,13 +9,15 @@ public class AIMotherShip : ShipBase {
     private StateMachine m_StateMachine;
 
     private int miniShipCount;
+    private Formations m_CurrentFormation;
+
+    private StateMachine m_Fsm;
 
     private static readonly int Color = Shader.PropertyToID("_Color");
 
+    public string startState;
     public Renderer meshRenderer;
-
     public bool autoLock;
-    public Formations defaultStrategy = Formations.Spread;
 
     public override int ClubId => 2;
 
@@ -26,7 +28,21 @@ public class AIMotherShip : ShipBase {
 
         meshRenderer.material.SetColor(Color, shipData.shipColor);
 
-        GameManager.GetModule<ShipModule>().RegisterAI(this, defaultStrategy);
+        GameManager.GetModule<ShipModule>().RegisterAI(this);
+
+        InitFsm();
+    }
+
+    private void InitFsm() {
+        m_Fsm = Game.Fsm.CreateStateMachine("AI " + this.GetHashCode().ToString() + " Behaviour");
+        var patrol = new PatrolState(m_Fsm, this);
+        var alert = new AlertState(m_Fsm, this);
+        var battle = new BattleState(m_Fsm, this);
+        m_Fsm.AddState(nameof(PatrolState), patrol);
+        m_Fsm.AddState(nameof(AlertState), alert);
+        m_Fsm.AddState(nameof(BattleState), battle);
+        m_Fsm.SetDefaultState(startState);
+        m_Fsm.Start();
     }
 
     protected override void Update() {
@@ -43,6 +59,9 @@ public class AIMotherShip : ShipBase {
         }
     }
 
+    public bool HasTarget() {
+        return target != null;
+    }
 
     public int GetMiniShipCount() {
         return miniShipCount;

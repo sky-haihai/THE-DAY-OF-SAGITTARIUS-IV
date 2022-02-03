@@ -58,7 +58,7 @@ MonoBehaviour:
     shipColor: {r: 1, g: 0.397, b: 0.9125058, a: 0}
     shipOwner: "\u30B3\u30F3\u30D7\u30FC\u30BF\u30FC\u7814"
     viewRadius: 2.5
-    attackRadius: 3.5
+    attackRadius: 7.5
     tolerantAngle: 5
     offense: 200
     defense: 200
@@ -67,9 +67,9 @@ MonoBehaviour:
     rotateSpeed: 20
     thrustLevelLimit: {x: -3, y: 5}
   attackLine: {fileID: 3789703662092542288}
+  startState: 
   meshRenderer: {fileID: 7765888934633049777}
   autoLock: 1
-  defaultStrategy: 0
 --- !u!1001 &4498301350937448113
 PrefabInstance:
   m_ObjectHideFlags: 0

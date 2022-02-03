@@ -103,8 +103,8 @@ public class ShipModule : GameModule {
         }
     }
 
-    public void RegisterAI(AIMotherShip ai, Formations defaultStrategy) {
-        m_AIBrain.Register(ai, defaultStrategy);
+    public void RegisterAI(AIMotherShip ai) {
+        m_AIBrain.Register(ai);
     }
 
     public override void Update() {

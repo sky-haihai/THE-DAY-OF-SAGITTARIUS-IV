@@ -10,30 +10,31 @@ using UnityEngine;
 /// </summary>
 [Serializable]
 public class AIBrain {
-    private Dictionary<string, AIInfo> m_AiInfos;
+    private Dictionary<string, AIMotherShip> m_AiMotherShips;
 
     public float decisionTime = 0.1f;
 
     public AIBrain() {
-        m_AiInfos = new Dictionary<string, AIInfo>();
+        m_AiMotherShips = new Dictionary<string, AIMotherShip>();
     }
 
-    public void Register(AIMotherShip motherShip, Formations defaultFormation) {
+    public void Register(AIMotherShip motherShip) {
         var name = string.IsNullOrEmpty(motherShip.shipData.shipName) ? motherShip.GetHashCode().ToString() : motherShip.shipData.shipName;
 
-        if (!m_AiInfos.ContainsKey(name)) {
-            m_AiInfos.Add(name, new AIInfo(motherShip, defaultFormation));
+        if (!m_AiMotherShips.ContainsKey(name)) {
+            m_AiMotherShips.Add(name, motherShip);
         }
     }
 
     public void UnRegister(AIMotherShip motherShip) {
         var name = string.IsNullOrEmpty(motherShip.shipData.shipName) ? motherShip.GetHashCode().ToString() : motherShip.shipData.shipName;
 
-        if (m_AiInfos.ContainsKey(name)) {
-            m_AiInfos.Remove(name);
+        if (m_AiMotherShips.ContainsKey(name)) {
+            m_AiMotherShips.Remove(name);
         }
     }
 
     void RefreshDecision() {
+        
     }
 }

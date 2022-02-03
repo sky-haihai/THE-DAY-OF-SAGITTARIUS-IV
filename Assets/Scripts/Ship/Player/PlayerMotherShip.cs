@@ -22,6 +22,8 @@ public class PlayerMotherShip : ShipBase {
 
     public override int ClubId => 1;
 
+    #region Override Methods
+
     protected override void Start() {
         base.Start();
 
@@ -33,30 +35,6 @@ public class PlayerMotherShip : ShipBase {
 
         InitStencilMeshScale();
         InitShipColor();
-    }
-
-    private void OnFormationUIValueChanged(object sender, object e) {
-        var ne = (int) e;
-        m_CurrentFormation = (Formations) ne;
-
-        UpdateFormationToMiniShips();
-    }
-
-    public Formations GetFormation() {
-        return m_CurrentFormation;
-    }
-
-    private void OnSendPlayerScout(object sender, object e) {
-        SeparateMiniShipFromMother();
-    }
-
-    void InitStencilMeshScale() {
-        var radius = shipData.viewRadius * 2;
-        stencilSphere.localScale = new Vector3(radius, radius, radius);
-    }
-
-    void InitShipColor() {
-        stencilObjectRenderer.material.SetColor(Color, shipData.shipColor);
     }
 
     protected override void Update() {
@@ -73,6 +51,54 @@ public class PlayerMotherShip : ShipBase {
         UpdatePlayerRuntimeData();
     }
 
+    protected override void OnDrawGizmos() {
+        base.OnDrawGizmos();
+
+        Gizmos.color = UnityEngine.Color.yellow;
+        GizmosUtil.DrawCircle(transform.position, shipData.attackRadius, 25);
+
+        if (!Application.isPlaying) {
+            var radius = shipData.viewRadius * 2;
+            stencilSphere.localScale = new Vector3(radius, radius, radius);
+        }
+    }
+
+    #endregion
+
+    #region Public Methods
+
+    public Formations GetFormation() {
+        return m_CurrentFormation;
+    }
+
+    public int GetMiniShipCount() {
+        return miniShipCount;
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private void OnFormationUIValueChanged(object sender, object e) {
+        var ne = (int) e;
+        m_CurrentFormation = (Formations) ne;
+
+        UpdateFormationToMiniShips();
+    }
+
+    private void OnSendPlayerScout(object sender, object e) {
+        SeparateMiniShipFromMother();
+    }
+
+    private void InitStencilMeshScale() {
+        var radius = shipData.viewRadius * 2;
+        stencilSphere.localScale = new Vector3(radius, radius, radius);
+    }
+
+    private void InitShipColor() {
+        stencilObjectRenderer.material.SetColor(Color, shipData.shipColor);
+    }
+
     private void UpdatePlayerRuntimeData() {
         var shipLeft = GameManager.GetModule<ShipModule>().GetShipLeftOwnedBy(shipData.shipOwner);
         ShipRuntimeData data = new ShipRuntimeData(runtimeData.shipName, shipLeft,
@@ -80,9 +106,6 @@ public class PlayerMotherShip : ShipBase {
         Game.Blackboard.SetData("PlayerRuntimeData", data, BlackBoardDataType.Runtime);
     }
 
-    public int GetMiniShipCount() {
-        return miniShipCount;
-    }
 
     private void SeparateMiniShipFromMother() {
         if (runtimeData.hp <= shipData.initialHp / 20f) {
@@ -90,12 +113,13 @@ public class PlayerMotherShip : ShipBase {
         }
 
         var root = GameObject.FindWithTag("PlayerShipRoot");
-        var go = Instantiate(miniShipTemplate, transform.position, transform.rotation, root.transform);
+        var cachedTransform = transform;
+        var go = Instantiate(miniShipTemplate, cachedTransform.position, cachedTransform.rotation, root.transform);
         go.Setup(this, miniShipCount++);
         runtimeData.hp -= 750f;
     }
 
-    public void UpdateFormationToMiniShips() {
+    private void UpdateFormationToMiniShips() {
         Game.Event.Invoke("OnSetFormation", this, m_CurrentFormation);
     }
 
@@ -108,9 +132,10 @@ public class PlayerMotherShip : ShipBase {
     }
 
     private void TryLockTarget(Vector3 worldPosition) {
-        var delta = worldPosition - transform.position;
+        var cachedTransform = transform;
+        var delta = worldPosition - cachedTransform.position;
 
-        var angleSigned = Vector3.SignedAngle(transform.forward, delta, Vector3.up);
+        var angleSigned = Vector3.SignedAngle(cachedTransform.forward, delta, Vector3.up);
 
         if (Mathf.Approximately(angleSigned, 0f)) {
             return;
@@ -134,7 +159,8 @@ public class PlayerMotherShip : ShipBase {
             m_ThrustDestination -= 1f;
         }
 
-        m_Destination = transform.position + transform.forward * (runtimeData.thrustLevel * Time.deltaTime * shipData.moveSpeed);
+        var cachedTransform = transform;
+        m_Destination = cachedTransform.position + cachedTransform.forward * (runtimeData.thrustLevel * Time.deltaTime * shipData.moveSpeed);
 
         m_ThrustDestination = Mathf.Clamp(m_ThrustDestination, shipData.thrustLevelLimit.x, shipData.thrustLevelLimit.y);
         runtimeData.thrustLevel = Mathf.Lerp(runtimeData.thrustLevel, m_ThrustDestination, 1 / 10f);
@@ -162,15 +188,5 @@ public class PlayerMotherShip : ShipBase {
         target = GameManager.GetModule<ShipModule>().GuessBestTarget(this);
     }
 
-    protected override void OnDrawGizmos() {
-        base.OnDrawGizmos();
-
-        Gizmos.color = UnityEngine.Color.yellow;
-        GizmosUtil.DrawCircle(transform.position, shipData.attackRadius, 25);
-
-        if (!Application.isPlaying) {
-            var radius = shipData.viewRadius * 2;
-            stencilSphere.localScale = new Vector3(radius, radius, radius);
-        }
-    }
+    #endregion
 }

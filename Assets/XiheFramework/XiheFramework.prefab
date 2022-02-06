@@ -43,6 +43,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ec7fe6a38e4b48b8d253c4b47d6f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameFormationPairs:
+  - name: "\u5F2F\u66F2\u7EBF\u5F62"
+    strategy: {fileID: 11400000, guid: 625b22fd0c649074eb037427f24d7bf4, type: 2}
+  - name: "\u73AF\u5F62"
+    strategy: {fileID: 11400000, guid: b0f119f353edca14093d4d8f2416ab06, type: 2}
+  - name: "\u76F4\u7EBF\u5F62"
+    strategy: {fileID: 11400000, guid: 2ab2714be2a4cb94eb893813694753c2, type: 2}
+  - name: "\u5206\u6563\u5F62"
+    strategy: {fileID: 11400000, guid: 5a3d99be2efc4984189a7c946a14843e, type: 2}
+  - name: "\u6954\u5F62"
+    strategy: {fileID: 11400000, guid: 6c99088de99cc1a488d48bbafade12cc, type: 2}
+  - name: "\u6ECB\u5D29"
+    strategy: {fileID: 11400000, guid: 3bdd8777b87de174099d6842f7faf088, type: 2}
   bound: {x: 0, y: 0, z: 75, w: 75}
 --- !u!1 &892182868994225882
 GameObject:

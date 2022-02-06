@@ -626,7 +626,7 @@ Shader "AttackLine"
 }
 /*ASEBEGIN
 Version=18934
-1920;0;1920;1019;1737.144;320.0287;1;True;False
+1920;0;1920;1019;1737.144;308.0287;1;True;False
 Node;AmplifyShaderEditor.RangedFloatNode;10;-1265.298,149.8331;Inherit;False;Property;_Offset;Offset;1;1;[HideInInspector];Create;True;0;0;0;True;0;False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.DynamicAppendNode;12;-1104.67,140.3163;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.Vector2Node;14;-1110.144,-4.028748;Inherit;False;Property;_Tiling;Tiling;2;0;Create;True;0;0;0;False;0;False;0,0;4,1;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
@@ -644,4 +644,4 @@ WireConnection;8;1;9;0
 WireConnection;1;2;8;0
 WireConnection;1;3;8;4
 ASEEND*/
-//CHKSM=ED3DB566BFBDDF03BD6A555DC1C742379CEA4D0F
+//CHKSM=AC1CE25F3585433AEBBC983DE90A5BE8FC46BD5B

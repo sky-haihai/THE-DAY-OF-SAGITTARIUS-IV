@@ -79,7 +79,7 @@ public class PlayerMiniShip : ShipBase {
     public void Setup(PlayerMotherShip motherShip, int id) {
         m_MotherShip = motherShip;
         localId = id;
-        m_Strategy = FormationStrategyHelper.GetStrategyByFormation(motherShip.GetFormation());
+        m_Strategy = motherShip.GetStrategy();
     }
 
     public PlayerMotherShip GetMotherShip() {
@@ -93,8 +93,8 @@ public class PlayerMiniShip : ShipBase {
         }
 
         if (s == m_MotherShip) {
-            var ne = (Formations) e;
-            m_Strategy = FormationStrategyHelper.GetStrategyByFormation(ne);
+            var ne = (IFormationStrategy) e;
+            m_Strategy = ne;
         }
     }
 
@@ -121,12 +121,13 @@ public class PlayerMiniShip : ShipBase {
         var rad = Mathf.Deg2Rad * Mathf.Abs(angleSigned);
         var max = shipData.thrustLevelLimit.y;
         var min = shipData.thrustLevelLimit.x;
-        const float pow = 3;
+        const float pow = 4;
         var level = -max * Mathf.Pow(rad / Mathf.PI, 1 / pow) + max;
+        level = Mathf.Floor(level);
         level = Mathf.Clamp(level, min, max);
         runtimeData.thrustLevel = level;
 
-        var dest = transform.position + transform.forward * (runtimeData.thrustLevel * Time.deltaTime);
+        var dest = transform.position + transform.forward * (runtimeData.thrustLevel * Time.deltaTime * shipData.moveSpeed);
         transform.position = Vector3.Lerp(transform.position, dest, 1 / 5f);
 
         return false;

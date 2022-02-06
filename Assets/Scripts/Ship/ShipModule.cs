@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using XiheFramework;
@@ -11,6 +12,8 @@ public class ShipModule : GameModule {
 
     private MultiDictionary<int, ShipBase> m_VisibilityTree; //club id, visible ships
 
+    public List<NameStrategyPair> nameFormationPairs = new List<NameStrategyPair>();
+
     public Vector4 bound;
 
     private bool m_PlayerAutoLock = false;
@@ -18,24 +21,31 @@ public class ShipModule : GameModule {
     public override void Setup() {
         Game.Blackboard.SetData("bound", bound, BlackBoardDataType.Runtime);
 
+        var names = nameFormationPairs.Select(pair => pair.name).ToArray();
+        Game.Blackboard.SetData("StrategyNames", names, BlackBoardDataType.Runtime);
+
         m_AIBrain = new AIBrain();
 
         m_VisibilityTree = new MultiDictionary<int, ShipBase>();
 
         // m_DamageDisplayStructs = new List<DamageDisplayStruct>();
 
-        InitFormationOptions();
+        //InitFormationOptions();
     }
 
-    private void InitFormationOptions() {
-        var formationOptions = Enum.GetValues(typeof(Formations));
-        List<string> result = new List<string>();
-        foreach (var option in formationOptions) {
-            result.Add(option.ToString());
-        }
+    // private void InitFormationOptions() {
+    //     var formationOptions = Enum.GetValues(typeof(Formations));
+    //     List<string> result = new List<string>();
+    //     foreach (var option in formationOptions) {
+    //         result.Add(option.ToString());
+    //     }
+    //
+    //     //formationOptions = (string[]) formationOptions;
+    //     Game.Blackboard.SetData("FormationOptions", result.ToArray(), BlackBoardDataType.Runtime);
+    // }
 
-        //formationOptions = (string[]) formationOptions;
-        Game.Blackboard.SetData("FormationOptions", result.ToArray(), BlackBoardDataType.Runtime);
+    public IFormationStrategy GetStrategyById(int id) {
+        return nameFormationPairs[id].strategy;
     }
 
     public ShipBase GuessBestTarget(ShipBase originShip) {
@@ -152,4 +162,10 @@ public class ShipModule : GameModule {
     public override void ShutDown() {
         m_ShipList.Clear();
     }
+}
+
+[Serializable]
+public class NameStrategyPair {
+    public string name;
+    public StrategyBase strategy;
 }

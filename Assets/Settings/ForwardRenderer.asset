@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de640fe3d0db1804a85f9fc8f5cadab6, type: 3}
   m_Name: ForwardRenderer
   m_EditorClassIdentifier: 
-  m_RendererFeatures:
-  - {fileID: 6073108926185413955}
-  m_RendererFeatureMap: 431d894364044854
+  m_RendererFeatures: []
+  m_RendererFeatureMap: 
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
@@ -34,7 +33,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_DefaultStencilState:
-    overrideStencilState: 1
+    overrideStencilState: 0
     stencilReference: 0
     stencilCompareFunction: 8
     passOperation: 0
@@ -43,7 +42,7 @@ MonoBehaviour:
   m_ShadowTransparentReceive: 1
   m_RenderingMode: 0
   m_AccurateGbufferNormals: 0
---- !u!114 &6073108926185413955
+--- !u!114 &5821383893757861745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,11 +51,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fcdc9de38f56a2469f0a6267499b937, type: 3}
-  m_Name: Add Darker Grid
+  m_Script: {fileID: 11500000, guid: a39243e8a1c51ad43abe84a5c12809c8, type: 3}
+  m_Name: NewCustomRenderPassFeature
   m_EditorClassIdentifier: 
-  m_Active: 0
-  cameraName: BattleCam
-  blitMaterial: {fileID: 2100000, guid: b9aea886c13e42340b893fc21ee78f30, type: 2}
-  renderPassEvent: 400
-  enable: 0
+  m_Active: 1
+  blueScreen: {fileID: 2100000, guid: 2c5bb5095c89b254b84a120393bf06b2, type: 2}
+  queue: 250

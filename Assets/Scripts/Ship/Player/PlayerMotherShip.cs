@@ -9,7 +9,7 @@ public class PlayerMotherShip : ShipBase {
 
     private int miniShipCount;
 
-    private Formations m_CurrentFormation;
+    private IFormationStrategy m_CurrentFormation;
 
     public PlayerMiniShip miniShipTemplate;
 
@@ -67,7 +67,7 @@ public class PlayerMotherShip : ShipBase {
 
     #region Public Methods
 
-    public Formations GetFormation() {
+    public IFormationStrategy GetStrategy() {
         return m_CurrentFormation;
     }
 
@@ -81,7 +81,7 @@ public class PlayerMotherShip : ShipBase {
 
     private void OnFormationUIValueChanged(object sender, object e) {
         var ne = (int) e;
-        m_CurrentFormation = (Formations) ne;
+        m_CurrentFormation = GameManager.GetModule<ShipModule>().GetStrategyById(ne);
 
         UpdateFormationToMiniShips();
     }

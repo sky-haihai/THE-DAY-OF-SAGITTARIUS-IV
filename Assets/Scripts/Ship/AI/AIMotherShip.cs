@@ -10,10 +10,8 @@ public class AIMotherShip : ShipBase {
     private StateMachine m_StateMachine;
 
     private int miniShipCount;
-    private Formations m_CurrentFormation;
-
-    private StateMachine m_Fsm;
-
+    private IFormationStrategy m_CurrentFormation;
+    
     private static readonly int Color = Shader.PropertyToID("_Color");
 
     public Renderer meshRenderer;
@@ -107,7 +105,7 @@ public class AIMotherShip : ShipBase {
         level = Mathf.Clamp(level, min, max);
         runtimeData.thrustLevel = level;
 
-        var dest = transform.position + transform.forward * (runtimeData.thrustLevel * Time.deltaTime);
+        var dest = transform.position + transform.forward * (runtimeData.thrustLevel * Time.deltaTime * shipData.moveSpeed);
         transform.position = Vector3.Lerp(transform.position, dest, 1 / 5f);
 
         return false;

@@ -60,7 +60,7 @@ public class HUDBehaviour : UIBehaviour {
 
     private void InitFormationOptions() {
         var options = new List<Dropdown.OptionData>();
-        var data = Game.Blackboard.GetData<string[]>("FormationOptions");
+        var data = Game.Blackboard.GetData<string[]>("StrategyNames");
         foreach (var option in data) {
             options.Add(new Dropdown.OptionData(option));
         }

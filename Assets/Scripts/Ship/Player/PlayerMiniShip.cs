@@ -27,7 +27,17 @@ public class PlayerMiniShip : ShipBase {
         stencilObjectRenderer.material.renderQueue += 1;
 
         Game.Event.Subscribe("OnSetFormation", OnSetFormation);
+        Game.Event.Subscribe("OnRetrievePlayerScout", OnRetrievePlayerScout);
         Game.Event.Subscribe("OnPlayerMiniShipDestroyed", OnPlayerMiniShipDestroyed);
+    }
+
+    private void OnRetrievePlayerScout(object sender, object e) {
+        var closest = GameManager.GetModule<ShipModule>().GetClosestPlayerMiniShip(m_MotherShip).shipData.shipName;
+        if (this.shipData.shipName.Equals( closest)) {
+            return;
+        }
+
+        m_Destination = m_MotherShip.transform.position;
     }
 
     private void OnPlayerMiniShipDestroyed(object sender, object e) {

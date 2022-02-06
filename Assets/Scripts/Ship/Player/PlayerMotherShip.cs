@@ -7,7 +7,7 @@ public class PlayerMotherShip : ShipBase {
 
     private float m_ThrustDestination; //thrust destination
 
-    private int miniShipCount;
+    private int m_MiniShipCount;
 
     private IFormationStrategy m_CurrentFormation;
 
@@ -26,6 +26,8 @@ public class PlayerMotherShip : ShipBase {
 
     protected override void Start() {
         base.Start();
+
+        Game.Blackboard.SetData("PlayerInitialData", shipData, BlackBoardDataType.Runtime);
 
         m_Bound = Game.Blackboard.GetData<Vector4>("bound");
 
@@ -54,7 +56,7 @@ public class PlayerMotherShip : ShipBase {
     protected override void OnDrawGizmos() {
         base.OnDrawGizmos();
 
-        Gizmos.color = UnityEngine.Color.yellow;
+        Gizmos.color = Gizmos.color = new Color(0.4f, 0.4f, 0, 1f);
         GizmosUtil.DrawCircle(transform.position, shipData.attackRadius, 25);
 
         if (!Application.isPlaying) {
@@ -72,7 +74,7 @@ public class PlayerMotherShip : ShipBase {
     }
 
     public int GetMiniShipCount() {
-        return miniShipCount;
+        return m_MiniShipCount;
     }
 
     #endregion
@@ -115,7 +117,7 @@ public class PlayerMotherShip : ShipBase {
         var root = GameObject.FindWithTag("PlayerShipRoot");
         var cachedTransform = transform;
         var go = Instantiate(miniShipTemplate, cachedTransform.position, cachedTransform.rotation, root.transform);
-        go.Setup(this, miniShipCount++);
+        go.Setup(this, m_MiniShipCount++);
         runtimeData.hp -= 750f;
     }
 

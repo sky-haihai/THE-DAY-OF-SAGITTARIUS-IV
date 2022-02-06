@@ -44,6 +44,10 @@ public class ShipModule : GameModule {
     //     Game.Blackboard.SetData("FormationOptions", result.ToArray(), BlackBoardDataType.Runtime);
     // }
 
+    public ShipBase GetPlayerShip() {
+        return m_ShipList.OfType<PlayerMotherShip>().FirstOrDefault();
+    }
+
     public IFormationStrategy GetStrategyById(int id) {
         return nameFormationPairs[id].strategy;
     }
@@ -81,6 +85,23 @@ public class ShipModule : GameModule {
         }
 
         return result.ToArray();
+    }
+
+    public ShipBase GetClosestPlayerMiniShip(PlayerMotherShip motherShip) {
+        ShipBase result = null;
+        float dist = float.MaxValue;
+        foreach (var shipBase in m_ShipList) {
+            if (shipBase is PlayerMiniShip) {
+                var s = (PlayerMiniShip) shipBase;
+                var delta = Vector3.Distance(s.GetMotherShip().transform.position, shipBase.transform.position);
+                if (delta < dist) {
+                    dist = delta;
+                    result = shipBase;
+                }
+            }
+        }
+
+        return result;
     }
 
     public float GetShipLeftOwnedBy(string owner) {

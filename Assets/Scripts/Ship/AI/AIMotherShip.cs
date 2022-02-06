@@ -11,7 +11,7 @@ public class AIMotherShip : ShipBase {
 
     private int miniShipCount;
     private IFormationStrategy m_CurrentFormation;
-    
+
     private static readonly int Color = Shader.PropertyToID("_Color");
 
     public Renderer meshRenderer;
@@ -133,7 +133,7 @@ public class AIMotherShip : ShipBase {
     protected override void OnDrawGizmos() {
         base.OnDrawGizmos();
 
-        Gizmos.color = UnityEngine.Color.red;
+        Gizmos.color = new Color(0.4f, 0f, 0, 1f);
         GizmosUtil.DrawCircle(transform.position, shipData.attackRadius, 25);
     }
 }

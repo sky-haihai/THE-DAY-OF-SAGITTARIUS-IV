@@ -26,6 +26,8 @@ public class HUDBehaviour : UIBehaviour {
 
     //location
 
+    private ShipData playerInitData;
+
     public override void Start() {
         base.Start();
 
@@ -40,6 +42,10 @@ public class HUDBehaviour : UIBehaviour {
 
     private void Update() {
         UpdateStatus();
+
+        if (playerInitData == null) {
+            playerInitData = Game.Blackboard.GetData<ShipData>("PlayerInitialData");
+        }
     }
 
     private void UpdateStatus() {
@@ -52,7 +58,7 @@ public class HUDBehaviour : UIBehaviour {
             return;
         }
 
-        shipLeft.text = data.hp.ToString();
+        shipLeft.text = Mathf.Floor(data.hp) + "   /    " + Mathf.Floor(playerInitData.initialHp);
         speed.text = data.thrustLevel.ToString();
         offense.text = data.offense.ToString();
         defense.text = data.defense.ToString();

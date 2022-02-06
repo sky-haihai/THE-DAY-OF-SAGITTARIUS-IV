@@ -48,10 +48,10 @@ namespace FlowCanvas.Macros
         private MacroOutputNode _exit;
 
 
-        ///Macros dont use blackboard overrides or blackboard variables parametrization
+        ///<summary>Macros dont use blackboard overrides or blackboard variables parametrization</summary>
         public override bool allowBlackboardOverrides => false;
 
-        ///The entry node of the Macro (input ports)
+        ///<summary>The entry node of the Macro (input ports)</summary>
         public MacroInputNode entry {
             get
             {
@@ -65,7 +65,7 @@ namespace FlowCanvas.Macros
             }
         }
 
-        ///The exit node of the Macro (output ports)
+        ///<summary>The exit node of the Macro (output ports)</summary>
         public MacroOutputNode exit {
             get
             {
@@ -79,7 +79,7 @@ namespace FlowCanvas.Macros
             }
         }
 
-        ///validates the entry and exit references
+        ///<summary>validates the entry and exit references</summary>
         protected override void OnGraphValidate() {
             base.OnGraphValidate();
             _entry = null;
@@ -88,7 +88,7 @@ namespace FlowCanvas.Macros
             _exit = exit;
         }
 
-        ///Adds a new input port definition to the Macro
+        ///<summary>Adds a new input port definition to the Macro</summary>
         public Port AddInputDefinition(DynamicParameterDefinition def) {
             if ( inputDefinitions.Find(d => d.ID == def.ID) == null ) {
                 inputDefinitions.Add(def);
@@ -98,7 +98,7 @@ namespace FlowCanvas.Macros
             return null;
         }
 
-        ///Adds a new output port definition to the Macro
+        ///<summary>Adds a new output port definition to the Macro</summary>
         public Port AddOutputDefinition(DynamicParameterDefinition def) {
             if ( outputDefinitions.Find(d => d.ID == def.ID) == null ) {
                 outputDefinitions.Add(def);
@@ -122,8 +122,7 @@ namespace FlowCanvas.Macros
 
         ///----------------------------------------------------------------------------------------------
 
-        /// Set a value input of type T of the Macro to a certain value.
-        /// Only use to interface with the Macro from code.
+        ///<summary> Set a value input of type T of the Macro to a certain value. Only use to interface with the Macro from code.</summary>
         public void SetValueInput<T>(string name, T value) {
             var def = inputDefinitions.FirstOrDefault(d => d.name == name && d.type == typeof(T));
             if ( def == null ) {
@@ -133,8 +132,7 @@ namespace FlowCanvas.Macros
             entryFunctionMap[def.ID] = () => { return value; };
         }
 
-        /// Call a Flow Input of the Macro.
-        /// Only use to interface with the Macro from code.
+        ///<summary> Call a Flow Input of the Macro. Only use to interface with the Macro from code.</summary>
         public void CallFlowInput(string name) {
             var def = inputDefinitions.FirstOrDefault(d => d.name == name && d.type == typeof(Flow));
             if ( def == null ) {
@@ -144,8 +142,7 @@ namespace FlowCanvas.Macros
             entryActionMap[def.ID](new Flow());
         }
 
-        /// Get the value output of type T of the Macro.
-        /// Only use to interface with the Macro from code.
+        ///<summary> Get the value output of type T of the Macro. Only use to interface with the Macro from code.</summary>
         public T GetValueOutput<T>(string name) {
             var def = outputDefinitions.FirstOrDefault(d => d.name == name && d.type == typeof(T));
             if ( def == null ) {

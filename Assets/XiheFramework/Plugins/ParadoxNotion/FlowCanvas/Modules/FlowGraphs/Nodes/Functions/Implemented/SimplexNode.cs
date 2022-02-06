@@ -8,8 +8,7 @@ using ParadoxNotion.Design;
 namespace FlowCanvas.Nodes
 {
 
-    ///SimplexNodes are used within a SimplexNodeWrapper node.
-    ///Derive CallableActionNode, CallableFunctionNode, LatentActionNode, PureFunctionNode or ExtractorNode, for creating simple nodes easily and type cast safe.
+    ///<summary>SimplexNodes are used within a SimplexNodeWrapper node. Derive CallableActionNode, CallableFunctionNode, LatentActionNode, PureFunctionNode or ExtractorNode, for creating simple nodes easily and type cast safe.</summary>
     [ParadoxNotion.Design.SpoofAOT]
     abstract public class SimplexNode
     {
@@ -19,7 +18,7 @@ namespace FlowCanvas.Nodes
         [System.NonSerialized]
         private string _description;
 
-        ///A reference to the parent node this SimplexNode lives within
+        ///<summary>A reference to the parent node this SimplexNode lives within</summary>
         protected FlowNode parentNode { get; private set; }
 
         virtual public string name {

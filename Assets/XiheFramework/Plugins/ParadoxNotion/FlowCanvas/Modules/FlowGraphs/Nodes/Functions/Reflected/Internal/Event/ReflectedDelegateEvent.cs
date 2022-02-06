@@ -17,24 +17,24 @@ namespace FlowCanvas.Nodes
         private Delegate theDelegate;
 
         public ReflectedDelegateEvent() { }
-        ///Create a new reflected delegate event of target delegate type
+        ///<summary>Create a new reflected delegate event of target delegate type</summary>
         public ReflectedDelegateEvent(Type delegateType) {
             var callbackMethod = GetMethodForDelegateType(delegateType);
             theDelegate = callbackMethod.RTCreateDelegate(delegateType, this);
         }
 
-        ///Subscribe to the event
+        ///<summary>Subscribe to the event</summary>
         public void Add(DelegateEventCallback callback) { onCallback += callback; }
 
-        ///Unsubscribe from the event
+        ///<summary>Unsubscribe from the event</summary>
         public void Remove(DelegateEventCallback callback) { onCallback -= callback; }
 
-        ///Returns the actual delegate created and used
+        ///<summary>Returns the actual delegate created and used</summary>
         public Delegate AsDelegate() {
             return theDelegate;
         }
 
-        ///Resolve method and create delegate
+        ///<summary>Resolve method and create delegate</summary>
         MethodInfo GetMethodForDelegateType(Type delegateType) {
             var invokeMethod = delegateType.GetMethod("Invoke");
             var parameters = invokeMethod.GetParameters();

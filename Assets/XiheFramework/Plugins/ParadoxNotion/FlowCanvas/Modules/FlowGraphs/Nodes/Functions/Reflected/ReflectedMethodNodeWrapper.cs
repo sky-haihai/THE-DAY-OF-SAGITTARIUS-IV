@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace FlowCanvas.Nodes
 {
-    ///Wraps a MethodInfo into a FlowGraph node
+    ///<summary>Wraps a MethodInfo into a FlowGraph node</summary>
     public class ReflectedMethodNodeWrapper : ReflectedMethodBaseNodeWrapper
     {
 
@@ -44,14 +44,14 @@ namespace FlowCanvas.Nodes
             }
         }
 
-        ///Set a new MethodInfo to be used by ReflectedMethodNode
+        ///<summary>Set a new MethodInfo to be used by ReflectedMethodNode</summary>
         public override void SetMethodBase(MethodBase newMethod, object instance = null) {
             if ( newMethod is MethodInfo ) {
                 SetMethod((MethodInfo)newMethod, instance);
             }
         }
 
-        ///Set a new MethodInfo to be used by ReflectedMethodNode
+        ///<summary>Set a new MethodInfo to be used by ReflectedMethodNode</summary>
         void SetMethod(MethodInfo newMethod, object instance = null) {
 
             //open generic
@@ -71,7 +71,7 @@ namespace FlowCanvas.Nodes
             base.SetDefaultParameterValues(newMethod);
         }
 
-        ///When ports connects and is a generic method, try change method to that port type
+        ///<summary>When ports connects and is a generic method, try change method to that port type</summary>
         public override void OnPortConnected(Port port, Port otherPort) {
             if ( method.IsGenericMethod ) {
                 var wildType = method.GetFirstGenericParameterConstraintType();
@@ -88,7 +88,7 @@ namespace FlowCanvas.Nodes
             return method.GetFirstGenericParameterConstraintType();
         }
 
-        ///Gather the ports through the wrapper
+        ///<summary>Gather the ports through the wrapper</summary>
         protected override void RegisterPorts() {
             if ( method == null ) {
                 return;

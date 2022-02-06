@@ -11,7 +11,7 @@ namespace FlowCanvas.Nodes
     [Color("ff5c5c")]
     [ContextDefinedOutputs(typeof(Flow))]
     [ExecutionPriority(1)]
-    ///Base class for event nodes.
+    ///<summary>Base class for event nodes.</summary>
     abstract public class EventNode : FlowNode
     {
         public override string name {
@@ -21,8 +21,7 @@ namespace FlowCanvas.Nodes
 
     ///----------------------------------------------------------------------------------------------
 
-    ///Base class for event nodes that require a specific target Component or GameObject.
-    ///(use Transform for GameObjects).
+    ///<summary>Base class for event nodes that require a specific target Component or GameObject. (use Transform for GameObjects).</summary>
     [ContextDefinedOutputs(typeof(Wild))]
     abstract public class EventNode<T> : EventNode where T : Component
     {
@@ -38,7 +37,7 @@ namespace FlowCanvas.Nodes
             ResolveSelf();
         }
 
-        ///Resolve component from Self if 'target' is null
+        ///<summary>Resolve component from Self if 'target' is null</summary>
         protected void ResolveSelf() {
             if ( !target.useBlackboard && target.value == null ) {
                 target.value = graphAgent.GetComponent<T>();
@@ -48,8 +47,7 @@ namespace FlowCanvas.Nodes
 
     ///----------------------------------------------------------------------------------------------
 
-    ///Base class for event nodes with single or multiple target Component(s) that work with MonoBehaviour-based event callbacks raised through EventRouter.
-    ///(use Transform for GameObjects)
+    ///<summary>Base class for event nodes with single or multiple target Component(s) that work with MonoBehaviour-based event callbacks raised through EventRouter. (use Transform for GameObjects)</summary>
     [ContextDefinedOutputs(typeof(Wild))]
     abstract public class RouterEventNode<T> : EventNode where T : Component
     {
@@ -79,9 +77,9 @@ namespace FlowCanvas.Nodes
             }
         }
 
-        ///Called per target object with argument being the EventRouter of that object (never null)
+        ///<summary>Called per target object with argument being the EventRouter of that object (never null)</summary>
         abstract protected void Subscribe(ParadoxNotion.Services.EventRouter router);
-        ///Called per target object with argument being the EventRouter of that object (never null)
+        ///<summary>Called per target object with argument being the EventRouter of that object (never null)</summary>
         abstract protected void UnSubscribe(ParadoxNotion.Services.EventRouter router);
 
         //...
@@ -137,7 +135,7 @@ namespace FlowCanvas.Nodes
             }
         }
 
-        ///Utility to resolve receiver T object faster and for better performance
+        ///<summary>Utility to resolve receiver T object faster and for better performance</summary>
         protected T ResolveReceiver(GameObject receiver) {
             if ( receiver == null ) { return null; }
 

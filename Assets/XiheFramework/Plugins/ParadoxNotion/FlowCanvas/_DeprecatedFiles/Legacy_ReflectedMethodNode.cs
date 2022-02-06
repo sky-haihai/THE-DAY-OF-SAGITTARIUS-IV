@@ -8,7 +8,7 @@ using UnityEngine;
 namespace FlowCanvas.Nodes.Legacy
 {
 
-    ///Wrapped in a ReflectedMethodNodeWrapper it furthers wraps a MethodInfo call to delegates and strong type value usage for much greater performance than simply reflection Invoke.
+    ///<summary>Wrapped in a ReflectedMethodNodeWrapper it furthers wraps a MethodInfo call to delegates and strong type value usage for much greater performance than simply reflection Invoke.</summary>
     [Obsolete]
     abstract public class ReflectedMethodNode
     {
@@ -27,7 +27,7 @@ namespace FlowCanvas.Nodes.Legacy
             catch { return new PureReflectedMethodNode(); }
         }
 
-        ///Try create for JIT
+        ///<summary>Try create for JIT</summary>
         static ReflectedMethodNode TryCreateJit(MethodInfo method) {
 
             if ( method.ReturnType == typeof(void) ) {
@@ -101,7 +101,7 @@ namespace FlowCanvas.Nodes.Legacy
         }
 
 
-        ///Derived type must implement way of registration.
+        ///<summary>Derived type must implement way of registration.</summary>
         abstract public void RegisterPorts(FlowNode node, MethodInfo method, ReflectedMethodRegistrationOptions options);
 
     }

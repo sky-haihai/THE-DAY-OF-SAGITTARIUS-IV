@@ -7,7 +7,7 @@ using ParadoxNotion.Design;
 namespace FlowCanvas.Nodes
 {
 
-    ///Function Nodes return a value and can have up to 10 parameters. They don't need Flow execution.
+    ///<summary>Function Nodes return a value and can have up to 10 parameters. They don't need Flow execution.</summary>
     abstract public class PureFunctionNodeBase : SimplexNode { }
 
 

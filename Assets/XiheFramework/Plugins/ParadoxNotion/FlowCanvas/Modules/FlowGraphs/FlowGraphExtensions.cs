@@ -233,19 +233,22 @@ namespace FlowCanvas
         ///----------------------------------------------------------------------------------------------
 
 
-        ///Returns all nodes' menu
+        ///<summary>Returns all nodes' menu</summary>
         public static UnityEditor.GenericMenu GetFullNodesMenu(this FlowGraph flowGraph, Vector2 mousePos, Port context, Object dropInstance) {
             var menu = new UnityEditor.GenericMenu();
-            if ( context is ValueInput || context is ValueOutput ) {
-                menu = flowGraph.AppendTypeReflectionNodesMenu(menu, context.type, "", mousePos, context, dropInstance);
+            if ( context is ValueOutput ) {
+                menu = flowGraph.AppendTypeReflectionNodesMenu(menu, context.type, string.Empty, mousePos, context, dropInstance);
             }
-            menu = flowGraph.AppendFlowNodesMenu(menu, "", mousePos, context, dropInstance);
+            if ( context is ValueInput ) {
+                menu = flowGraph.AppendMakeVariableMenu(menu, string.Empty, mousePos, context, dropInstance);
+            }
+            menu = flowGraph.AppendFlowNodesMenu(menu, string.Empty, mousePos, context, dropInstance);
             menu = flowGraph.AppendSimplexNodesMenu(menu, "Functions/Implemented", mousePos, context, dropInstance);
             menu = flowGraph.AppendAllReflectionNodesMenu(menu, "Functions/Reflected", mousePos, context, dropInstance);
             menu = flowGraph.AppendVariableNodesMenu(menu, "Variables", mousePos, context, dropInstance);
             menu = flowGraph.AppendSignals(menu, "Events/Signals", mousePos, context, dropInstance);
             menu = flowGraph.AppendMacroNodesMenu(menu, "MACROS", mousePos, context, dropInstance);
-            menu = flowGraph.AppendMenuCallbackReceivers(menu, "", mousePos, context, dropInstance);
+            menu = flowGraph.AppendMenuCallbackReceivers(menu, string.Empty, mousePos, context, dropInstance);
             return menu;
         }
 
@@ -318,7 +321,7 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Simplex Nodes
+        ///<summary>Simplex Nodes</summary>
         public static UnityEditor.GenericMenu AppendSimplexNodesMenu(this FlowGraph graph, UnityEditor.GenericMenu menu, string baseCategory, Vector2 pos, Port contextPort, object dropInstance) {
             var infos = EditorUtils.GetScriptInfosOfType(typeof(SimplexNode));
             var generalized = new List<System.Type>();
@@ -371,15 +374,33 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///All reflection type nodes
+        ///<summary>ValueInput menus for "Make Variable"</summary>
+        public static UnityEditor.GenericMenu AppendMakeVariableMenu(this FlowGraph graph, UnityEditor.GenericMenu menu, string baseCategory, Vector2 pos, Port contextPort, object dropInstance) {
+
+            if ( contextPort is ValueInput ) {
+                var portValue = ( contextPort as ValueInput ).serializedValue;
+                menu.AddItem(new GUIContent("Make Constant Variable"), false, (o) => { graph.AddVariableGet((System.Type)o, null, null, pos, contextPort, portValue); }, contextPort.type);
+                menu.AddItem(new GUIContent("Make Linked Variable"), false, (o) =>
+                {
+                    var bbVar = graph.blackboard.AddVariable(contextPort.name, contextPort.type);
+                    if ( bbVar != null ) { graph.AddVariableGet((System.Type)o, graph.blackboard, bbVar, pos, contextPort, portValue); }
+                }, contextPort.type);
+                menu.AddSeparator("/");
+            }
+
+            return menu;
+        }
+
+        ///<summary>All reflection type nodes</summary>
         public static UnityEditor.GenericMenu AppendAllReflectionNodesMenu(this FlowGraph graph, UnityEditor.GenericMenu menu, string baseCategory, Vector2 pos, Port contextPort, object dropInstance) {
             foreach ( var type in TypePrefs.GetPreferedTypesList() ) {
+                if ( contextPort is ValueOutput && contextPort.type == type ) { continue; }
                 menu = graph.AppendTypeReflectionNodesMenu(menu, type, baseCategory, pos, contextPort, dropInstance);
             }
             return menu;
         }
 
-        ///Refletion nodes on a type
+        ///<summary>Refletion nodes on a type</summary>
         public static UnityEditor.GenericMenu AppendTypeReflectionNodesMenu(this FlowGraph graph, UnityEditor.GenericMenu menu, System.Type type, string baseCategory, Vector2 pos, Port contextPort, object dropInstance) {
 
             var builder = new StringBuilder();
@@ -394,19 +415,6 @@ namespace FlowCanvas
                 if ( contextPort == null || ( contextPort is ValueOutput && type.IsAssignableFrom(contextPort.type) ) ) {
                     var extractName = string.Format("/Extract {0}", type.FriendlyName());
                     menu.AddItem(new GUIContent(typeCategory + extractName), false, (o) => { graph.AddReflectedExtractorNode(type, pos, contextPort, dropInstance); }, type);
-                }
-            }
-
-            if ( contextPort is ValueInput ) {
-                if ( contextPort.type == type ) {
-                    var portValue = ( contextPort as ValueInput ).serializedValue;
-                    menu.AddItem(new GUIContent("Make Constant Variable"), false, (o) => { graph.AddVariableGet((System.Type)o, null, null, pos, contextPort, portValue); }, type);
-                    menu.AddItem(new GUIContent("Make Linked Variable"), false, (o) =>
-                    {
-                        var bbVar = graph.blackboard.AddVariable(contextPort.name, contextPort.type);
-                        if ( bbVar != null ) { graph.AddVariableGet((System.Type)o, graph.blackboard, bbVar, pos, contextPort, portValue); }
-                    }, type);
-                    menu.AddSeparator("/");
                 }
             }
 
@@ -513,7 +521,7 @@ namespace FlowCanvas
                     builder.Append("/Methods/");
                 }
                 if ( specialType == ReflectionTools.MethodType.PropertyAccessor ) {
-                    ///special case unity event
+                    //special case unity event
                     if ( isUnityEvent ) {
                         builder.Append("/Events/").Append(m.Name.Replace("get_", string.Empty));
                         var prop = m.GetAccessorProperty();
@@ -652,7 +660,7 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Variable based nodes
+        ///<summary>Variable based nodes</summary>
         public static UnityEditor.GenericMenu AppendVariableNodesMenu(this FlowGraph graph, UnityEditor.GenericMenu menu, string baseCategory, Vector2 pos, Port contextPort, object dropInstance) {
             if ( !string.IsNullOrEmpty(baseCategory) ) {
                 baseCategory += "/";
@@ -696,7 +704,7 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Macro Nodes
+        ///<summary>Macro Nodes</summary>
         public static UnityEditor.GenericMenu AppendMacroNodesMenu(this FlowGraph graph, UnityEditor.GenericMenu menu, string baseCategory, Vector2 pos, Port contextPort, object dropInstance) {
             var trackedAssets = AssetTracker.trackedAssets;
             if ( trackedAssets == null ) { return menu; }
@@ -716,7 +724,7 @@ namespace FlowCanvas
                     }
                 }
 
-                var category = baseCategory + ( !string.IsNullOrEmpty(macro.category) ? "/" + macro.category : "" );
+                var category = baseCategory + ( !string.IsNullOrEmpty(macro.category) ? "/" + macro.category : string.Empty );
                 var idx1 = pair.Key.LastIndexOf('/') + 1;
                 var idx2 = pair.Key.LastIndexOf('.');
                 var macroName = pair.Key.Substring(idx1, idx2 - idx1);
@@ -744,7 +752,7 @@ namespace FlowCanvas
             return menu;
         }
 
-        ///Signal Definitions
+        ///<summary>Signal Definitions</summary>
         public static UnityEditor.GenericMenu AppendSignals(this FlowGraph graph, UnityEditor.GenericMenu menu, string baseCategory, Vector2 pos, Port contextPort, object dropInstance) {
             var trackedAssets = AssetTracker.trackedAssets;
             if ( trackedAssets == null ) { return menu; }
@@ -776,7 +784,7 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Nodes can post menu by themselves as well.
+        ///<summary>Nodes can post menu by themselves as well.</summary>
         public static UnityEditor.GenericMenu AppendMenuCallbackReceivers(this FlowGraph graph, UnityEditor.GenericMenu menu, string baseCategory, Vector2 pos, Port contextPort, object dropInstance) {
             foreach ( var node in graph.allNodes.OfType<IEditorMenuCallbackReceiver>() ) {
                 node.OnMenu(menu, pos, contextPort, dropInstance);
@@ -787,7 +795,7 @@ namespace FlowCanvas
         ///----------------------------------------------------------------------------------------------
         ///----------------------------------------------------------------------------------------------
 
-        ///Convert nodes to macro (with a bit of hocus pocus)
+        ///<summary>Convert nodes to macro (with a bit of hocus pocus)</summary>
         public static void ConvertNodesToMacro(List<Node> originalNodes) {
 
             if ( originalNodes == null || originalNodes.Count == 0 ) {

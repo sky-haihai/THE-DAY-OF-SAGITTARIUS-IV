@@ -6,12 +6,11 @@ using ParadoxNotion;
 namespace FlowCanvas
 {
 
-    ///Value bindings use the generic version of FlowBinderConnection.
-    ///T is always the same at the 'target' ValueInput type.
+    ///<summary>Value bindings use the generic version of FlowBinderConnection. T is always the same at the 'target' ValueInput type.</summary>
     public class BinderConnection<T> : BinderConnection
     {
 
-        ///Binds source and target value ports
+        ///<summary>Binds source and target value ports</summary>
         public override void Bind() {
 
             if ( !isActive ) {
@@ -28,7 +27,7 @@ namespace FlowCanvas
 #endif
         }
 
-        ///Unbinds source and target value ports
+        ///<summary>Unbinds source and target value ports</summary>
         public override void UnBind() {
             if ( targetPort is ValueInput ) {
                 ( targetPort as ValueInput ).UnBind();

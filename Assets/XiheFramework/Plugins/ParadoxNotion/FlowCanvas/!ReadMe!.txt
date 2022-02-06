@@ -48,5 +48,6 @@ You can of course re-generate the file any time you wish.
 
 -------------------------------------------------------------
 Thanks for using FlowCanvas!
+Gavalakis Evangelos
 http://flowcanvas.paradoxnotion.com
 -------------------------------------------------------------

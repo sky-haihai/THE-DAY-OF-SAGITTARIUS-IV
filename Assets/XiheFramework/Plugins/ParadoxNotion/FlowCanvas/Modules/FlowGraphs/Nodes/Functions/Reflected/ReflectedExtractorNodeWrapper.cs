@@ -11,7 +11,7 @@ namespace FlowCanvas.Nodes
     //Wrap public readable properties and fields for selected type
     [DoNotList]
     [Description("Chose and expose any number of fields or properties of the type. If you only require a single field / property, it's better to get that field / property directly without an Extractor.")]
-    [Icon(runtimeIconTypeCallback: nameof(GetRuntimeIconType))]
+    [ParadoxNotion.Design.Icon(runtimeIconTypeCallback: nameof(GetRuntimeIconType))]
     public class ReflectedExtractorNodeWrapper<T> : FlowNode
     {
 

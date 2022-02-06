@@ -145,4 +145,4 @@ MonoBehaviour:
   lineRenderer: {fileID: 6689051394313448823}
   offset: 0.05
   scrollSpeed: 1.5
-  reachTargetTime: 0.2
+  reachTargetTime: 0.05

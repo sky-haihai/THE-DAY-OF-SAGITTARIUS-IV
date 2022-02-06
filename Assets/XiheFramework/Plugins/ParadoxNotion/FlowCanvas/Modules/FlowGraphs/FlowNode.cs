@@ -20,13 +20,13 @@ using System.Diagnostics;
 namespace FlowCanvas
 {
 
-    ///The base node class for FlowGraph systems
+    ///<summary>The base node class for FlowGraph systems</summary>
     abstract public partial class FlowNode : Node, ISerializationCallbackReceiver
     {
 
         ///----------------------------------------------------------------------------------------------
 
-        [AttributeUsage(AttributeTargets.Class)] ///Helper attribute for context menu
+        [AttributeUsage(AttributeTargets.Class)] ///<summary>Helper attribute for context menu</summary>
 		public class ContextDefinedInputsAttribute : Attribute
         {
             readonly public Type[] types;
@@ -35,7 +35,7 @@ namespace FlowCanvas
             }
         }
 
-        [AttributeUsage(AttributeTargets.Class)] ///Helper attribute for context menu
+        [AttributeUsage(AttributeTargets.Class)] ///<summary>Helper attribute for context menu</summary>
 		public class ContextDefinedOutputsAttribute : Attribute
         {
             readonly public Type[] types;
@@ -44,10 +44,10 @@ namespace FlowCanvas
             }
         }
 
-        [AttributeUsage(AttributeTargets.Class)] ///Helper attribute to show refresh button
+        [AttributeUsage(AttributeTargets.Class)] ///<summary>Helper attribute to show refresh button</summary>
 		public class HasRefreshButtonAttribute : Attribute { }
 
-        [AttributeUsage(AttributeTargets.Field)] ///When field change, ports will be gathered
+        [AttributeUsage(AttributeTargets.Field)] ///<summary>When field change, ports will be gathered</summary>
 		public class GatherPortsCallbackAttribute : CallbackAttribute
         {
             public GatherPortsCallbackAttribute() : base("GatherPorts") { }
@@ -77,12 +77,12 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Ignore the Self Instance Object feature altogether for the the node?
+        ///<summary>Ignore the Self Instance Object feature altogether for the the node?</summary>
         virtual public bool ignoreSelfInstancePortAssignment => false;
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Store the changed input port values.
+        ///<summary>Store the changed input port values.</summary>
         void ISerializationCallbackReceiver.OnBeforeSerialize() {
             if ( inputPorts != null ) {
                 var result = new Dictionary<string, object>(StringComparer.Ordinal);
@@ -102,7 +102,7 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///This is called when the node is created, duplicated or otherwise needs validation
+        ///<summary>This is called when the node is created, duplicated or otherwise needs validation</summary>
         sealed public override void OnValidate(Graph flowGraph) { GatherPorts(); }
 
         //Sealed for future proof use
@@ -113,33 +113,33 @@ namespace FlowCanvas
 
         ///---------------------------------------------------------------------------------------------
 
-        ///Callback when a port in this node, is connected with another port
+        ///<summary>Callback when a port in this node, is connected with another port</summary>
         virtual public void OnPortConnected(Port port, Port otherPort) {
             TryHandleWildPortConnection(port.type, otherPort.type);
         }
 
-        ///Callback when a port in this node, is disconnected from another port
+        ///<summary>Callback when a port in this node, is disconnected from another port</summary>
         virtual public void OnPortDisconnected(Port port, Port otherPort) {
             TryRemovePortIfMissingAndClean(port);
         }
 
         ///---------------------------------------------------------------------------------------------
 
-        ///Bind the port delegates. Called in runtime
+        ///<summary>Bind the port delegates. Called in runtime</summary>
         public void BindPorts() {
             for ( var i = 0; i < outConnections.Count; i++ ) {
                 ( outConnections[i] as BinderConnection ).Bind();
             }
         }
 
-        ///Unbind the ports.
+        ///<summary>Unbind the ports.</summary>
         public void UnBindPorts() {
             for ( var i = 0; i < outConnections.Count; i++ ) {
                 ( outConnections[i] as BinderConnection ).UnBind();
             }
         }
 
-        ///Gets an input Port by it's ID name which commonly is the same as it's name
+        ///<summary>Gets an input Port by it's ID name which commonly is the same as it's name</summary>
         public Port GetInputPort(string ID) {
             Port input = null;
             if ( inputPorts != null ) {
@@ -151,7 +151,7 @@ namespace FlowCanvas
             return input;
         }
 
-        ///Gets an output Port by it's ID name which commonly is the same as it's name
+        ///<summary>Gets an output Port by it's ID name which commonly is the same as it's name</summary>
         public Port GetOutputPort(string ID) {
             Port output = null;
             if ( outputPorts != null ) {
@@ -165,48 +165,46 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Returns all ports
+        ///<summary>Returns all ports</summary>
         public IEnumerable<Port> GetAllPorts() {
             return inputPorts.Values.Concat(outputPorts.Values);
         }
 
-        ///Returns all Flow Output Ports
+        ///<summary>Returns all Flow Output Ports</summary>
         public IEnumerable<FlowOutput> GetOutputFlowPorts() {
             return outputPorts.Values.OfType<FlowOutput>();
         }
 
-        ///Returns all Value Output Ports
+        ///<summary>Returns all Value Output Ports</summary>
         public IEnumerable<ValueOutput> GetOutputValuePorts() {
             return outputPorts.Values.OfType<ValueOutput>();
         }
 
-        ///Returns all Flow Input Ports
+        ///<summary>Returns all Flow Input Ports</summary>
         public IEnumerable<FlowInput> GetInputFlowPorts() {
             return inputPorts.Values.OfType<FlowInput>();
         }
 
-        ///Returns all Value Input Ports
+        ///<summary>Returns all Value Input Ports</summary>
         public IEnumerable<ValueInput> GetInputValuePorts() {
             return inputPorts.Values.OfType<ValueInput>();
         }
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Returns the first input port assignable to the type provided
+        ///<summary>Returns the first input port assignable to the type provided</summary>
         public Port GetFirstInputOfType(Type type) {
             return inputPorts.Values.OrderBy(p => p is FlowInput ? 0 : 1).FirstOrDefault(p => p.type.RTIsAssignableFrom(type));
         }
 
-        ///Returns the first output port of a type assignable to the port
+        ///<summary>Returns the first output port of a type assignable to the port</summary>
         public Port GetFirstOutputOfType(Type type) {
             return outputPorts.Values.OrderBy(p => p is FlowInput ? 0 : 1).FirstOrDefault(p => type.RTIsAssignableFrom(p.type));
         }
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Set the Component or GameObject instance input port to Owner if not connected and not already set to another reference.
-        ///By convention, the instance port is always considered to be the first.
-        ///Called from Graph when started.
+        ///<summary>Set the Component or GameObject instance input port to Owner if not connected and not already set to another reference. By convention, the instance port is always considered to be the first. Called from Graph when started.</summary>
         public void AssignSelfInstancePort() {
             if ( ignoreSelfInstancePortAssignment ) { return; }
             var instanceInput = inputPorts.Values.OfType<ValueInput>().FirstOrDefault(p => p.IsUnitySceneObject() && !p.skipSelfInstanceAssignment);
@@ -216,7 +214,7 @@ namespace FlowCanvas
             }
         }
 
-        ///Gather and register the node ports.
+        ///<summary>Gather and register the node ports.</summary>
         public void GatherPorts() {
             inputPorts = new Dictionary<string, Port>(StringComparer.Ordinal);
             outputPorts = new Dictionary<string, Port>(StringComparer.Ordinal);
@@ -230,7 +228,7 @@ namespace FlowCanvas
             }
         }
 
-        ///Override for registration/definition of ports.
+        ///<summary>Override for registration/definition of ports.</summary>
         abstract protected void RegisterPorts();
 
         //Validate ports for connections
@@ -256,7 +254,7 @@ namespace FlowCanvas
 #endif
         }
 
-        ///Restore the serialized input port values
+        ///<summary>Restore the serialized input port values</summary>
         void DeserializeInputPortValues() {
 
             if ( _inputPortValues == null ) {
@@ -286,49 +284,47 @@ namespace FlowCanvas
         ///---------------------------------------------------------------------------------------------
         //Port registration/definition methods, to be used within RegisterPorts override
 
-        ///Add a new FlowInput with name and pointer. Pointer is the method to run when the flow port is called. Returns the new FlowInput object.
+        ///<summary>Add a new FlowInput with name and pointer. Pointer is the method to run when the flow port is called. Returns the new FlowInput object.</summary>
         public FlowInput AddFlowInput(string name, string ID, FlowHandler pointer) { return AddFlowInput(name, pointer, ID); }
         public FlowInput AddFlowInput(string name, FlowHandler pointer, string ID = "") {
             QualifyPortNameAndID(ref name, ref ID, inputPorts);
             return (FlowInput)( inputPorts[ID] = new FlowInput(this, name, ID, pointer) );
         }
 
-        ///Add a new FlowOutput with name. Returns the new FlowOutput object.
+        ///<summary>Add a new FlowOutput with name. Returns the new FlowOutput object.</summary>
         public FlowOutput AddFlowOutput(string name, string ID = "") {
             QualifyPortNameAndID(ref name, ref ID, outputPorts);
             return (FlowOutput)( outputPorts[ID] = new FlowOutput(this, name, ID) );
         }
 
-        ///Recommended. Add a ValueInput of type T. Returns the new ValueInput<T> object.
+        ///<summary>Recommended. Add a ValueInput of type T. Returns the new ValueInput<T> object.</summary>
         public ValueInput<T> AddValueInput<T>(string name, string ID = "") {
             QualifyPortNameAndID(ref name, ref ID, inputPorts);
             return (ValueInput<T>)( inputPorts[ID] = new ValueInput<T>(this, name, ID) );
         }
 
-        ///Recommended. Add a ValueOutput of type T. getter is the function to get the value from. Returns the new ValueOutput<T> object.
+        ///<summary>Recommended. Add a ValueOutput of type T. getter is the function to get the value from. Returns the new ValueOutput<T> object.</summary>
         public ValueOutput<T> AddValueOutput<T>(string name, string ID, ValueHandler<T> getter) { return AddValueOutput<T>(name, getter, ID); }
         public ValueOutput<T> AddValueOutput<T>(string name, ValueHandler<T> getter, string ID = "") {
             QualifyPortNameAndID(ref name, ref ID, outputPorts);
             return (ValueOutput<T>)( outputPorts[ID] = new ValueOutput<T>(this, name, ID, getter) );
         }
 
-        ///Add an object port of unkown runtime type. getter is a function to get the port value from. Returns the new ValueOutput object.
-        ///It is always recommended to use the generic versions to avoid value boxing/unboxing!
+        ///<summary>Add an object port of unkown runtime type. getter is a function to get the port value from. Returns the new ValueOutput object. It is always recommended to use the generic versions to avoid value boxing/unboxing!</summary>
         public ValueInput AddValueInput(string name, string ID, Type type) { return AddValueInput(name, type, ID); }
         public ValueInput AddValueInput(string name, Type type, string ID = "") {
             QualifyPortNameAndID(ref name, ref ID, inputPorts);
             return (ValueInput)( inputPorts[ID] = ValueInput.CreateInstance(type, this, name, ID) );
         }
 
-        ///Add an object port of unkown runtime type. getter is a function to get the port value from. Returns the new ValueOutput object.
-        ///It is always recommended to use the generic versions to avoid value boxing/unboxing!
+        ///<summary>Add an object port of unkown runtime type. getter is a function to get the port value from. Returns the new ValueOutput object. It is always recommended to use the generic versions to avoid value boxing/unboxing!</summary>
         public ValueOutput AddValueOutput(string name, string ID, Type type, ValueHandlerObject getter) { return AddValueOutput(name, type, getter, ID); }
         public ValueOutput AddValueOutput(string name, Type type, ValueHandlerObject getter, string ID = "") {
             QualifyPortNameAndID(ref name, ref ID, outputPorts);
             return (ValueOutput)( outputPorts[ID] = ValueOutput.CreateInstance(type, this, name, ID, getter) );
         }
 
-        ///Helper used above
+        ///<summary>Helper used above</summary>
         void QualifyPortNameAndID(ref string name, ref string ID, IDictionary dict) {
             if ( string.IsNullOrEmpty(ID) ) ID = name;
             if ( string.IsNullOrEmpty(ID) ) {
@@ -339,8 +335,7 @@ namespace FlowCanvas
             }
         }
 
-        //Check whether port can qualify for requested ID
-        //This is only for upgrading from previous versions.
+        //Check whether port can qualify for requested ID. This is only for upgrading from previous versions.
         bool CheckReverseIDEquality(Port port, string requestedID) {
             if ( port.ID.Trim() == requestedID.Trim() ) { return true; }
             if ( port.name.Trim() == requestedID.Trim() ) { return true; }
@@ -350,8 +345,7 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Reflection based registration for target object.
-        ///This is nowhere used by default.
+        ///<summary>Reflection based registration for target object. This is nowhere used by default.</summary>
         public void TryAddReflectionBasedRegistrationForObject(object instance) {
             //FlowInputs. All public void methods with one Flow parameter.
             foreach ( var method in instance.GetType().RTGetMethods() ) {
@@ -373,7 +367,7 @@ namespace FlowCanvas
             }
         }
 
-        ///Register a MethodInfo as FlowInput. Used only in reflection based registration.
+        ///<summary>Register a MethodInfo as FlowInput. Used only in reflection based registration.</summary>
         public FlowInput TryAddMethodFlowInput(MethodInfo method, object instance) {
             var parameters = method.GetParameters();
             if ( method.ReturnType == typeof(void) && parameters.Length == 1 && parameters[0].ParameterType == typeof(Flow) ) {
@@ -385,7 +379,7 @@ namespace FlowCanvas
             return null;
         }
 
-        ///Register a FieldInfo Delegate (FlowHandler) as FlowOutput. Used only in reflection based registration.
+        ///<summary>Register a FieldInfo Delegate (FlowHandler) as FlowOutput. Used only in reflection based registration.</summary>
         public FlowOutput TryAddFieldDelegateFlowOutput(FieldInfo field, object instance) {
             if ( field.FieldType == typeof(FlowHandler) ) {
                 var nameAtt = field.RTGetAttribute<NameAttribute>(true);
@@ -397,7 +391,7 @@ namespace FlowCanvas
             return null;
         }
 
-        ///Register a FieldInfo Delegate (ValueHandler<T>) as ValueInput. Used only in reflection based registration.
+        ///<summary>Register a FieldInfo Delegate (ValueHandler<T>) as ValueInput. Used only in reflection based registration.</summary>
         public ValueInput TryAddFieldDelegateValueInput(FieldInfo field, object instance) {
             if ( typeof(Delegate).RTIsAssignableFrom(field.FieldType) ) {
                 var invokeMethod = field.FieldType.RTGetMethod("Invoke");
@@ -418,7 +412,7 @@ namespace FlowCanvas
             return null;
         }
 
-        ///Register a PropertyInfo as ValueOutput. Used only in reflection based registration.
+        ///<summary>Register a PropertyInfo as ValueOutput. Used only in reflection based registration.</summary>
         public ValueOutput TryAddPropertyValueOutput(PropertyInfo prop, object instance) {
             if ( prop.CanRead ) {
                 var nameAtt = prop.RTGetAttribute<NameAttribute>(true);
@@ -434,7 +428,7 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Replace with another type.
+        ///<summary>Replace with another type.</summary>
         //1) Because SetTarget, SetSource also fires OnPortConnected, Wild ports are handled automatically.
         //2) GatherPorts is also firing connections validation.
         //3) Because connections are validated, changing connection types to correct types is also automatic.
@@ -456,7 +450,7 @@ namespace FlowCanvas
             return (FlowNode)newNode;
         }
 
-        ///Try remove port if it's missing and has no connections left
+        ///<summary>Try remove port if it's missing and has no connections left</summary>
         void TryRemovePortIfMissingAndClean(Port port) {
             if ( port.connections == 0 ) {
                 if ( port.bindStatus == Port.BindStatus.Missing ) {
@@ -473,12 +467,12 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Should return the base wild definition type with which new generic version can be made.
+        ///<summary>Should return the base wild definition type with which new generic version can be made.</summary>
         virtual public Type GetNodeWildDefinitionType() {
             return this.GetType().GetFirstGenericParameterConstraintType();
         }
 
-        ///Handles connecting to a wild port and changing generic version to that new connection
+        ///<summary>Handles connecting to a wild port and changing generic version to that new connection</summary>
         void TryHandleWildPortConnection(Type currentType, Type targetType) {
             var wildType = GetNodeWildDefinitionType();
             var content = this.GetType();
@@ -488,7 +482,7 @@ namespace FlowCanvas
             }
         }
 
-        ///Given a wildType and two types for current and target, will try and return a closed type for wild definition of content
+        ///<summary>Given a wildType and two types for current and target, will try and return a closed type for wild definition of content</summary>
         public static Type TryGetNewGenericTypeForWild(Type wildType, Type currentType, Type targetType, Type content, Type context) {
             if ( wildType == null || !content.IsGenericType ) {
                 return null;
@@ -519,7 +513,7 @@ namespace FlowCanvas
             return null;
         }
 
-        ///Given a wildType and two types for current and target, will try and return a closed method for wild definition of content
+        ///<summary>Given a wildType and two types for current and target, will try and return a closed method for wild definition of content</summary>
         public static MethodInfo TryGetNewGenericMethodForWild(Type wildType, Type currentType, Type targetType, MethodInfo content) {
             if ( wildType == null || !content.IsGenericMethod ) {
                 return null;
@@ -668,17 +662,17 @@ namespace FlowCanvas
                 }
             }
 
-            ///ACCEPT CONNECTION
+            //ACCEPT CONNECTION
             if ( clickedPort != null && e.type == EventType.MouseUp ) {
 
-                ///ON NODE
+                //ON NODE
                 if ( rect.Contains(e.mousePosition) ) {
                     var cachePort = clickedPort;
                     clickedPort = null;
                     DoDropInConnectionMenu(cachePort);
                     e.Use();
 
-                    ///ON CANVAS
+                    //ON CANVAS
                 } else {
 
                     dragDropMisses++;
@@ -735,7 +729,7 @@ namespace FlowCanvas
             }
         }
 
-        ///button and shortcuts to change verbose level
+        ///<summary>button and shortcuts to change verbose level</summary>
         void DoVerboseLevelGUI(Event e) {
 
             if ( GUIUtility.keyboardControl == 0 ) {
@@ -804,12 +798,12 @@ namespace FlowCanvas
             return false;
         }
 
-        ///Handle relink start port to port
+        ///<summary>Handle relink start port to port</summary>
         public override void OnActiveRelinkStart(Connection connection) {
             relinkBinder = connection as BinderConnection;
         }
 
-        ///Handle relink end port to port
+        ///<summary>Handle relink end port to port</summary>
         public override void OnActiveRelinkEnd(Connection connection) {
             var canvasMousePos = Event.current.mousePosition;
             var binder = (BinderConnection)connection;
@@ -860,7 +854,7 @@ namespace FlowCanvas
             relinkBinder = null;
         }
 
-        ///Handle port events
+        ///<summary>Handle port events</summary>
         void HandlePortEvents(Port port) {
             var e = Event.current;
             if ( GraphEditorUtility.allowClick ) {
@@ -894,7 +888,7 @@ namespace FlowCanvas
             }
         }
 
-        ///A menu for drop in connection request from provided port
+        ///<summary>A menu for drop in connection request from provided port</summary>
         void DoDropInConnectionMenu(Port contextPort, BinderConnection refBinder = null) {
             var menu = GetDropInConnectionMenu(contextPort, refBinder);
             if ( menu.GetItemCount() == 0 ) {
@@ -908,7 +902,7 @@ namespace FlowCanvas
             GraphEditorUtility.PostGUI += () => { menu.ShowAsContext(); };
         }
 
-        ///A menu for drop in connection request from provided port
+        ///<summary>A menu for drop in connection request from provided port</summary>
         GenericMenu GetDropInConnectionMenu(Port contextPort, BinderConnection refBinder = null) {
             var menu = new GenericMenu();
             if ( contextPort.IsInputPort() ) {
@@ -947,7 +941,7 @@ namespace FlowCanvas
             return menu;
         }
 
-        ///Let nodes handle ports draged on top of them
+        ///<summary>Let nodes handle ports draged on top of them</summary>
         virtual protected GenericMenu OnDragAndDropPortContextMenu(GenericMenu menu, Port port) { return menu; }
 
         //Input port graphics outside node

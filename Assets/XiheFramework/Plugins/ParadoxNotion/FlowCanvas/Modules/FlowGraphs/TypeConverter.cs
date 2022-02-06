@@ -7,14 +7,25 @@ using ParadoxNotion;
 
 namespace FlowCanvas
 {
-
-    ///Responsible for internal -connection level- value conversions
+    ///<summary>Responsible for internal -connection level- value conversions</summary>
 	[ParadoxNotion.Design.SpoofAOT]
     public static class TypeConverter
     {
+        ///<summary>Custom Converter delegate</summary>
+        public delegate ValueHandler<object> CustomConverter(Type sourceType, Type targetType, ValueHandler<object> func);
+        ///<summary>Subscribe to custom converter</summary>
+        public static event CustomConverter customConverter;
 
-        ///Returns a function that can convert from source type to target type with given func as the current value
+        ///<summary>Returns a function that can convert from source type to target type with given func as the current value</summary>
         public static ValueHandler<T> GetConverterFuncFromTo<T>(Type sourceType, Type targetType, ValueHandler<object> func) {
+
+            // Custom Converter
+            if ( customConverter != null ) {
+                var converter = customConverter(sourceType, targetType, func);
+                if ( converter != null ) {
+                    return () => { return (T)converter(); };
+                }
+            }
 
             //assignables
             if ( targetType.RTIsAssignableFrom(sourceType) ) {
@@ -26,7 +37,7 @@ namespace FlowCanvas
                 return () => { return (T)Convert.ChangeType(func(), targetType); };
             }
 
-            ///CUSTOM CONVENIENCE CONVERSIONS
+            //CUSTOM CONVENIENCE CONVERSIONS
             ///----------------------------------------------------------------------------------------------
 
             //from anything to string
@@ -127,7 +138,7 @@ namespace FlowCanvas
             return null;
         }
 
-        ///Is there a convertion available from source type and to target type?
+        ///<summary>Is there a convertion available from source type and to target type?</summary>
         public static bool HasConvertion(Type sourceType, Type targetType) {
 
             //Flow only connect to Flow
@@ -138,7 +149,7 @@ namespace FlowCanvas
             return GetConverterFuncFromTo<object>(sourceType, targetType, null) != null;
         }
 
-        ///Rarely used
+        ///<summary>Rarely used</summary>
         public static T QuickConvert<T>(object obj) { return (T)QuickConvert(obj, typeof(T)); }
         public static object QuickConvert(object obj, Type type) {
             if ( obj == null || type == null ) { return null; }

@@ -98,7 +98,7 @@ public abstract class ShipBase : MonoBehaviour {
     }
 
     protected virtual void OnDrawGizmos() {
-        // Gizmos.color = Color.white;
-        // GizmosUtil.DrawCircle(transform.position, shipData.viewRadius+0.01f, 25);
+        Gizmos.color = Color.white;
+        GizmosUtil.DrawCircle(transform.position, shipData.viewRadius+0.01f, 25);
     }
 }

@@ -21,19 +21,19 @@ namespace FlowCanvas
         [System.NonSerialized]
         private Port _targetPort;
 
-        ///The source port ID name this binder is connected to
+        ///<summary>The source port ID name this binder is connected to</summary>
         public string sourcePortID {
             get { return sourcePort != null ? sourcePort.ID : _sourcePortID; }
             private set { _sourcePortID = value; }
         }
 
-        ///The target port ID name this binder is connected to
+        ///<summary>The target port ID name this binder is connected to</summary>
         public string targetPortID {
             get { return targetPort != null ? targetPort.ID : _targetPortID; }
             private set { _targetPortID = value; }
         }
 
-        ///The source Port
+        ///<summary>The source Port</summary>
         public Port sourcePort {
             get
             {
@@ -46,7 +46,7 @@ namespace FlowCanvas
             }
         }
 
-        ///The target Port
+        ///<summary>The target Port</summary>
         public Port targetPort {
             get
             {
@@ -59,14 +59,14 @@ namespace FlowCanvas
             }
         }
 
-        ///The binder type. In case of Value connection, BinderConnection<T> is used, else it's basicaly a Flow binding
+        ///<summary>The binder type. In case of Value connection, BinderConnection<T> is used, else it's basicaly a Flow binding</summary>
         public System.Type bindingType {
             get { return GetType().RTIsGenericType() ? GetType().RTGetGenericArguments()[0] : typeof(Flow); }
         }
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Create a NEW BinderConnection object between two ports
+        ///<summary>Create a NEW BinderConnection object between two ports</summary>
         public static BinderConnection Create(Port source, Port target) {
 
             if ( !CanBeBoundVerbosed(source, target, null, out string verbose) ) {
@@ -109,7 +109,7 @@ namespace FlowCanvas
             return binder;
         }
 
-        ///Set binder source port
+        ///<summary>Set binder source port</summary>
         public void SetSourcePort(Port newSourcePort) {
             if ( newSourcePort == sourcePort ) {
                 return;
@@ -137,7 +137,7 @@ namespace FlowCanvas
             }
         }
 
-        ///Set binder target port
+        ///<summary>Set binder target port</summary>
         public void SetTargetPort(Port newTargetPort) {
             if ( newTargetPort == targetPort ) {
                 return;
@@ -167,7 +167,7 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Called after the node has GatherPorts to gather the references and validate the binding connection
+        ///<summary>Called after the node has GatherPorts to gather the references and validate the binding connection</summary>
         public void GatherAndValidateSourcePort() {
             _sourcePort = null; //refetch
             if ( sourcePort != null ) {
@@ -198,7 +198,7 @@ namespace FlowCanvas
             missingPort.connections++;
         }
 
-        ///Called after the node has GatherPorts to gather the references and validate the binding connection
+        ///<summary>Called after the node has GatherPorts to gather the references and validate the binding connection</summary>
         public void GatherAndValidateTargetPort() {
             _targetPort = null; //refetch
             if ( targetPort != null ) {
@@ -242,10 +242,9 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Return whether or not source can connect to target.
+        ///<summary>Return whether or not source can connect to target.</summary>
         public static bool CanBeBound(Port source, Port target, BinderConnection refConnection) { return CanBeBoundVerbosed(source, target, refConnection, out string v); }
-        ///Return whether or not source can connect to target. The return is a string with the reason why NOT, null if possible.
-        ///Providing an existing ref connection, will bypass source/target validation respectively if that connection is already connected to that source/target port.
+        ///<summary>Return whether or not source can connect to target. The return is a string with the reason why NOT, null if possible. Providing an existing ref connection, will bypass source/target validation respectively if that connection is already connected to that source/target port.</summary>
         public static bool CanBeBoundVerbosed(Port source, Port target, BinderConnection refConnection, out string verbose) {
             verbose = CanBeBoundVerbosed_Internal(source, target, refConnection);
             return verbose == null;
@@ -301,7 +300,7 @@ namespace FlowCanvas
             return null;
         }
 
-        ///Callback from base class. The connection reference is already removed from target and source Nodes
+        ///<summary>Callback from base class. The connection reference is already removed from target and source Nodes</summary>
         public override void OnDestroy() {
             if ( sourcePort != null ) {
                 sourcePort.connections--;
@@ -318,7 +317,7 @@ namespace FlowCanvas
             }
         }
 
-        ///Called in runtime intialize to actualy bind the delegates
+        ///<summary>Called in runtime intialize to actualy bind the delegates</summary>
         virtual public void Bind() {
 
             if ( !isActive ) {
@@ -337,7 +336,7 @@ namespace FlowCanvas
             }
         }
 
-        ///UnBinds the delegates
+        ///<summary>UnBinds the delegates</summary>
         virtual public void UnBind() {
             if ( sourcePort is FlowOutput ) {
                 ( sourcePort as FlowOutput ).UnBind();
@@ -408,7 +407,7 @@ namespace FlowCanvas
             return null;
         }
 
-        ///Blinks connection status
+        ///<summary>Blinks connection status</summary>
         protected void BlinkStatus(Flow f = default(Flow)) {
             if ( Application.isPlaying ) {
                 lastBlinkFrame = graph.lastUpdateFrame;

@@ -7,7 +7,7 @@ using ParadoxNotion;
 namespace FlowCanvas.Nodes
 {
 
-    ///Extractor Nodes have one value input and up to 5 'out' value parameters. They don't need Flow execution.
+    ///<summary>Extractor Nodes have one value input and up to 5 'out' value parameters. They don't need Flow execution.</summary>
     abstract public class ExtractorNode : SimplexNode
     {
 

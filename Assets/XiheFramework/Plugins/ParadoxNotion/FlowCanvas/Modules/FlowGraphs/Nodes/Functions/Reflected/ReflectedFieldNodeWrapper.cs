@@ -20,7 +20,7 @@ namespace FlowCanvas.Nodes
 
 
     [DoNotList]
-    [Icon(runtimeIconTypeCallback: nameof(GetRuntimeIconType))]
+    [ParadoxNotion.Design.Icon(runtimeIconTypeCallback: nameof(GetRuntimeIconType))]
     [fsMigrateVersions(typeof(ReflectedFieldNodeWrapper_0))]
     public class ReflectedFieldNodeWrapper : FlowNode, IReflectedWrapper, IMigratable<ReflectedFieldNodeWrapper_0>
     {
@@ -71,7 +71,7 @@ namespace FlowCanvas.Nodes
 
 #if UNITY_EDITOR
         public override string description {
-            get { return field != null ? DocsByReflection.GetMemberSummary(field) : "Missing Field"; }
+            get { return field != null ? XMLDocs.GetMemberSummary(field) : "Missing Field"; }
         }
 #endif
 

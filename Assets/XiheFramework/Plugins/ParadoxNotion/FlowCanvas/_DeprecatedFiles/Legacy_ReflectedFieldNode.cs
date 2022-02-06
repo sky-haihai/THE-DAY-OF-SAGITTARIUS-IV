@@ -4,7 +4,7 @@ using ParadoxNotion;
 namespace FlowCanvas.Nodes.Legacy
 {
 
-    ///Base class for FieldInfo based nodes
+    ///<summary>Base class for FieldInfo based nodes</summary>
     [System.Obsolete]
     abstract public class ReflectedFieldNode
     {

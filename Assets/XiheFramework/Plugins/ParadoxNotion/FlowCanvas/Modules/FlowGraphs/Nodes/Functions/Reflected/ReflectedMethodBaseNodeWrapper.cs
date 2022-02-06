@@ -9,9 +9,9 @@ using System.Linq;
 
 namespace FlowCanvas.Nodes
 {
-    ///Base class for MethodBase -based wrappers
+    ///<summary>Base class for MethodBase -based wrappers</summary>
     [DoNotList]
-    [Icon(runtimeIconTypeCallback: nameof(GetRuntimeIconType))]
+    [ParadoxNotion.Design.Icon(runtimeIconTypeCallback: nameof(GetRuntimeIconType))]
     abstract public class ReflectedMethodBaseNodeWrapper : FlowNode, IReflectedWrapper
     {
 
@@ -31,7 +31,7 @@ namespace FlowCanvas.Nodes
 
 #if UNITY_EDITOR
         public override string description {
-            get { return method != null ? DocsByReflection.GetMemberSummary(method) : "Missing Method"; }
+            get { return method != null ? XMLDocs.GetMemberSummary(method) : "Missing Method"; }
         }
 #endif
 
@@ -72,7 +72,7 @@ namespace FlowCanvas.Nodes
             }
         }
 
-        ///Set a new method base info
+        ///<summary>Set a new method base info</summary>
         abstract public void SetMethodBase(MethodBase newMethod, object instance = null);
 
 

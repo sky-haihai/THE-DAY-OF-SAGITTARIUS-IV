@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FlowCanvas.Nodes
 {
     [Description("Encapsulates a SubGraph able to control independently.")]
-    ///Base class for nested subgraphs that work a specific way, thus why it is separate than FlowNodeNested super base
+    ///<summary>Base class for nested subgraphs that work a specific way, thus why it is separate than FlowNodeNested super base</summary>
     abstract public class FlowNestedBase<T> : FlowNodeNested<T>, IDropedReferenceNode, IUpdatable where T : Graph
     {
 
@@ -48,6 +48,7 @@ namespace FlowCanvas.Nodes
             paused = false;
             status = Status.Running;
             this.TryStartSubGraph(targetAgent.value, (result) => { endResult = result; OnStop(f); });
+            f.Call(onStart);
         }
 
         void Stop(Flow f) {

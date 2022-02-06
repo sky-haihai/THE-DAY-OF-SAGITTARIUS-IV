@@ -292,7 +292,7 @@ namespace NodeCanvas.Editor
 
             var rect = EditorGUILayout.GetControlRect();
             var label = EditorGUI.BeginProperty(rect, EditorUtils.GetTempContent("Blackboard"), blackboardProp);
-            owner.blackboard = (IBlackboard)EditorGUI.ObjectField(rect, label, owner.blackboard as Object, typeof(IBlackboard), true);
+            owner.blackboard = (Blackboard)EditorGUI.ObjectField(rect, label, owner.blackboard as Object, typeof(Blackboard), true);
             EditorGUI.EndProperty();
             if ( owner.blackboard == null ) { EditorUtils.MarkLastFieldWarning("No Blackboard assigned. This is fine if you only want to use Graph Blackboard Variables."); }
 

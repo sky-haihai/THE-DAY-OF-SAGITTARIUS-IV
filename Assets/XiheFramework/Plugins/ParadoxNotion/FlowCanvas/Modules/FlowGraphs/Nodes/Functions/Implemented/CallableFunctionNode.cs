@@ -1,7 +1,7 @@
 ﻿namespace FlowCanvas.Nodes
 {
 
-    ///Like PureFunctionNode but require Flow execution.
+    ///<summary>Like PureFunctionNode but require Flow execution.</summary>
     abstract public class CallableFunctionNodeBase : SimplexNode { }
 
 

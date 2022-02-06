@@ -4,12 +4,12 @@ using ParadoxNotion;
 namespace FlowCanvas
 {
 
-    ///Data struct that is propagated within the graph through the FlowPorts
+    ///<summary>Data struct that is propagated within the graph through the FlowPorts</summary>
     [ParadoxNotion.Design.SpoofAOT]
     public struct Flow
     {
 
-        ///Contains data for Return calls
+        ///<summary>Contains data for Return calls</summary>
         public struct ReturnData
         {
             public FlowReturn returnCall { get; private set; }
@@ -20,22 +20,22 @@ namespace FlowCanvas
             }
         }
 
-        ///Number of ticks this Flow has made
+        ///<summary>Number of ticks this Flow has made</summary>
         public int ticks { get; internal set; }
 
         private Dictionary<string, object> parameters;
         private ReturnData returnData;
         private FlowBreak breakCall;
 
-        ///Short for 'new Flow()'
+        ///<summary>Short for 'new Flow()'</summary>
         public static Flow New { get { return new Flow(); } }
 
-        ///Same as 'port.Call(f)'
+        ///<summary>Same as 'port.Call(f)'</summary>
         public void Call(FlowOutput port) {
             port.Call(this);
         }
 
-        ///Read a temporary flow parameter
+        ///<summary>Read a temporary flow parameter</summary>
         public T ReadParameter<T>(string name) {
             object parameter = default(T);
             if ( parameters != null ) {
@@ -44,7 +44,7 @@ namespace FlowCanvas
             return parameter is T ? (T)parameter : default(T);
         }
 
-        ///Write a temporary flow parameter
+        ///<summary>Write a temporary flow parameter</summary>
         public void WriteParameter<T>(string name, T value) {
             if ( parameters == null ) {
                 parameters = new Dictionary<string, object>();
@@ -54,12 +54,12 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Set Return Data to be calledback when Return is called
+        ///<summary>Set Return Data to be calledback when Return is called</summary>
         public void SetReturnData(FlowReturn call, System.Type expectedType) {
             returnData = new ReturnData(call, expectedType);
         }
 
-        ///Invoke Return callback with provided return value 
+        ///<summary>Invoke Return callback with provided return value </summary>
         public void Return(object value, FlowNode context) {
             if ( returnData.returnCall == null ) {
                 context.Fail("Called Return without anything to return out from.");
@@ -67,7 +67,7 @@ namespace FlowCanvas
             }
             if ( returnData.returnType != null ) {
                 var valueType = value != null ? value.GetType() : null;
-                if ( valueType == null || !valueType.RTIsAssignableTo(returnData.returnType) ) {
+                if ( valueType != null && !valueType.RTIsAssignableTo(returnData.returnType) ) {
                     context.Fail(string.Format("Return Value is not of expected type '{0}'", returnData.returnType.FriendlyName()));
                     return;
                 }
@@ -80,12 +80,12 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Start a break callback
+        ///<summary>Start a break callback</summary>
         public void BeginBreakBlock(FlowBreak callback) {
             breakCall = callback;
         }
 
-        ///End a break callback
+        ///<summary>End a break callback</summary>
         public void EndBreakBlock() {
             if ( breakCall == null ) {
                 ParadoxNotion.Services.Logger.LogWarning("Called EndBreakBlock wihout a previously BeginBreakBlock call.", NodeCanvas.Framework.LogTag.EXECUTION);
@@ -94,7 +94,7 @@ namespace FlowCanvas
             breakCall = null;
         }
 
-        ///Invoke Break callback.
+        ///<summary>Invoke Break callback.</summary>
         public void Break(FlowNode context) {
             if ( breakCall == null ) {
                 context.Warn("Called Break without anything to break out from.");

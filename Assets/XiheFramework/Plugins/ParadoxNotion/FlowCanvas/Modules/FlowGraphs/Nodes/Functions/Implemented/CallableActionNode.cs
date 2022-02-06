@@ -1,7 +1,7 @@
 ﻿namespace FlowCanvas.Nodes
 {
 
-    ///Action Nodes do not return any value and can have up to 10 parameters. They need Flow execution.
+    ///<summary>Action Nodes do not return any value and can have up to 10 parameters. They need Flow execution.</summary>
     abstract public class CallableActionNodeBase : SimplexNode { }
 
     abstract public class CallableActionNode : CallableActionNodeBase

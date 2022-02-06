@@ -8,24 +8,23 @@ using UnityEngine;
 
 namespace FlowCanvas
 {
-    ///Base Port class for all port types
+    ///<summary>Base Port class for all port types</summary>
     [ParadoxNotion.Design.SpoofAOT]
     abstract public class Port
     {
 
 #if UNITY_EDITOR
-        ///Editor display name
+        ///<summary>Editor display name</summary>
         internal string displayName { get; private set; }
-        ///Editor display content
-        ///Editor is port drawn in gui
+        ///<summary>Editor display content. Editor is port drawn in gui</summary>
         internal bool willDraw { get; set; }
-        ///Editor port highlight flag
+        ///<summary>Editor port highlight flag</summary>
         internal bool highlightFlag { get; set; }
-        ///Editor relative y offset of the port in relation to it's parent
+        ///<summary>Editor relative y offset of the port in relation to it's parent</summary>
         internal float posOffsetY { private get; set; }
-        ///Editor position of port
+        ///<summary>Editor position of port</summary>
         internal Vector2 pos => rect.center;
-        ///Editor rect of port
+        ///<summary>Editor rect of port</summary>
         internal Rect rect {
             get
             {
@@ -37,7 +36,7 @@ namespace FlowCanvas
             }
         }
 
-        ///Editor GUI Caching of port
+        ///<summary>Editor GUI Caching of port</summary>
         internal void EnsureCachedGUIContent() {
             if ( displayContent != null ) { return; }
             var content = new GUIContent();
@@ -82,7 +81,7 @@ namespace FlowCanvas
 
         ///----------------------------------------------------------------------------------------------
 
-        ///required for serialization -> dont use
+        ///<summary>required for serialization -> dont use</summary>
         public Port() { }
 
         public Port(FlowNode parent, string name, string ID) {
@@ -99,66 +98,66 @@ namespace FlowCanvas
             InvalidCast = 2,
         }
 
-        ///The FlowNode parent reference of the port
+        ///<summary>The FlowNode parent reference of the port</summary>
         public FlowNode parent { get; private set; }
-        ///The ID name of the port. Usualy is the same as the name
+        ///<summary>The ID name of the port. Usualy is the same as the name</summary>
         public string ID { get; private set; }
-        ///The name of the port
+        ///<summary>The name of the port</summary>
         public string name { get; private set; }
-        ///The number of connections the port currently has
+        ///<summary>The number of connections the port currently has</summary>
         public int connections { get; internal set; }
-        ///Is the port connected?
+        ///<summary>Is the port connected?</summary>
         public bool isConnected { get { return connections > 0; } }
-        ///The current binding status of the port
+        ///<summary>The current binding status of the port</summary>
         internal BindStatus bindStatus { get; private set; }
-        ///Display GUIContent
+        ///<summary>Display GUIContent</summary>
         internal GUIContent displayContent { get; private set; }
 
-        ///The type of the port
+        ///<summary>The type of the port</summary>
         abstract public Type type { get; }
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Flags the port as a missing one
+        ///<summary>Flags the port as a missing one</summary>
         internal Port FlagMissing() {
             displayContent = null; //flush
             bindStatus = BindStatus.Missing;
             return this;
         }
 
-        ///Flags the port as invalid cast
+        ///<summary>Flags the port as invalid cast</summary>
         internal Port FlagInvalidCast() {
             displayContent = null; //flush
             bindStatus = BindStatus.InvalidCast;
             return this;
         }
 
-        ///Flags the port as valid
+        ///<summary>Flags the port as valid</summary>
         internal Port FlagValid() {
             displayContent = null; //flush
             bindStatus = BindStatus.Valid;
             return this;
         }
 
-        ///Helper method to determine if a port can accept further connections
+        ///<summary>Helper method to determine if a port can accept further connections</summary>
         public bool CanAcceptConnections() {
             if ( this is ValueOutput || ( this is FlowOutput && !this.isConnected ) ) { return true; }
             if ( this is FlowInput || ( this is ValueInput && !this.isConnected ) ) { return true; }
             return false;
         }
 
-        ///Get all BinderConnections the port is using
+        ///<summary>Get all BinderConnections the port is using</summary>
         public IEnumerable<BinderConnection> GetPortConnections() {
             if ( IsInputPort() ) { return parent.inConnections.OfType<BinderConnection>().Where(c => c.targetPort == this); }
             return parent.outConnections.OfType<BinderConnection>().Where(c => c.sourcePort == this);
         }
 
-        ///Gets the first input BinderConnection of the port
+        ///<summary>Gets the first input BinderConnection of the port</summary>
         public BinderConnection GetFirstInputConnection() {
             return parent.inConnections.OfType<BinderConnection>().FirstOrDefault(c => c.targetPort == this);
         }
 
-        ///Gets the first output BinderConnection of the port
+        ///<summary>Gets the first output BinderConnection of the port</summary>
         public BinderConnection GetFirstOutputConnection() {
             return parent.outConnections.OfType<BinderConnection>().FirstOrDefault(c => c.sourcePort == this);
         }
@@ -206,36 +205,36 @@ namespace FlowCanvas
 
 
     ///----------------------------------------------------------------------------------------------
-    ///FLOW PORTS
+    //FLOW PORTS
     ///----------------------------------------------------------------------------------------------
 
-    ///Input port for Flow type
+    ///<summary>Input port for Flow type</summary>
     public class FlowInput : Port
     {
 
-        ///pointer refers to callback when the port is called
+        ///<summary>pointer refers to callback when the port is called</summary>
         public FlowInput(FlowNode parent, string name, string ID, FlowHandler pointer) : base(parent, name, ID) {
             this.pointer = pointer;
         }
 
-        ///Used for port binding. Points to the call for when port is called
+        ///<summary>Used for port binding. Points to the call for when port is called</summary>
         public FlowHandler pointer { get; private set; }
-        ///The type of the port which is always type of Flow
+        ///<summary>The type of the port which is always type of Flow</summary>
         public override Type type { get { return typeof(Flow); } }
     }
 
-    ///Output port for Flow type
+    ///<summary>Output port for Flow type</summary>
     public class FlowOutput : Port
     {
 
         public FlowOutput(FlowNode parent, string name, string ID) : base(parent, name, ID) { }
 
-        ///Used for port binding. Points to a FlowInput pointer if ports are connected
+        ///<summary>Used for port binding. Points to a FlowInput pointer if ports are connected</summary>
         public event FlowHandler pointer;
-        ///The type of the port which is always type of Flow
+        ///<summary>The type of the port which is always type of Flow</summary>
         public override Type type { get { return typeof(Flow); } }
 
-        ///Calls the target bound pointer
+        ///<summary>Calls the target bound pointer</summary>
         public void Call(Flow f) {
             if ( pointer != null && parent.graph.isRunning ) {
                 f.ticks++;
@@ -279,17 +278,17 @@ namespace FlowCanvas
 #endif
 
 
-        ///Bind the port to the target FlowInput
+        ///<summary>Bind the port to the target FlowInput</summary>
         public void BindTo(FlowInput target) {
             this.pointer = target.pointer;
         }
 
-        ///Appends a callback when port is called
+        ///<summary>Appends a callback when port is called</summary>
         public void Append(FlowHandler callback) {
             this.pointer += callback;
         }
 
-        ///Unbinds the port
+        ///<summary>Unbinds the port</summary>
         public void UnBind() {
             this.pointer = null;
         }
@@ -297,38 +296,38 @@ namespace FlowCanvas
 
 
     ///----------------------------------------------------------------------------------------------
-    ///VALUE INPUT PORT
+    //VALUE INPUT PORT
     ///----------------------------------------------------------------------------------------------
 
-    ///Base input port for values
+    ///<summary>Base input port for values</summary>
     abstract public class ValueInput : Port
     {
 
         public ValueInput(FlowNode parent, string name, string ID) : base(parent, name, ID) { }
 
-        ///Creates a generic instance of ValueInput
+        ///<summary>Creates a generic instance of ValueInput</summary>
         public static ValueInput<T> CreateInstance<T>(FlowNode parent, string name, string ID) {
             return new ValueInput<T>(parent, name, ID);
         }
 
-        ///Creates a generic instance of ValueInput
+        ///<summary>Creates a generic instance of ValueInput</summary>
         public static ValueInput CreateInstance(Type t, FlowNode parent, string name, string ID) {
             return (ValueInput)Activator.CreateInstance(typeof(ValueInput<>).RTMakeGenericType(t), new object[] { parent, name, ID });
         }
 
-        ///The value as object type when accessed as ValueInput
+        ///<summary>The value as object type when accessed as ValueInput</summary>
         public object value {
             get { return GetObjectValue(); }
         }
 
-        ///Convenience method to set default port value and serialized port value, which should be the same value in any case.
+        ///<summary>Convenience method to set default port value and serialized port value, which should be the same value in any case.</summary>
         public ValueInput SetDefaultAndSerializedValue(object v) {
             this.defaultValue = v;
             this.serializedValue = v;
             return this;
         }
 
-        ///Convenience method to make the port skip self object assigment if it was a valid candidate in the first place.
+        ///<summary>Convenience method to make the port skip self object assigment if it was a valid candidate in the first place.</summary>
         public ValueInput SkipSelfInstanceAssignment(bool skip) {
             this.skipSelfInstanceAssignment = skip;
             return this;
@@ -344,20 +343,20 @@ namespace FlowCanvas
         abstract public object GetObjectValue();
     }
 
-    ///Value Input port for a known type. .value refers to either connected binded port if any, or the serialized exposed value
+    ///<summary>Value Input port for a known type. .value refers to either connected binded port if any, or the serialized exposed value</summary>
     public class ValueInput<T> : ValueInput
     {
 
         public ValueInput(FlowNode parent, string name, string ID) : base(parent, name, ID) { }
 
-        ///Used for port binding
+        ///<summary>Used for port binding</summary>
         public event ValueHandler<T> getter;
         private Action<T> callback;
 
         private T _value;
         private T _defaultValue;
 
-        ///The port value
+        ///<summary>The port value</summary>
         new public T value {
             get
             {
@@ -384,44 +383,44 @@ namespace FlowCanvas
             }
         }
 
-        ///The value which is considered default
+        ///<summary>The value which is considered default</summary>
         public override object defaultValue {
             get { return _defaultValue; }
             set { _defaultValue = (T)value; }
         }
 
-        ///Used to get/set the serialized value directly
+        ///<summary>Used to get/set the serialized value directly</summary>
         public override object serializedValue {
             get { return _value; }
             set { _value = (T)value; }
         }
 
-        ///Returns if the serializedValue is equal to the default value, usually simply default(T)
+        ///<summary>Returns if the serializedValue is equal to the default value, usually simply default(T)</summary>
         public override bool isDefaultValue {
             get { return ObjectUtils.AnyEquals(serializedValue, defaultValue); }
         }
 
-        ///The port value type which is always of type T
+        ///<summary>The port value type which is always of type T</summary>
         public override Type type { get { return typeof(T); } }
 
-        ///Sets the default and serialized value of the port. Can be used when registering ports.
+        ///<summary>Sets the default and serialized value of the port. Can be used when registering ports.</summary>
         public ValueInput<T> SetDefaultAndSerializedValue(T v) {
             this._defaultValue = v;
             this._value = v;
             return this;
         }
 
-        ///Get the value same as .value (can be used for delegate since properties can't directly)
+        ///<summary>Get the value same as .value (can be used for delegate since properties can't directly)</summary>
         public T GetValue() {
             return value;
         }
 
-        ///Get the value as object
+        ///<summary>Get the value as object</summary>
         public override object GetObjectValue() {
             return value;
         }
 
-        ///Binds the port to the target source ValueOutput port
+        ///<summary>Binds the port to the target source ValueOutput port</summary>
         public override void BindTo(ValueOutput source) {
             //if same T use directly
             if ( source is ValueOutput<T> ) {
@@ -433,12 +432,12 @@ namespace FlowCanvas
             this.getter = TypeConverter.GetConverterFuncFromTo<T>(source.type, typeof(T), source.GetObjectValue);
         }
 
-        ///Append callback when getter is called with the result value
+        ///<summary>Append callback when getter is called with the result value</summary>
         public void Append(Action<T> callback) {
             this.callback += callback;
         }
 
-        ///Unbinds the port
+        ///<summary>Unbinds the port</summary>
         public override void UnBind() {
             this.getter = null;
             this.callback = null;
@@ -452,30 +451,30 @@ namespace FlowCanvas
 
 
     ///----------------------------------------------------------------------------------------------
-    ///VALUE OUTPUT PORT
+    //VALUE OUTPUT PORT
     ///----------------------------------------------------------------------------------------------
 
-    ///Base output port for values
+    ///<summary>Base output port for values</summary>
     abstract public class ValueOutput : Port
     {
 
         public ValueOutput(FlowNode parent, string name, string ID) : base(parent, name, ID) { }
 
-        ///Creates a generic instance of ValueOutput
+        ///<summary>Creates a generic instance of ValueOutput</summary>
         public static ValueOutput<T> CreateInstance<T>(FlowNode parent, string name, string ID, ValueHandler<T> getter) {
             return new ValueOutput<T>(parent, name, ID, getter);
         }
 
-        ///Creates a generic instance of ValueOutput
+        ///<summary>Creates a generic instance of ValueOutput</summary>
         public static ValueOutput CreateInstance(Type t, FlowNode parent, string name, string ID, ValueHandlerObject getter) {
             return (ValueOutput)Activator.CreateInstance(typeof(ValueOutput<>).RTMakeGenericType(t), new object[] { parent, name, ID, getter });
         }
 
-        ///Used only in case that a binder required casting cause of different port types (a conversion)
+        ///<summary>Used only in case that a binder required casting cause of different port types (a conversion)</summary>
         abstract public object GetObjectValue();
     }
 
-    ///An output value port
+    ///<summary>An output value port</summary>
     public class ValueOutput<T> : ValueOutput
     {
 
@@ -489,12 +488,12 @@ namespace FlowCanvas
             this.getter = () => { return (T)getter(); };
         }
 
-        ///Used for port binding
+        ///<summary>Used for port binding</summary>
         public ValueHandler<T> getter { get; private set; }
 
-        ///Used only in case that a binder required casting cause of different port types
+        ///<summary>Used only in case that a binder required casting cause of different port types</summary>
         public override object GetObjectValue() { return (object)getter(); }
-        ///The type of the port which is always of type T
+        ///<summary>The type of the port which is always of type T</summary>
         public override Type type { get { return typeof(T); } }
 
         //operator

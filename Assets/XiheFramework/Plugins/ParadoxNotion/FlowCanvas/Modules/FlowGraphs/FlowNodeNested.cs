@@ -8,7 +8,7 @@ namespace FlowCanvas
 {
     [Category("SubGraphs")]
     [Color("ffe4e1")]
-    ///Base for nested graphs
+    ///<summary>Base for nested graphs</summary>
     public abstract class FlowNodeNested<T> : FlowNode, IGraphAssignable<T> where T : Graph
     {
         [SerializeField] private List<BBMappingParameter> _variablesMap;

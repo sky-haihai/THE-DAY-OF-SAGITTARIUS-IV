@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace FlowCanvas.Nodes
 {
-    ///Wraps a ConstructorInfo into a FlowGraph node
+    ///<summary>Wraps a ConstructorInfo into a FlowGraph node</summary>
     public class ReflectedConstructorNodeWrapper : ReflectedMethodBaseNodeWrapper
     {
 
@@ -28,18 +28,18 @@ namespace FlowCanvas.Nodes
 
 #if UNITY_EDITOR
         public override string description {
-            get { return constructor != null ? DocsByReflection.GetMemberSummary(constructor.DeclaringType) : "Missing Constructor"; }
+            get { return constructor != null ? XMLDocs.GetMemberSummary(constructor.DeclaringType) : "Missing Constructor"; }
         }
 #endif
 
-        ///Set a new ConstructorInfo to be used by ReflectedConstructorNode
+        ///<summary>Set a new ConstructorInfo to be used by ReflectedConstructorNode</summary>
         public override void SetMethodBase(MethodBase newMethod, object instance = null) {
             if ( newMethod is ConstructorInfo ) {
                 SetConstructor((ConstructorInfo)newMethod);
             }
         }
 
-        ///Set a new ConstructorInfo to be used by ReflectedConstructorNode
+        ///<summary>Set a new ConstructorInfo to be used by ReflectedConstructorNode</summary>
         void SetConstructor(ConstructorInfo newConstructor) {
             _constructor = new SerializedConstructorInfo(newConstructor);
             GatherPorts();

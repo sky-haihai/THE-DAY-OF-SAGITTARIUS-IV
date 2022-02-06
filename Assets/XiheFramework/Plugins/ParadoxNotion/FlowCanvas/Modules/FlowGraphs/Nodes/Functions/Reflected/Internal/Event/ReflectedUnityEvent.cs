@@ -31,12 +31,12 @@ namespace FlowCanvas.Nodes
 
         public ReflectedUnityEvent() { }
 
-        ///Create a reflected unity event for target unity event type
+        ///<summary>Create a reflected unity event for target unity event type</summary>
         public ReflectedUnityEvent(Type eventType) {
             InitForEventType(eventType);
         }
 
-        ///Initialize for target unity event type
+        ///<summary>Initialize for target unity event type</summary>
         public void InitForEventType(Type eventType) {
             this._eventType = eventType;
             if ( _eventType == null || !_eventType.RTIsSubclassOf(typeof(UnityEventBase)) ) {
@@ -60,13 +60,13 @@ namespace FlowCanvas.Nodes
             _removeListenerMethod = typeof(UnityEventBase).GetMethod("RemoveListener", flags, null, typeArray, null);
         }
 
-        ///Subscribe to target unity event
+        ///<summary>Subscribe to target unity event</summary>
         public void StartListening(UnityEventBase targetEvent, UnityEventCallback callback) {
             this._callback += callback;
             _addListenerMethod.Invoke(targetEvent, new object[] { this, _callMethod });
         }
 
-        ///Unsubscribe from target unity event
+        ///<summary>Unsubscribe from target unity event</summary>
         public void StopListening(UnityEventBase targetEvent, UnityEventCallback callback) {
             this._callback -= callback;
             _removeListenerMethod.Invoke(targetEvent, new object[] { this, _callMethod });

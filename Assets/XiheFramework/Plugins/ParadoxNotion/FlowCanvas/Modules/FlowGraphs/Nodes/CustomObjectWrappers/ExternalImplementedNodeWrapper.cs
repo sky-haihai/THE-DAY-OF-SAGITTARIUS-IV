@@ -5,7 +5,7 @@ namespace FlowCanvas.Nodes
 {
 
     [DoNotList]
-    [Icon(runtimeIconTypeCallback: nameof(GetRuntimeIconType))]
+    [ParadoxNotion.Design.Icon(runtimeIconTypeCallback: nameof(GetRuntimeIconType))]
     public class ExternalImplementedNodeWrapper : FlowNode
     {
         [SerializeField]

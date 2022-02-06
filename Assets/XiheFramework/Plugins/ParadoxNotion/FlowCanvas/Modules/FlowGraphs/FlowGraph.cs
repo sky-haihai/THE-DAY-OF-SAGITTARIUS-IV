@@ -11,7 +11,7 @@ using Logger = ParadoxNotion.Services.Logger;
 namespace FlowCanvas
 {
 
-    ///Base class for flow graphs.
+    ///<summary>Base class for flow graphs.</summary>
     [GraphInfo(
         packageName = "FlowCanvas",
         docsURL = "http://flowcanvas.paradoxnotion.com/documentation/",
@@ -34,12 +34,12 @@ namespace FlowCanvas
         public override bool isTree => false;
         public override bool canAcceptVariableDrops => true;
 
-        ///Calls and returns a value of a custom function in the flowgraph
+        ///<summary>Calls and returns a value of a custom function in the flowgraph</summary>
         public T CallFunction<T>(string name, params object[] args) {
             return (T)CallFunction(name, args);
         }
 
-        ///Calls and returns a value of a custom function in the flowgraph
+        ///<summary>Calls and returns a value of a custom function in the flowgraph</summary>
         public object CallFunction(string name, params object[] args) {
             Debug.Assert(isRunning, "Trying to Execute Function but graph is not running");
             IInvokable func = null;
@@ -49,7 +49,7 @@ namespace FlowCanvas
             return null;
         }
 
-        ///Calls a custom function in the flowgraph async. When the function is done, it will callback with return value
+        ///<summary>Calls a custom function in the flowgraph async. When the function is done, it will callback with return value</summary>
         public void CallFunctionAsync(string name, System.Action<object> callback, params object[] args) {
             Debug.Assert(isRunning, "Trying to Execute Function but graph is not running");
             IInvokable func = null;
@@ -58,7 +58,7 @@ namespace FlowCanvas
             }
         }
 
-        ///Returns cached component type from graph agent
+        ///<summary>Returns cached component type from graph agent</summary>
         public UnityEngine.Object GetAgentComponent(System.Type type) {
             if ( agent == null ) { return null; }
             if ( type == typeof(GameObject) ) { return agent.gameObject; }
@@ -238,7 +238,7 @@ namespace FlowCanvas
             return menu;
         }
 
-        ///Show Get/Set variable menu
+        ///<summary>Show Get/Set variable menu</summary>
         protected override void OnVariableDropInGraph(IBlackboard bb, Variable variable, Vector2 mousePos) {
             if ( variable != null ) {
                 var menu = new UnityEditor.GenericMenu();

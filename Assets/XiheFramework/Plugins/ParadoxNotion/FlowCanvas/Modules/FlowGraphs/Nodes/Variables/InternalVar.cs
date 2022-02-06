@@ -16,7 +16,7 @@ namespace FlowCanvas.Nodes
         abstract public System.Type relayType { get; }
     }
 
-    ///Relay Input
+    ///<summary>Relay Input</summary>
     public class RelayValueInput<T> : RelayValueInputBase, IEditorMenuCallbackReceiver
     {
 
@@ -58,7 +58,7 @@ namespace FlowCanvas.Nodes
         abstract public void SetSource(RelayValueInputBase source);
     }
 
-    ///Relay Output
+    ///<summary>Relay Output</summary>
     public class RelayValueOutput<T> : RelayValueOutputBase
     {
 

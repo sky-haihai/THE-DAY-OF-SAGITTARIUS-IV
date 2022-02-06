@@ -11,7 +11,7 @@ namespace FlowCanvas.Nodes
     }
 
     [System.Obsolete("Use 'IReferencedObjectWrapper' along with 'ReferencedObjectTypeAttribute'")]
-    [Icon(runtimeIconTypeCallback: nameof(GetRuntimeIconType))]
+    [ParadoxNotion.Design.Icon(runtimeIconTypeCallback: nameof(GetRuntimeIconType))]
     abstract public class CustomObjectWrapper<T> : CustomObjectWrapper where T : UnityEngine.Object
     {
         [SerializeField]

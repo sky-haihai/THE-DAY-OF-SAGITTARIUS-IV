@@ -7,7 +7,7 @@ namespace FlowCanvas.Macros
 {
 
     [DoNotList]
-    [Icon("MacroIn")]
+    [ParadoxNotion.Design.Icon("MacroIn")]
     [Description("Defines the Input ports of the Macro.\nTo quickly create ports, you can also Drag&Drop a connection on top of this node!")]
     [ProtectedSingleton]
     public class MacroInputNode : FlowNode

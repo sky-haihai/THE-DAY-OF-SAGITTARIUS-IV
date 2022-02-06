@@ -3,21 +3,21 @@
 namespace FlowCanvas
 {
 
-    ///Add this component on a game object to be controlled by a FlowScript
+    ///<summary>Add this component on a game object to be controlled by a FlowScript</summary>
     [UnityEngine.AddComponentMenu("FlowCanvas/FlowScript Controller")]
     public class FlowScriptController : GraphOwner<FlowScript>
     {
-        ///Calls a custom function in the flowgraph. This overload exists so that works with UnityEvents
+        ///<summary>Calls a custom function in the flowgraph. This overload exists so that works with UnityEvents</summary>
         public void CallFunction(string name) {
             behaviour.CallFunction(name);
         }
 
-        ///Calls and returns a value of a custom function in the flowgraph
+        ///<summary>Calls and returns a value of a custom function in the flowgraph</summary>
         public object CallFunction(string name, params object[] args) {
             return behaviour.CallFunction(name, args);
         }
 
-        ///Calls a custom function in the flowgraph async. When the function is done, it will callback with return value
+        ///<summary>Calls a custom function in the flowgraph async. When the function is done, it will callback with return value</summary>
         public void CallFunctionAsync(string name, System.Action<object> callback, params object[] args) {
             behaviour.CallFunctionAsync(name, callback, args);
         }

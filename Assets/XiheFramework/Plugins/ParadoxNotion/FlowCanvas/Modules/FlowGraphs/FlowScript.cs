@@ -1,7 +1,7 @@
 ﻿namespace FlowCanvas
 {
 
-    ///FlowScripts are assigned or bound to FlowScriptControllers
+    ///<summary>FlowScripts are assigned or bound to FlowScriptControllers</summary>
     [UnityEngine.CreateAssetMenu(menuName = "ParadoxNotion/FlowCanvas/FlowScript Asset")]
     public class FlowScript : FlowScriptBase
     {

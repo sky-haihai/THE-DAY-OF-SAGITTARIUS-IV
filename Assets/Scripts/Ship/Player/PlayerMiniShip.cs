@@ -50,11 +50,11 @@ public class PlayerMiniShip : ShipBase {
         }
 
         UpdateDestination();
-        TryGoToDestination();
+        var reached = TryGoToDestination();
 
         UpdateTarget();
 
-        if (target && m_IsStandby) {
+        if (target && reached) {
             TryLockTarget(target.transform.position);
         }
     }
@@ -98,15 +98,16 @@ public class PlayerMiniShip : ShipBase {
         }
     }
 
-    private void TryGoToDestination() {
+    /// <summary>
+    /// Try Go To Destination
+    /// </summary>
+    /// <returns>true if destination is reached false otherwise</returns>
+    private bool TryGoToDestination() {
         var delta = m_Destination - transform.position;
 
         if (delta.magnitude <= 0.01f) {
-            m_IsStandby = true;
-            return;
+            return true;
         }
-
-        m_IsStandby = false;
 
         var angleSigned = Vector3.SignedAngle(transform.forward, delta, Vector3.up);
 
@@ -127,6 +128,8 @@ public class PlayerMiniShip : ShipBase {
 
         var dest = transform.position + transform.forward * (runtimeData.thrustLevel * Time.deltaTime);
         transform.position = Vector3.Lerp(transform.position, dest, 1 / 5f);
+
+        return false;
     }
 
     private void TryLockTarget(Vector3 worldPosition) {

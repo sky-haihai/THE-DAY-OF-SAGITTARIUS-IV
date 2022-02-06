@@ -25,13 +25,13 @@ namespace FlowCanvas.Nodes
         private object returnValue;
         private FlowOutput onInvoke;
 
-        ///the parameters port definition
+        ///<summary>the parameters port definition</summary>
         public List<DynamicParameterDefinition> parameters {
             get { return _parameters; }
             private set { _parameters = value; }
         }
 
-        ///the return port definition
+        ///<summary>the return port definition</summary>
         public DynamicParameterDefinition returns {
             get { return _returns; }
             private set { _returns = value; }
@@ -72,7 +72,7 @@ namespace FlowCanvas.Nodes
         }
 
 
-        ///Invokes the function and return it's return value
+        ///<summary>Invokes the function and return it's return value</summary>
         public object Invoke(Flow f, params object[] args) {
             this.args = args;
             FlowReturn returnCallback = (o) => { this.returnValue = o; };
@@ -82,7 +82,7 @@ namespace FlowCanvas.Nodes
             return returnValue;
         }
 
-        ///Invokes the function and callbacks when a Return node is hit.
+        ///<summary>Invokes the function and callbacks when a Return node is hit.</summary>
         public void InvokeAsync(Flow f, FlowHandler flowCallback, params object[] args) {
             this.args = args;
             FlowReturn returnCallback = (o) => { this.returnValue = o; flowCallback(f); };
@@ -91,7 +91,7 @@ namespace FlowCanvas.Nodes
             onInvoke.Call(invocationFlow);
         }
 
-        ///Returns the function's last return value
+        ///<summary>Returns the function's last return value</summary>
         public object GetReturnValue() {
             return returnValue;
         }

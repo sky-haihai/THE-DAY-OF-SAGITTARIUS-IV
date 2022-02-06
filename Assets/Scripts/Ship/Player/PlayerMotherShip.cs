@@ -160,7 +160,8 @@ public class PlayerMotherShip : ShipBase {
         }
 
         var cachedTransform = transform;
-        m_Destination = cachedTransform.position + cachedTransform.forward * (runtimeData.thrustLevel * Time.deltaTime * shipData.moveSpeed);
+        //multiply by 2 because ai ships has different calculation method 
+        m_Destination = cachedTransform.position + cachedTransform.forward * (runtimeData.thrustLevel * Time.deltaTime * shipData.moveSpeed * 2);
 
         m_ThrustDestination = Mathf.Clamp(m_ThrustDestination, shipData.thrustLevelLimit.x, shipData.thrustLevelLimit.y);
         runtimeData.thrustLevel = Mathf.Lerp(runtimeData.thrustLevel, m_ThrustDestination, 1 / 10f);

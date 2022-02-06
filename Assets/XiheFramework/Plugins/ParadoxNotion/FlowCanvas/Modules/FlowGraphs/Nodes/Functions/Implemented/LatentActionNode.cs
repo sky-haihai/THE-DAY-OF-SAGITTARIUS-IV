@@ -5,7 +5,7 @@ using ParadoxNotion.Services;
 namespace FlowCanvas.Nodes
 {
 
-    ///Latent Action Nodes do not return any value and can span within multiple frames and have up to 10 parameters. They need Flow execution.
+    ///<summary>Latent Action Nodes do not return any value and can span within multiple frames and have up to 10 parameters. They need Flow execution.</summary>
     abstract public class LatentActionNodeBase : SimplexNode
     {
 
@@ -122,11 +122,11 @@ namespace FlowCanvas.Nodes
 
         ///----------------------------------------------------------------------------------------------
 
-        ///Register the special per type ports
+        ///<summary>Register the special per type ports</summary>
         abstract protected void OnRegisterDerivedPorts(FlowNode node);
-        ///Called when Break input is called.
+        ///<summary>Called when Break input is called.</summary>
         virtual public void OnBreak() { }
-        ///Should extra ports be shown?
+        ///<summary>Should extra ports be shown?</summary>
         virtual public bool allowRoutineQueueing {
             get { return true; }
         }

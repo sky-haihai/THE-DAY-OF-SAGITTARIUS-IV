@@ -1,15 +1,15 @@
 ﻿namespace FlowCanvas
 {
 
-    ///Delegate for Flow
+    ///<summary>Delegate for Flow</summary>
     public delegate void FlowHandler(Flow f);
-    ///Delegate for Values
+    ///<summary>Delegate for Values</summary>
     [ParadoxNotion.Design.SpoofAOT]
     public delegate T ValueHandler<T>();
-    ///Delegate for object casted Values only
+    ///<summary>Delegate for object casted Values only</summary>
     public delegate object ValueHandlerObject();
-    ///Delegate for Flow Loop Break
+    ///<summary>Delegate for Flow Loop Break</summary>
     public delegate void FlowBreak();
-    ///Delegate for Flow Function Return
+    ///<summary>Delegate for Flow Function Return</summary>
     public delegate void FlowReturn(object value);
 }

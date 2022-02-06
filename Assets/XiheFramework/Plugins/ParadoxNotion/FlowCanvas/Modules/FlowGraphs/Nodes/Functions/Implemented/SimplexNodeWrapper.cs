@@ -7,10 +7,10 @@ namespace FlowCanvas.Nodes
 {
 
     [DoNotList]
-    ///Wraps a SimplexNode
+    ///<summary>Wraps a SimplexNode</summary>
     abstract public class SimplexNodeWrapper : FlowNode { }
 
-    ///Wraps a SimplexNode
+    ///<summary>Wraps a SimplexNode</summary>
     public class SimplexNodeWrapper<T> : SimplexNodeWrapper where T : SimplexNode
     {
 
@@ -78,9 +78,9 @@ namespace FlowCanvas.Nodes
             }
         }
 
-        ////////////////////////////////////////
-        ///////////GUI AND EDITOR STUFF/////////
-        ////////////////////////////////////////
+        ///----------------------------------------------------------------------------------------------
+        ///---------------------------------------UNITY EDITOR-------------------------------------------
+
 #if UNITY_EDITOR
 
         //Override of right click node context menu for ability to change type

@@ -1797,7 +1797,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters: []
-  _boundGraphSerialization: '{"type":"FlowCanvas.FlowScript","nodes":[],"connections":[],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+  _boundGraphSerialization: '{"type":"FlowCanvas.FlowScript","nodes":[{"eventName":{"_value":"OnPlayerDie"},"target":{},"targets":{},"_position":{"x":274.0,"y":466.0},"$type":"FlowCanvas.Nodes.CustomEvent","$id":"0"},{"_method":{"_baseInfo":"XiheFramework.EventSvc|Invoke|System.Void","_paramsInfo":"System.String|System.Object|System.Object"},"_callable":true,"_inputPortValues":{"eventName":{"$content":"OnGameOver","$type":"System.String"}},"_position":{"x":669.0,"y":513.0},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"1"}],"connections":[{"_sourcePortName":"Received","_targetPortName":"
+    ","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
   _boundGraphObjectReferences: []
   _boundGraphSource:
     _version: 3.22
@@ -2333,6 +2334,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1237641460287706955, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1237641460287706955, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1237641460287706955, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1237641460736212103, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

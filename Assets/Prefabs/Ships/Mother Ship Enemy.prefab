@@ -59,8 +59,8 @@ MonoBehaviour:
     shipName: 
     shipColor: {r: 1, g: 0.397, b: 0.9125058, a: 0}
     shipOwner: "\u30B3\u30F3\u30D7\u30FC\u30BF\u30FC\u7814"
-    viewRadius: 2.5
-    attackRadius: 7.5
+    viewRadius: 1.75
+    attackRadius: 5.25
     tolerantAngle: 5
     offense: 200
     defense: 200

@@ -44,7 +44,7 @@ public class ShipModule : GameModule {
     //     Game.Blackboard.SetData("FormationOptions", result.ToArray(), BlackBoardDataType.Runtime);
     // }
 
-    public ShipBase GetPlayerShip() {
+    public PlayerMotherShip GetPlayerShip() {
         return m_ShipList.OfType<PlayerMotherShip>().FirstOrDefault();
     }
 
@@ -87,7 +87,7 @@ public class ShipModule : GameModule {
         return result.ToArray();
     }
 
-    public ShipBase GetClosestPlayerMiniShip(PlayerMotherShip motherShip) {
+    public PlayerMiniShip GetClosestPlayerMiniShip(PlayerMotherShip motherShip) {
         ShipBase result = null;
         float dist = float.MaxValue;
         foreach (var shipBase in m_ShipList) {
@@ -101,7 +101,7 @@ public class ShipModule : GameModule {
             }
         }
 
-        return result;
+        return (PlayerMiniShip) result;
     }
 
     public float GetShipLeftOwnedBy(string owner) {
@@ -182,6 +182,30 @@ public class ShipModule : GameModule {
 
     public override void ShutDown() {
         m_ShipList.Clear();
+    }
+
+    public int GetPlayerMiniShipCountOf(PlayerMotherShip playerMotherShip) {
+        int sum = 0;
+        foreach (var shipBase in m_ShipList) {
+            if (shipBase is PlayerMiniShip) {
+                var ship = shipBase as PlayerMiniShip;
+                if (ship.GetMotherShip() == playerMotherShip) {
+                    sum += 1;
+                }
+            }
+        }
+
+        return sum;
+    }
+
+    public bool IsAnyEnemyShipAlive() {
+        foreach (var shipBase in m_ShipList) {
+            if (shipBase is AIMotherShip) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 

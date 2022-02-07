@@ -58,8 +58,8 @@ MonoBehaviour:
     shipName: 
     shipColor: {r: 1, g: 0.6431373, b: 0.14509805, a: 0}
     shipOwner: "Sky\u8266\u968A"
-    viewRadius: 2.5
-    attackRadius: 7.5
+    viewRadius: 1.75
+    attackRadius: 5.25
     tolerantAngle: 15
     offense: 200
     defense: 200

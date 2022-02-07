@@ -12,6 +12,7 @@ public class PlayerMiniShip : ShipBase {
     private IFormationStrategy m_Strategy;
     private Vector3 m_Destination;
     private bool m_IsStandby; //is reached destination and waiting 
+    private bool m_IsRetrieving = false; //is going back to mother ship
 
     private static readonly int Color = Shader.PropertyToID("_Color");
 
@@ -29,27 +30,7 @@ public class PlayerMiniShip : ShipBase {
         Game.Event.Subscribe("OnSetFormation", OnSetFormation);
         Game.Event.Subscribe("OnRetrievePlayerScout", OnRetrievePlayerScout);
         Game.Event.Subscribe("OnPlayerMiniShipDestroyed", OnPlayerMiniShipDestroyed);
-    }
-
-    private void OnRetrievePlayerScout(object sender, object e) {
-        var closest = GameManager.GetModule<ShipModule>().GetClosestPlayerMiniShip(m_MotherShip).shipData.shipName;
-        if (this.shipData.shipName.Equals( closest)) {
-            return;
-        }
-
-        m_Destination = m_MotherShip.transform.position;
-    }
-
-    private void OnPlayerMiniShipDestroyed(object sender, object e) {
-        var ns = sender as PlayerMotherShip;
-        if (ns != m_MotherShip) {
-            return;
-        }
-
-        var ne = (int) e;
-        if (localId > ne) {
-            localId -= 1;
-        }
+        Game.Event.Subscribe("OnPlayerDie", OnPlayerDie);
     }
 
     protected override void Update() {
@@ -59,13 +40,68 @@ public class PlayerMiniShip : ShipBase {
             return;
         }
 
-        UpdateDestination();
         var reached = TryGoToDestination();
-
         UpdateTarget();
+
+        if (m_IsRetrieving) {
+            m_Destination = m_MotherShip.transform.position;
+        }
+        else {
+            UpdateDestination();
+        }
+
+        if (m_IsRetrieving && reached) {
+            CombineToMother();
+        }
 
         if (target && reached) {
             TryLockTarget(target.transform.position);
+        }
+    }
+
+    private void OnPlayerDie(object sender, object e) {
+        var m = sender as PlayerMotherShip;
+        if (m == m_MotherShip) {
+            runtimeData.hp = 0;
+        }
+    }
+
+    void CombineToMother() {
+        m_MotherShip.runtimeData.hp += this.runtimeData.hp;
+        m_MotherShip.runtimeData.offense += runtimeData.offense;
+        m_MotherShip.runtimeData.defense += runtimeData.defense;
+
+        Destroy(gameObject);
+        //gameObject.SetActive(false);
+    }
+
+    private void OnRetrievePlayerScout(object sender, object e) {
+        var ne = e as PlayerMiniShip;
+        if (ne != this) {
+            return;
+        }
+
+        m_IsRetrieving = true;
+
+        m_Destination = m_MotherShip.transform.position;
+
+        GameManager.GetModule<ShipModule>().UnRegister(this);
+        Game.Event.Invoke("OnPlayerMiniShipDestroyed", m_MotherShip, localId);
+    }
+
+    private void OnPlayerMiniShipDestroyed(object sender, object e) {
+        var ns = sender as PlayerMotherShip;
+        if (ns != m_MotherShip) {
+            return;
+        }
+
+        var ne = (int) e;
+        if (ne == localId) {
+            return;
+        }
+
+        if (localId > ne) {
+            localId -= 1;
         }
     }
 
@@ -115,7 +151,7 @@ public class PlayerMiniShip : ShipBase {
     private bool TryGoToDestination() {
         var delta = m_Destination - transform.position;
 
-        if (delta.magnitude <= 0.01f) {
+        if (delta.magnitude <= 0.05f) {
             return true;
         }
 
@@ -138,6 +174,7 @@ public class PlayerMiniShip : ShipBase {
         runtimeData.thrustLevel = level;
 
         var dest = transform.position + transform.forward * (runtimeData.thrustLevel * Time.deltaTime * shipData.moveSpeed);
+        //Debug.Log(dest.ToString());
         transform.position = Vector3.Lerp(transform.position, dest, 1 / 5f);
 
         return false;
@@ -160,5 +197,10 @@ public class PlayerMiniShip : ShipBase {
 
         Gizmos.color = UnityEngine.Color.yellow;
         GizmosUtil.DrawCircle(transform.position, shipData.attackRadius, 25);
+
+        if (!Application.isPlaying) {
+            var radius = shipData.viewRadius * 2;
+            stencilSphere.localScale = new Vector3(radius, radius, radius);
+        }
     }
 }

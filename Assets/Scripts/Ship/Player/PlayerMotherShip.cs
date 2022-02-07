@@ -31,6 +31,8 @@ public class PlayerMotherShip : ShipBase {
 
         m_Bound = Game.Blackboard.GetData<Vector4>("bound");
 
+        m_CurrentFormation = GameManager.GetModule<ShipModule>().GetStrategyById(0);
+
         Game.Event.Subscribe("OnAutoLock", OnAutoLock);
         Game.Event.Subscribe("OnSendPlayerScout", OnSendPlayerScout);
         Game.Event.Subscribe("OnFormationUIValueChanged", OnFormationUIValueChanged);
@@ -51,6 +53,8 @@ public class PlayerMotherShip : ShipBase {
         }
 
         UpdatePlayerRuntimeData();
+
+        m_MiniShipCount = GameManager.GetModule<ShipModule>().GetPlayerMiniShipCountOf(this);
     }
 
     protected override void OnDrawGizmos() {
@@ -123,7 +127,7 @@ public class PlayerMotherShip : ShipBase {
         var root = GameObject.FindWithTag("PlayerShipRoot");
         var cachedTransform = transform;
         var go = Instantiate(miniShipTemplate, cachedTransform.position, cachedTransform.rotation, root.transform);
-        go.Setup(this, m_MiniShipCount++);
+        go.Setup(this, m_MiniShipCount);
         runtimeData.hp -= 750f;
     }
 

@@ -824,7 +824,7 @@ GameObject:
   - component: {fileID: 1051456430}
   m_Layer: 6
   m_Name: BattleCam
-  m_TagString: Untagged
+  m_TagString: BattleCam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -954,6 +954,10 @@ PrefabInstance:
     - target: {fileID: 3113940567242200320, guid: be84258d158bbdc479c6a894a2aac14f, type: 3}
       propertyPath: m_Name
       value: XiheFramework
+      objectReference: {fileID: 0}
+    - target: {fileID: 3113940567242200320, guid: be84258d158bbdc479c6a894a2aac14f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8707160360624129928, guid: be84258d158bbdc479c6a894a2aac14f, type: 3}
       propertyPath: m_RootOrder
@@ -1425,15 +1429,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5659648981358137085, guid: 0ad60c393f214c24ca73f7c7e97b1bef, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 5659648981358137085, guid: 0ad60c393f214c24ca73f7c7e97b1bef, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 5659648981358137085, guid: 0ad60c393f214c24ca73f7c7e97b1bef, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8936390115455142032, guid: 0ad60c393f214c24ca73f7c7e97b1bef, type: 3}
       propertyPath: m_RootOrder
@@ -1643,7 +1647,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1687258585}
   - component: {fileID: 1687258584}
-  - component: {fileID: 1687258582}
   - component: {fileID: 1687258586}
   m_Layer: 0
   m_Name: Main Camera
@@ -1652,14 +1655,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1687258582
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1687258581}
-  m_Enabled: 0
 --- !u!20 &1687258584
 Camera:
   m_ObjectHideFlags: 0
@@ -1797,15 +1792,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters: []
-  _boundGraphSerialization: '{"type":"FlowCanvas.FlowScript","nodes":[{"eventName":{"_value":"OnPlayerDie"},"target":{},"targets":{},"_position":{"x":274.0,"y":466.0},"$type":"FlowCanvas.Nodes.CustomEvent","$id":"0"},{"_method":{"_baseInfo":"XiheFramework.EventSvc|Invoke|System.Void","_paramsInfo":"System.String|System.Object|System.Object"},"_callable":true,"_inputPortValues":{"eventName":{"$content":"OnGameOver","$type":"System.String"}},"_position":{"x":669.0,"y":513.0},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"1"}],"connections":[{"_sourcePortName":"Received","_targetPortName":"
-    ","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+  _boundGraphSerialization: '{"type":"FlowCanvas.FlowScript","nodes":[{"_position":{"x":407.0,"y":241.0},"$type":"FlowCanvas.Nodes.StartEvent","$id":"0"},{"_method":{"_baseInfo":"XiheFramework.EventSvc|Invoke|System.Void","_paramsInfo":"System.String|System.Object|System.Object"},"_callable":true,"_inputPortValues":{"eventName":{"$content":"OnGameStart","$type":"System.String"}},"_position":{"x":617.0,"y":248.0},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"1"},{"updateInterval":{},"_position":{"x":429.9982,"y":485.004},"$type":"FlowCanvas.Nodes.UpdateEvent","$id":"2"},{"_position":{"x":736.9982,"y":464.004},"$type":"FlowCanvas.Nodes.SwitchBool","$id":"3"},{"_method":{"_baseInfo":"XiheFramework.EventSvc|Invoke|System.Void","_paramsInfo":"System.String|System.Object|System.Object"},"_callable":true,"_position":{"x":957.9982,"y":470.004},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"4"},{"eventName":{"_value":"OnPlayerDie"},"target":{},"targets":{},"_position":{"x":461.9985,"y":839.9955},"$type":"FlowCanvas.Nodes.CustomEvent","$id":"5"},{"_method":{"_baseInfo":"XiheFramework.EventSvc|Invoke|System.Void","_paramsInfo":"System.String|System.Object|System.Object"},"_callable":true,"_inputPortValues":{"eventName":{"$content":"OnGameEnd","$type":"System.String"}},"_position":{"x":841.9986,"y":867.9955},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"6"},{"value":{},"_position":{"x":656.9985,"y":951.9955},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"7"},{"_method":{"_baseInfo":"ShipSvc|IsAnyEnemyAlive|System.Boolean","_paramsInfo":""},"_position":{"x":483.9982,"y":582.004},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"8"},{"value":{"_value":true},"_position":{"x":723.9982,"y":644.004},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"9"}],"connections":[{"_sourcePortName":"Once","_targetPortName":"
+    ","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Out","_targetPortName":"In","_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"False","_targetPortName":"
+    ","_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"4"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Received","_targetPortName":"
+    ","_sourceNode":{"$ref":"5"},"_targetNode":{"$ref":"6"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Value","_targetPortName":"value","_sourceNode":{"$ref":"7"},"_targetNode":{"$ref":"6"},"$type":"FlowCanvas.BinderConnection`1[[System.Object,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"Condition","_sourceNode":{"$ref":"8"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"value","_sourceNode":{"$ref":"9"},"_targetNode":{"$ref":"4"},"$type":"FlowCanvas.BinderConnection`1[[System.Object,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}],"canvasGroups":[{"name":"win","rect":{"xMin":399.9982,"yMin":399.004,"xMax":1093.998,"yMax":738.004},"autoGroup":true},{"name":"lose","rect":{"xMin":431.9985,"yMin":774.9955,"xMax":977.9985,"yMax":1045.996},"autoGroup":true},{"name":"start","rect":{"xMin":377.0,"yMin":176.0,"xMax":753.0,"yMax":388.0},"autoGroup":true}],"localBlackboard":{"_variables":{}}}'
   _boundGraphObjectReferences: []
   _boundGraphSource:
     _version: 3.22
     _category: 
     _comments: 
-    _translation: {x: 0, y: 0}
-    _zoomFactor: 1
+    _translation: {x: 119.99999, y: 64.99999}
+    _zoomFactor: 0.7500098
   _firstActivation: 0
   _enableAction: 0
   _disableAction: 0
@@ -2127,7 +2129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2131260485}
   - component: {fileID: 2131260488}
-  - component: {fileID: 2131260487}
   - component: {fileID: 2131260486}
   m_Layer: 6
   m_Name: MiniMapCam
@@ -2183,14 +2184,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &2131260487
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2131260484}
-  m_Enabled: 1
 --- !u!20 &2131260488
 Camera:
   m_ObjectHideFlags: 0
@@ -2334,6 +2327,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 637083122, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -209
+      objectReference: {fileID: 0}
+    - target: {fileID: 637083122, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 1237641459058689614, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1237641460241106918, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
+      propertyPath: m_Text
+      value: "\u53EC\u56DE\u6700\u8FD1\u4FA6\u5BDF\u8239"
+      objectReference: {fileID: 0}
     - target: {fileID: 1237641460287706955, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2345,6 +2354,10 @@ PrefabInstance:
     - target: {fileID: 1237641460287706955, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1237641460382446317, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 499.16
       objectReference: {fileID: 0}
     - target: {fileID: 1237641460736212103, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
       propertyPath: m_AnchorMax.x

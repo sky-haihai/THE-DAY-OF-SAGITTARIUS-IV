@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a1b26cbea24728b7a0630f89f81ce0, type: 3}
   m_Name: New Wedge Formation
   m_EditorClassIdentifier: 
-  horizontal: 0.75
-  vertical: 1.25
-  scale: 2
+  horizontal: 0.53
+  vertical: 0.74
+  scale: 2.1

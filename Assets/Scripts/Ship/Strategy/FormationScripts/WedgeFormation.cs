@@ -1,5 +1,4 @@
-﻿using Microsoft.SqlServer.Server;
-using Unity.Mathematics;
+﻿using Unity.Mathematics;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Xihe/Strategy/Wedge")]

@@ -12,7 +12,8 @@ public class BentLineFormation : StrategyBase {
         // \left(\frac{x}{m}\right)^{2}+y^{2}=1\left\{-n<x<n\right\}\left\{y>0\right\}
 
         var x = Mathf.Lerp(xMin, xMax, (localId + 0.5f) / (float) count);
-        var y = Mathf.Sqrt(radius - Mathf.Pow(x / horizontalScale, 2));
+        var y = radius - Mathf.Pow(x / horizontalScale, 2);
+        y = Mathf.Sqrt(Mathf.Abs(y));
         Vector3 localPos = new Vector3(x, 0, y);
         localPos *= scale;
 

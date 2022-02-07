@@ -33,6 +33,8 @@ public class BattleCameraController : MonoBehaviour {
     }
 
     private void HandleInput() {
+        followPlayer = Game.Blackboard.GetData<bool>("IsCameraFollow");
+        
         if (followPlayer) {
             m_Dest = GameManager.GetModule<ShipModule>().GetPlayerShip().transform.position;
             return;

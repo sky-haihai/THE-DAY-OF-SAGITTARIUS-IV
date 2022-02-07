@@ -589,6 +589,8 @@ MonoBehaviour:
     key: 119
   - action: 2
     key: 115
+  - action: 6
+    key: 102
   allowInput: 1
 --- !u!1 &5666856739030178703
 GameObject:

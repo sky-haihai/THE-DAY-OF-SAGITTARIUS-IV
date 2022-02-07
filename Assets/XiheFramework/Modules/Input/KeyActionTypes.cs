@@ -9,6 +9,7 @@ namespace XiheFramework {
         TurnLeft,
         TurnRight,
         AutoLock,
+        CameraFollow,
         //...
     }
 }

@@ -65,6 +65,12 @@ public class PlayerMotherShip : ShipBase {
         }
     }
 
+    protected override void Die() {
+        base.Die();
+
+        Game.Event.Invoke("OnPlayerDie", this, null);
+    }
+
     #endregion
 
     #region Public Methods

@@ -17,32 +17,18 @@ public class ShipModule : GameModule {
     public Vector4 bound;
 
     private bool m_PlayerAutoLock = false;
+    private string[] m_StrategyNames = null;
 
     public override void Setup() {
         Game.Blackboard.SetData("bound", bound, BlackBoardDataType.Runtime);
 
-        var names = nameFormationPairs.Select(pair => pair.name).ToArray();
-        Game.Blackboard.SetData("StrategyNames", names, BlackBoardDataType.Runtime);
+        m_StrategyNames = nameFormationPairs.Select(pair => pair.name).ToArray();
+        Game.Blackboard.SetData("StrategyNames", m_StrategyNames, BlackBoardDataType.Runtime);
 
         m_AIBrain = new AIBrain();
 
         m_VisibilityTree = new MultiDictionary<int, ShipBase>();
-
-        // m_DamageDisplayStructs = new List<DamageDisplayStruct>();
-
-        //InitFormationOptions();
     }
-
-    // private void InitFormationOptions() {
-    //     var formationOptions = Enum.GetValues(typeof(Formations));
-    //     List<string> result = new List<string>();
-    //     foreach (var option in formationOptions) {
-    //         result.Add(option.ToString());
-    //     }
-    //
-    //     //formationOptions = (string[]) formationOptions;
-    //     Game.Blackboard.SetData("FormationOptions", result.ToArray(), BlackBoardDataType.Runtime);
-    // }
 
     public PlayerMotherShip GetPlayerShip() {
         return m_ShipList.OfType<PlayerMotherShip>().FirstOrDefault();
@@ -54,7 +40,7 @@ public class ShipModule : GameModule {
 
     public ShipBase GuessBestTarget(ShipBase originShip) {
         ShipBase result = null;
-        var smallest = 180f;
+        float highest = -10000f;
         if (!m_VisibilityTree.ContainsKey(originShip.ClubId)) {
             return null;
         }
@@ -67,8 +53,16 @@ public class ShipModule : GameModule {
 
             //angle
             var angle = Vector3.Angle(origin.forward, delta);
-            if (angle < smallest) {
-                smallest = angle;
+
+            const float ratio = 2f; //dist 1.7 : rot 1
+            var distScore = -Mathf.Pow(delta.magnitude / 5f, 2.5f) * ratio + ratio;
+            var rotScore = -Mathf.Pow(angle / 180f, 1.5f);
+            var priScore = 3 * ship.shipData.priority;
+
+            var s = distScore + rotScore + priScore;
+
+            if (s > highest) {
+                highest = s;
                 result = ship;
             }
         }
@@ -180,8 +174,10 @@ public class ShipModule : GameModule {
         }
     }
 
-    public override void ShutDown() {
+    public override void ShutDown(ShutDownType shutDownType) {
         m_ShipList.Clear();
+        m_VisibilityTree.Clear();
+        m_PlayerAutoLock = false;
     }
 
     public int GetPlayerMiniShipCountOf(PlayerMotherShip playerMotherShip) {

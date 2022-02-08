@@ -447,6 +447,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameRate: 60
+  retryScene: Splash
+  restartScene: Entrance
 --- !u!1 &3623201116647450447
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,7 +604,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3203768139639880636}
   - component: {fileID: 4351987937581912179}
-  - component: {fileID: 5667668058189069607}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -636,20 +637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2754cde2d4ac8cb4294c1daa0b402546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5667668058189069607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5666856739030178703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7360b0ba1d7dc0b44b8cca8e0b3498e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  confirmCanvasPrefab: {fileID: 3444770801788650562, guid: de502ff66e6e940499f19ae6df19ad5d, type: 3}
-  popupCanvasPrefab: {fileID: 5303211636626203784, guid: 83628fc6f11402a47a38bbc23c73fd67, type: 3}
 --- !u!1 &8437793166853298671
 GameObject:
   m_ObjectHideFlags: 0

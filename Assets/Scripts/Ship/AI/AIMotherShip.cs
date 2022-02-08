@@ -32,7 +32,7 @@ public class AIMotherShip : ShipBase {
     protected override void Update() {
         base.Update();
 
-        HandleAIDecision(); //handle ai decision
+        //HandleAIDecision(); //handle ai decision
 
         UpdateTarget();
 
@@ -54,6 +54,7 @@ public class AIMotherShip : ShipBase {
     }
 
     public Vector3 GetTargetPosition() {
+        Debug.Log(target.gameObject.name);
         return target.transform.position;
     }
 
@@ -102,6 +103,7 @@ public class AIMotherShip : ShipBase {
         var min = shipData.thrustLevelLimit.x;
         const float pow = 5;
         var level = -max * Mathf.Pow(rad / Mathf.PI, 1 / pow) + max;
+        level = Mathf.Floor(level);
         level = Mathf.Clamp(level, min, max);
         runtimeData.thrustLevel = level;
 

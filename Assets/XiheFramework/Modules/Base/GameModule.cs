@@ -1,5 +1,4 @@
-﻿using FlowCanvas.Nodes;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace XiheFramework {
     public abstract class GameModule : MonoBehaviour {
@@ -14,6 +13,6 @@ namespace XiheFramework {
 
         public abstract void Update();
 
-        public abstract void ShutDown();
+        public abstract void ShutDown(ShutDownType shutDownType);
     }
 }

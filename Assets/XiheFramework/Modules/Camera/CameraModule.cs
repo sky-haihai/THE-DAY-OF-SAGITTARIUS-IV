@@ -28,6 +28,6 @@ namespace XiheFramework {
             }
         }
 
-        public override void ShutDown() { }
+        public override void ShutDown(ShutDownType shutDownType) { }
     }
 }

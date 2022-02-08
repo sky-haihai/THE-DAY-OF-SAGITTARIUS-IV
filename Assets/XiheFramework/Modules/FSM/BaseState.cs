@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace XiheFramework {
+﻿namespace XiheFramework {
     public abstract class BaseState {
         private StateMachine m_ParentStateMachine;
         

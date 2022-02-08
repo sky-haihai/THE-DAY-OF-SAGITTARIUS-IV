@@ -1,12 +1,6 @@
-﻿using System.Runtime.CompilerServices;
-using FlowCanvas.Nodes;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace XiheFramework.Base {
-    /// <summary>
-    /// Inherit from this base class to create a singleton.
-    /// e.g. public class MyClassName : Singleton<MyClassName> {}
-    /// </summary>
+namespace XiheFramework {
     public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
         // Check to see if we're about to be destroyed.
         // private static object m_SyncRoot = new object();

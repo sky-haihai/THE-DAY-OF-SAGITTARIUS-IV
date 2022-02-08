@@ -114,7 +114,7 @@ public class PlayerMotherShip : ShipBase {
     private void UpdatePlayerRuntimeData() {
         var shipLeft = GameManager.GetModule<ShipModule>().GetShipLeftOwnedBy(shipData.shipOwner);
         ShipRuntimeData data = new ShipRuntimeData(runtimeData.shipName, shipLeft,
-            Mathf.Round(m_ThrustDestination), runtimeData.offense, runtimeData.defense);
+            Mathf.Round(m_ThrustDestination), runtimeData.offense, runtimeData.defense, runtimeData.moveSpeed);
         Game.Blackboard.SetData("PlayerRuntimeData", data, BlackBoardDataType.Runtime);
     }
 
@@ -127,8 +127,12 @@ public class PlayerMotherShip : ShipBase {
         var root = GameObject.FindWithTag("PlayerShipRoot");
         var cachedTransform = transform;
         var go = Instantiate(miniShipTemplate, cachedTransform.position, cachedTransform.rotation, root.transform);
+        go.name = Game.Blackboard.GetData<string>("PlayerName") + "分" + m_MiniShipCount;
         go.Setup(this, m_MiniShipCount);
-        runtimeData.hp -= 750f;
+        runtimeData.hp -= shipData.initialHp / 20f;
+        runtimeData.offense -= shipData.offense / 20f;
+        runtimeData.defense -= shipData.defense / 20f;
+        runtimeData.moveSpeed -= shipData.moveSpeed / 20f;
     }
 
     private void UpdateFormationToMiniShips() {
@@ -173,7 +177,7 @@ public class PlayerMotherShip : ShipBase {
 
         var cachedTransform = transform;
         //multiply by 2 because ai ships has different calculation method 
-        m_Destination = cachedTransform.position + cachedTransform.forward * (runtimeData.thrustLevel * Time.deltaTime * shipData.moveSpeed * 2);
+        m_Destination = cachedTransform.position + cachedTransform.forward * (runtimeData.thrustLevel * Time.deltaTime * runtimeData.moveSpeed * 2);
 
         m_ThrustDestination = Mathf.Clamp(m_ThrustDestination, shipData.thrustLevelLimit.x, shipData.thrustLevelLimit.y);
         runtimeData.thrustLevel = Mathf.Lerp(runtimeData.thrustLevel, m_ThrustDestination, 1 / 10f);

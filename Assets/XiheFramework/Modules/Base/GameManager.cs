@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using XiheFramework.Base;
 
 namespace XiheFramework {
     public class GameManager : Singleton<GameManager> {
         public int frameRate = 60;
 
+        public string retryScene;
+        public string restartScene;
         private const int FrameAtSceneId = 0;
 
         private readonly Dictionary<Type, GameModule> m_GameModules = new Dictionary<Type, GameModule>();
@@ -19,12 +20,14 @@ namespace XiheFramework {
             Application.targetFrameRate = frameRate;
 
             RegisterAllComponent();
-
             foreach (var component in m_GameModules.Values) {
                 component.Setup();
             }
 
             Debug.LogFormat("XiheFramework Initialized");
+        }
+
+        private void OnEnable() {
         }
 
         private void Start() {
@@ -68,20 +71,21 @@ namespace XiheFramework {
             return null;
         }
 
-        public static void ShutDown(ShutDownType restartType) {
+        public static void ShutDown(ShutDownType shutDownType) {
             for (int i = 0; i < Instance.m_GameModules.Count; i++) {
-                Instance.m_GameModules.ElementAt(i).Value.ShutDown();
+                Instance.m_GameModules.ElementAt(i).Value.ShutDown(shutDownType);
             }
 
             //Instance.m_GameComponents.Clear();
 
-            switch (restartType) {
+            switch (shutDownType) {
                 case ShutDownType.None:
                     break;
+                case ShutDownType.Retry:
+                    SceneManager.LoadScene(Instance.retryScene);
+                    break;
                 case ShutDownType.Restart:
-                    // Game.Scene.LoadScene("Opening");
-                    SceneManager.LoadScene("Entrance");
-                    //back to menu
+                    SceneManager.LoadScene(Instance.restartScene);
                     break;
                 case ShutDownType.Quit:
                     Application.Quit();
@@ -90,7 +94,7 @@ namespace XiheFramework {
 #endif
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(restartType), restartType, null);
+                    throw new ArgumentOutOfRangeException(nameof(shutDownType), shutDownType, null);
             }
         }
     }

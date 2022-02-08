@@ -69,7 +69,7 @@ public class NotificationModule : GameModule
         
     }
 
-    public override void ShutDown()
+    public override void ShutDown(ShutDownType shutDownType)
     {
         
     }

@@ -1,11 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using XiheFramework;
-using XiheFramework.Base;
 
 public class YUKI : MonoBehaviour {
     public ForwardRendererData rendererData;

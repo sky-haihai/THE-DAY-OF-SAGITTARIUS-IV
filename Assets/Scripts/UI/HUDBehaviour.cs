@@ -90,7 +90,7 @@ public class HUDBehaviour : UIBehaviour {
         gameResultTxt.text = "START";
 
         float t = 0f;
-        while (t < 1f) {
+        while (t < 2f) {
             t += Time.deltaTime;
             yield return null;
         }
@@ -118,11 +118,13 @@ public class HUDBehaviour : UIBehaviour {
     // }
 
     private void Update() {
-        UpdateStatus();
+        
 
         if (m_PlayerInitData == null) {
             m_PlayerInitData = Game.Blackboard.GetData<ShipData>("PlayerInitialData");
         }
+        
+        UpdateStatus();
 
         var zoom = 5 / m_BattleCam.orthographicSize;
         mapZoomTxt.text = "Map   ( x " + zoom.ToString("0.0") + " )";
@@ -137,7 +139,7 @@ public class HUDBehaviour : UIBehaviour {
             defense.text = string.Empty;
             return;
         }
-
+        
         shipLeft.text = Mathf.Floor(data.hp) + "   /    " + Mathf.Floor(m_PlayerInitData.initialHp);
         speed.text = data.thrustLevel.ToString();
         offense.text = data.offense.ToString();

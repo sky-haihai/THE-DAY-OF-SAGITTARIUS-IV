@@ -110,7 +110,7 @@ namespace XiheFramework {
 
         public override void Update() { }
 
-        public override void ShutDown() {
+        public override void ShutDown(ShutDownType shutDownType) {
             StopAll();
         }
     }

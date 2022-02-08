@@ -1,5 +1,4 @@
 ﻿using JetBrains.Annotations;
-using XiheFramework.Base;
 
 namespace XiheFramework {
     public class DebugModule : GameModule {
@@ -46,6 +45,6 @@ namespace XiheFramework {
 
         public override void Update() { }
 
-        public override void ShutDown() { }
+        public override void ShutDown(ShutDownType shutDownType) { }
     }
 }

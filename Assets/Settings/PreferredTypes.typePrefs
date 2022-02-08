@@ -60,5 +60,6 @@
     "XiheFramework.InputSvc",
     "XiheFramework.LocalizationSvc",
     "XiheFramework.SceneSvc",
-    "XiheFramework.SerializationSvc"
+    "XiheFramework.SerializationSvc",
+    "XiheFramework.GameSvc"
 ]

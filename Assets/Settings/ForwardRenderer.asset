@@ -36,24 +36,9 @@ MonoBehaviour:
     overrideStencilState: 0
     stencilReference: 0
     stencilCompareFunction: 8
-    passOperation: 0
+    passOperation: 2
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
   m_RenderingMode: 0
   m_AccurateGbufferNormals: 0
---- !u!114 &5821383893757861745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a39243e8a1c51ad43abe84a5c12809c8, type: 3}
-  m_Name: NewCustomRenderPassFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
-  blueScreen: {fileID: 2100000, guid: 2c5bb5095c89b254b84a120393bf06b2, type: 2}
-  queue: 250

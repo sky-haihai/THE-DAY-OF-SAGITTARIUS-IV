@@ -30,7 +30,7 @@ public abstract class ShipBase : MonoBehaviour {
             n = shipData.shipName;
         }
 
-        runtimeData = new ShipRuntimeData(n, shipData.initialHp, shipData.offense, shipData.defense);
+        runtimeData = new ShipRuntimeData(n, shipData.initialHp, shipData.offense, shipData.defense,shipData.moveSpeed);
     }
 
     protected virtual void Update() {

@@ -1,14 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
-using FlowCanvas;
-using NodeCanvas.Framework;
-using XiheFramework.Base;
 
 namespace XiheFramework
 {
@@ -106,7 +98,7 @@ namespace XiheFramework
         {
         }
 
-        public override void ShutDown()
+        public override void ShutDown(ShutDownType shutDownType)
         {
         }
     }

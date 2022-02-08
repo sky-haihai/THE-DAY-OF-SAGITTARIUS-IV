@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using XiheFramework.Base;
+﻿using System.Collections.Generic;
 
 namespace XiheFramework {
     public class UIModule : GameModule {
         private readonly Dictionary<string, UIBehaviour> m_UIBehaviours = new Dictionary<string, UIBehaviour>();
 
         //public Transform root;
-
-        
 
         public void RegisterUIBehaviour(string behaviourName, UIBehaviour behaviour) {
             if (m_UIBehaviours.ContainsKey(behaviourName)) {
@@ -64,6 +57,8 @@ namespace XiheFramework {
 
         public override void Update() { }
 
-        public override void ShutDown() { }
+        public override void ShutDown(ShutDownType shutDownType) {
+            m_UIBehaviours.Clear();
+        }
     }
 }

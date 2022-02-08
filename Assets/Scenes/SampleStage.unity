@@ -213,10 +213,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2082307927}
-  - {fileID: 1051456426}
-  - {fileID: 2131260485}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &153921510
 GameObject:
@@ -430,6 +428,68 @@ Transform:
   m_Father: {fileID: 2082307927}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1001 &528385365
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1391966780}
+    m_Modifications:
+    - target: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 17.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 83.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936390115455142033, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+      propertyPath: m_Name
+      value: Mother Ship Enemy (5)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+--- !u!4 &528385366 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
+  m_PrefabInstance: {fileID: 528385365}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &571784417
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,61 +533,13 @@ Transform:
   m_Children:
   - {fileID: 153921511}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &620939001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
   m_PrefabInstance: {fileID: 13158108}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &653260035
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 653260038}
-  - component: {fileID: 653260036}
-  m_Layer: 0
-  m_Name: Post-process Volume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &653260036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653260035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 10fc4df2da32a41aaa32d77bc913491c, type: 2}
---- !u!4 &653260038
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653260035}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &711048836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -727,88 +739,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8936390115455142032, guid: 9cb12605d3ba8a34a9ecbe5584491020, type: 3}
   m_PrefabInstance: {fileID: 956154622}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1038808600
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1038808602}
-  - component: {fileID: 1038808601}
-  m_Layer: 0
-  m_Name: ref
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!212 &1038808601
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1038808600}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8a2d3e586027c1e40b013a2cdcfc0279, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.54509807}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 12.8, y: 7.2}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &1038808602
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1038808600}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5431, y: 1.5431, z: 1.5431}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1051456425
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,8 +770,8 @@ Transform:
   m_LocalPosition: {x: 5, y: 5, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 97550622}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &1051456427
 MonoBehaviour:
@@ -957,11 +887,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3113940567242200320, guid: be84258d158bbdc479c6a894a2aac14f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8707160360624129928, guid: be84258d158bbdc479c6a894a2aac14f, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8707160360624129928, guid: be84258d158bbdc479c6a894a2aac14f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1247,6 +1177,7 @@ Transform:
   - {fileID: 891049694}
   - {fileID: 1013499999}
   - {fileID: 18688511}
+  - {fileID: 528385366}
   m_Father: {fileID: 2023211562}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1710,7 +1641,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1687258586
 MonoBehaviour:
@@ -1792,22 +1723,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters: []
-  _boundGraphSerialization: '{"type":"FlowCanvas.FlowScript","nodes":[{"_position":{"x":407.0,"y":241.0},"$type":"FlowCanvas.Nodes.StartEvent","$id":"0"},{"_method":{"_baseInfo":"XiheFramework.EventSvc|Invoke|System.Void","_paramsInfo":"System.String|System.Object|System.Object"},"_callable":true,"_inputPortValues":{"eventName":{"$content":"OnGameStart","$type":"System.String"}},"_position":{"x":617.0,"y":248.0},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"1"},{"updateInterval":{},"_position":{"x":429.9982,"y":485.004},"$type":"FlowCanvas.Nodes.UpdateEvent","$id":"2"},{"_position":{"x":736.9982,"y":464.004},"$type":"FlowCanvas.Nodes.SwitchBool","$id":"3"},{"_method":{"_baseInfo":"XiheFramework.EventSvc|Invoke|System.Void","_paramsInfo":"System.String|System.Object|System.Object"},"_callable":true,"_position":{"x":957.9982,"y":470.004},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"4"},{"eventName":{"_value":"OnPlayerDie"},"target":{},"targets":{},"_position":{"x":461.9985,"y":839.9955},"$type":"FlowCanvas.Nodes.CustomEvent","$id":"5"},{"_method":{"_baseInfo":"XiheFramework.EventSvc|Invoke|System.Void","_paramsInfo":"System.String|System.Object|System.Object"},"_callable":true,"_inputPortValues":{"eventName":{"$content":"OnGameEnd","$type":"System.String"}},"_position":{"x":841.9986,"y":867.9955},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"6"},{"value":{},"_position":{"x":656.9985,"y":951.9955},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"7"},{"_method":{"_baseInfo":"ShipSvc|IsAnyEnemyAlive|System.Boolean","_paramsInfo":""},"_position":{"x":483.9982,"y":582.004},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"8"},{"value":{"_value":true},"_position":{"x":723.9982,"y":644.004},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"9"}],"connections":[{"_sourcePortName":"Once","_targetPortName":"
-    ","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Out","_targetPortName":"In","_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"False","_targetPortName":"
-    ","_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"4"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Received","_targetPortName":"
-    ","_sourceNode":{"$ref":"5"},"_targetNode":{"$ref":"6"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Value","_targetPortName":"value","_sourceNode":{"$ref":"7"},"_targetNode":{"$ref":"6"},"$type":"FlowCanvas.BinderConnection`1[[System.Object,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"Condition","_sourceNode":{"$ref":"8"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"value","_sourceNode":{"$ref":"9"},"_targetNode":{"$ref":"4"},"$type":"FlowCanvas.BinderConnection`1[[System.Object,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}],"canvasGroups":[{"name":"win","rect":{"xMin":399.9982,"yMin":399.004,"xMax":1093.998,"yMax":738.004},"autoGroup":true},{"name":"lose","rect":{"xMin":431.9985,"yMin":774.9955,"xMax":977.9985,"yMax":1045.996},"autoGroup":true},{"name":"start","rect":{"xMin":377.0,"yMin":176.0,"xMax":753.0,"yMax":388.0},"autoGroup":true}],"localBlackboard":{"_variables":{}}}'
+  _boundGraphSerialization: '{"type":"FlowCanvas.FlowScript","nodes":[{"_position":{"x":1082.34,"y":331.0454},"$type":"FlowCanvas.Nodes.StartEvent","$id":"0"},{"_method":{"_baseInfo":"XiheFramework.EventSvc|Invoke|System.Void","_paramsInfo":"System.String|System.Object|System.Object"},"_callable":true,"_inputPortValues":{"eventName":{"$content":"OnGameStart","$type":"System.String"}},"_position":{"x":1291.34,"y":332.0454},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"1"},{"updateInterval":{},"_position":{"x":-450.3386,"y":483.7311},"$type":"FlowCanvas.Nodes.UpdateEvent","$id":"2"},{"_position":{"x":-217.6097,"y":501.6812},"$type":"FlowCanvas.Nodes.Split","$id":"3"},{"_position":{"x":-16.88428,"y":530.4433},"$type":"FlowCanvas.Nodes.SwitchBool","$id":"4"},{"_simplexNode":{},"_inputPortValues":{"time":{"$content":5.0,"$type":"System.Single"}},"_position":{"x":167.5013,"y":326.3787},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[FlowCanvas.Nodes.Wait,
+    ParadoxNotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"5"},{"_method":{"_baseInfo":"XiheFramework.GameSvc|ShutDown|System.Void","_paramsInfo":"XiheFramework.ShutDownType"},"_callable":true,"_inputPortValues":{"shutDownType":{"$content":1,"$type":"XiheFramework.ShutDownType"}},"_position":{"x":427.7155,"y":343.03},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"6"},{"_position":{"x":531.8769,"y":553.9056},"$type":"FlowCanvas.Nodes.SwitchBool","$id":"7"},{"_method":{"_baseInfo":"XiheFramework.EventSvc|Invoke|System.Void","_paramsInfo":"System.String|System.Object|System.Object"},"_callable":true,"_inputPortValues":{"eventName":{"$content":"OnGameEnd","$type":"System.String"}},"_position":{"x":752.877,"y":559.9056},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"8"},{"_method":{"_baseInfo":"XiheFramework.BlackBoardSvc|SetValue|System.Void","_paramsInfo":"System.String|System.Boolean|XiheFramework.BlackBoardDataType","_genericArgumentsInfo":"System.Boolean"},"_callable":true,"_inputPortValues":{"key":{"$content":"SampleStageCleared","$type":"System.String"},"targetType":{"$content":1,"$type":"XiheFramework.BlackBoardDataType"}},"_position":{"x":990.4544,"y":570.7576},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"9"},{"targetVariable":{"_name":"IsGameEnded","_targetVariableID":"8dca1ba2-fcfb-4300-939c-d2b73e9f1f11"},"_inputPortValues":{"Value":{"$content":true,"$type":"System.Boolean"}},"_position":{"x":1270.591,"y":592.9091},"$type":"FlowCanvas.Nodes.SetVariable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"10"},{"eventName":{"_value":"OnPlayerDie"},"target":{},"targets":{},"_position":{"x":616.3621,"y":915.0334},"$type":"FlowCanvas.Nodes.CustomEvent","$id":"11"},{"_method":{"_baseInfo":"XiheFramework.EventSvc|Invoke|System.Void","_paramsInfo":"System.String|System.Object|System.Object"},"_callable":true,"_inputPortValues":{"eventName":{"$content":"OnGameEnd","$type":"System.String"}},"_position":{"x":996.3623,"y":943.0334},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"12"},{"_method":{"_baseInfo":"XiheFramework.BlackBoardSvc|SetValue|System.Void","_paramsInfo":"System.String|System.Boolean|XiheFramework.BlackBoardDataType","_genericArgumentsInfo":"System.Boolean"},"_callable":true,"_inputPortValues":{"key":{"$content":"SampleStageCleared","$type":"System.String"},"targetType":{"$content":1,"$type":"XiheFramework.BlackBoardDataType"}},"_position":{"x":1239.363,"y":958.0379},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"13"},{"value":{},"_position":{"x":811.3621,"y":1027.033},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"14"},{"_method":{"_baseInfo":"ShipSvc|IsAnyEnemyAlive|System.Boolean","_paramsInfo":""},"_position":{"x":278.8769,"y":671.9056},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"15"},{"value":{"_value":true},"_position":{"x":518.8769,"y":733.9056},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"16"},{"value":{"_name":"IsGameEnded","_targetVariableID":"8dca1ba2-fcfb-4300-939c-d2b73e9f1f11"},"_position":{"x":-222.9695,"y":650.6851},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"17"}],"connections":[{"_sourcePortName":"Once","_targetPortName":"
+    ","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Out","_targetPortName":"In","_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"1","_targetPortName":"In","_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"4"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"True","_targetPortName":"In","_sourceNode":{"$ref":"4"},"_targetNode":{"$ref":"5"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"False","_targetPortName":"In","_sourceNode":{"$ref":"4"},"_targetNode":{"$ref":"7"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Done","_targetPortName":"
+    ","_sourceNode":{"$ref":"5"},"_targetNode":{"$ref":"6"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"False","_targetPortName":"
+    ","_sourceNode":{"$ref":"7"},"_targetNode":{"$ref":"8"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"
+    ","_targetPortName":" ","_sourceNode":{"$ref":"8"},"_targetNode":{"$ref":"9"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"
+    ","_targetPortName":"In","_sourceNode":{"$ref":"9"},"_targetNode":{"$ref":"10"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Received","_targetPortName":"
+    ","_sourceNode":{"$ref":"11"},"_targetNode":{"$ref":"12"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"
+    ","_targetPortName":" ","_sourceNode":{"$ref":"12"},"_targetNode":{"$ref":"13"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Value","_targetPortName":"value","_sourceNode":{"$ref":"14"},"_targetNode":{"$ref":"12"},"$type":"FlowCanvas.BinderConnection`1[[System.Object,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"value","_sourceNode":{"$ref":"14"},"_targetNode":{"$ref":"13"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"Condition","_sourceNode":{"$ref":"15"},"_targetNode":{"$ref":"7"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"value","_sourceNode":{"$ref":"16"},"_targetNode":{"$ref":"8"},"$type":"FlowCanvas.BinderConnection`1[[System.Object,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"value","_sourceNode":{"$ref":"16"},"_targetNode":{"$ref":"9"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"Condition","_sourceNode":{"$ref":"17"},"_targetNode":{"$ref":"4"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}],"canvasGroups":[{"name":"win","rect":{"xMin":248.8769,"yMin":488.9056,"xMax":1449.591,"yMax":828.9056},"autoGroup":true},{"name":"lose","rect":{"xMin":586.3621,"yMin":850.0334,"xMax":1485.364,"yMax":1121.033},"autoGroup":true},{"name":"start","rect":{"xMin":1052.34,"yMin":266.0454,"xMax":1427.34,"yMax":471.0454},"autoGroup":true}],"localBlackboard":{"_variables":{"IsGameEnded":{"_name":"IsGameEnded","_id":"8dca1ba2-fcfb-4300-939c-d2b73e9f1f11","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}}'
   _boundGraphObjectReferences: []
   _boundGraphSource:
     _version: 3.22
     _category: 
     _comments: 
-    _translation: {x: 119.99999, y: 64.99999}
-    _zoomFactor: 0.7500098
+    _translation: {x: -80, y: -192}
+    _zoomFactor: 0.93286294
   _firstActivation: 0
   _enableAction: 0
   _disableAction: 0
@@ -2045,7 +1987,7 @@ Transform:
   - {fileID: 1850218137}
   - {fileID: 1391966780}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2082307926
 GameObject:
@@ -2148,8 +2090,8 @@ Transform:
   m_LocalPosition: {x: 37.5, y: 5, z: 37.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 97550622}
-  m_RootOrder: 2
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &2131260486
 MonoBehaviour:
@@ -2318,7 +2260,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &1237641459489322008
 PrefabInstance:
@@ -2377,7 +2319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1237641460844692168, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1237641460844692168, guid: 2c2242a8ec7293a4e94e551140582387, type: 3}
       propertyPath: m_AnchorMax.x

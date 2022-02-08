@@ -70,6 +70,8 @@ public class PlayerMiniShip : ShipBase {
         m_MotherShip.runtimeData.hp += this.runtimeData.hp;
         m_MotherShip.runtimeData.offense += runtimeData.offense;
         m_MotherShip.runtimeData.defense += runtimeData.defense;
+        m_MotherShip.runtimeData.moveSpeed += m_MotherShip.shipData.moveSpeed / 20f;
+
 
         Destroy(gameObject);
         //gameObject.SetActive(false);
@@ -151,7 +153,7 @@ public class PlayerMiniShip : ShipBase {
     private bool TryGoToDestination() {
         var delta = m_Destination - transform.position;
 
-        if (delta.magnitude <= 0.05f) {
+        if (delta.magnitude <= 0.1f) {
             return true;
         }
 

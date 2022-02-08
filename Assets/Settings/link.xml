@@ -79,6 +79,7 @@
 		<type fullname="XiheFramework.DebugSvc" preserve="all"/>
 		<type fullname="XiheFramework.EventSvc" preserve="all"/>
 		<type fullname="XiheFramework.FlowCanvasSvc" preserve="all"/>
+		<type fullname="XiheFramework.GameSvc" preserve="all"/>
 		<type fullname="XiheFramework.InputSvc" preserve="all"/>
 		<type fullname="XiheFramework.LocalizationSvc" preserve="all"/>
 		<type fullname="XiheFramework.SceneSvc" preserve="all"/>

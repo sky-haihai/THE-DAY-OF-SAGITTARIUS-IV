@@ -109,7 +109,7 @@ public class ShipModule : GameModule {
         return sum;
     }
 
-    public void ApplyAttack(ShipBase from, ShipBase to) {
+    public float ApplyAttack(ShipBase from, ShipBase to, out float multiplier) {
         float multi = 1f;
         var isFromMotherShip = from is PlayerMotherShip || from is AIMotherShip;
         var isToMotherShip = to is PlayerMotherShip || to is AIMotherShip;
@@ -136,6 +136,9 @@ public class ShipModule : GameModule {
         var y = (1 - 1 / (slope + 1)) * n;
         var damage = y * 100f * multi * Time.deltaTime;
         to.ReceiveDamage(damage);
+
+        multiplier = multi;
+        return damage;
     }
 
     public void Register(ShipBase shipBase) {

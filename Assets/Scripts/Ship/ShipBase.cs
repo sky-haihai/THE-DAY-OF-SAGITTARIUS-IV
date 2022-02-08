@@ -6,7 +6,7 @@ using XiheFramework;
 [Serializable]
 public abstract class ShipBase : MonoBehaviour {
     [SerializeField] protected ShipBase target;
-    
+
     [SerializeField] public ShipRuntimeData runtimeData;
     [SerializeField] public ShipData shipData;
 
@@ -30,7 +30,7 @@ public abstract class ShipBase : MonoBehaviour {
             n = shipData.shipName;
         }
 
-        runtimeData = new ShipRuntimeData(n, shipData.initialHp, shipData.offense, shipData.defense,shipData.moveSpeed);
+        runtimeData = new ShipRuntimeData(n, shipData.initialHp, shipData.offense, shipData.defense, shipData.moveSpeed);
     }
 
     protected virtual void Update() {
@@ -54,9 +54,11 @@ public abstract class ShipBase : MonoBehaviour {
 
     private void Attack() {
         //draw
-        attackLine.DrawLine(transform.position, target.transform.position);
-
-        GameManager.GetModule<ShipModule>().ApplyAttack(this, target);
+        var damage = GameManager.GetModule<ShipModule>().ApplyAttack(this, target, out float multiplier);
+        // Debug.Log("Damage " + damage);
+        // damage = Mathf.Floor(damage / 2f) * 2f;//0-2 2-4 4-6 (eg.3.5 -> 1.75 -> 1.0 -> 2.0
+        attackLine.scrollSpeed = multiplier;
+        attackLine.DrawLine(transform.position + Vector3.up, target.transform.position + Vector3.up);
 
         // var args = runtimeData.shipName + " 全砲、発射！";
         // var args = gameObject.name + " 全砲、発射！";
@@ -99,6 +101,6 @@ public abstract class ShipBase : MonoBehaviour {
 
     protected virtual void OnDrawGizmos() {
         Gizmos.color = Color.white;
-        GizmosUtil.DrawCircle(transform.position, shipData.viewRadius+0.01f, 25);
+        GizmosUtil.DrawCircle(transform.position, shipData.viewRadius + 0.01f, 25);
     }
 }

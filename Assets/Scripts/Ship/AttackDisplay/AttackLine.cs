@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class AttackLine : MonoBehaviour {
     public LineRenderer lineRenderer;
-    public float offset = 0.1f;
-    public float scrollSpeed = 1f;
-    public float reachTargetTime = 0.5f;
+    public float offset = 0.05f;
+    public float scrollSpeed = 1.5f;
+    public float reachTargetTime = 0.05f;
 
     private readonly Vector3[] m_Buffer = new Vector3[2];
     private static readonly int Offset = Shader.PropertyToID("_Offset");

@@ -110,10 +110,32 @@ public class ShipModule : GameModule {
     }
 
     public void ApplyAttack(ShipBase from, ShipBase to) {
-        var damage = from.shipData.offense / to.shipData.defense * 10f * Time.deltaTime;
-        to.ReceiveDamage(damage);
+        float multi = 1f;
+        var isFromMotherShip = from is PlayerMotherShip || from is AIMotherShip;
+        var isToMotherShip = to is PlayerMotherShip || to is AIMotherShip;
 
-        //m_DamageDisplayStructs.Add(new DamageDisplayStruct(from.transform.position, to.transform.position));
+        if (isFromMotherShip && isToMotherShip) {
+            multi = 4f;
+        }
+
+        if (isFromMotherShip && !isToMotherShip) {
+            //Debug.Log("mother -> mini");
+            multi = 0.5f;
+        }
+
+        if (!isFromMotherShip && isToMotherShip) {
+            multi = 1.5f;
+        }
+
+        if (!isFromMotherShip && !isToMotherShip) {
+            multi = 1f;
+        }
+
+        var slope = from.shipData.offense / to.shipData.defense;
+        const float n = 3f;
+        var y = (1 - 1 / (slope + 1)) * n;
+        var damage = y * 100f * multi * Time.deltaTime;
+        to.ReceiveDamage(damage);
     }
 
     public void Register(ShipBase shipBase) {

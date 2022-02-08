@@ -54,7 +54,6 @@ public class AIMotherShip : ShipBase {
     }
 
     public Vector3 GetTargetPosition() {
-        Debug.Log(target.gameObject.name);
         return target.transform.position;
     }
 

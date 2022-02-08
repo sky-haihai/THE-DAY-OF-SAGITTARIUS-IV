@@ -34,7 +34,7 @@ public class BattleCameraController : MonoBehaviour {
 
     private void HandleInput() {
         followPlayer = Game.Blackboard.GetData<bool>("IsCameraFollow");
-        
+
         if (followPlayer) {
             m_Dest = GameManager.GetModule<ShipModule>().GetPlayerShip().transform.position;
             return;
@@ -43,7 +43,7 @@ public class BattleCameraController : MonoBehaviour {
         if (Game.Input.GetMouse(2)) {
             var delta = Game.Input.GetMouseDeltaPosition().ToVector3(V2ToV3Type.XZ) * (Time.deltaTime * moveSpeed);
             delta *= cam.orthographicSize / 5;
-            delta = Vector3.ClampMagnitude(delta, 1f);
+            //delta = Vector3.ClampMagnitude(delta, 10f);
             if (invertMove) {
                 m_Dest -= delta;
             }
@@ -51,6 +51,10 @@ public class BattleCameraController : MonoBehaviour {
                 m_Dest += delta;
             }
         }
+
+        var x = Mathf.Clamp(m_Dest.x, bound.x + cam.orthographicSize, bound.z - cam.orthographicSize);
+        var z = Mathf.Clamp(m_Dest.z, bound.y + cam.orthographicSize, bound.w - cam.orthographicSize);
+        m_Dest = new Vector3(x, 5f, z);
     }
 
     private void HandleMove() {

@@ -54,12 +54,14 @@ MonoBehaviour:
     thrustLevel: 0
     offense: 0
     defense: 0
+    moveSpeed: 0
   shipData:
     shipName: 
     shipColor: {r: 1, g: 0.6431373, b: 0.14509805, a: 0}
     shipOwner: "Sky\u8266\u968A"
+    priority: 0
     viewRadius: 1.75
-    attackRadius: 5.25
+    attackRadius: 8.75
     tolerantAngle: 15
     offense: 200
     defense: 200
@@ -85,15 +87,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4525da9f6ed19b14ea2f3db43298c6c1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4525da9f6ed19b14ea2f3db43298c6c1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4525da9f6ed19b14ea2f3db43298c6c1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4525da9f6ed19b14ea2f3db43298c6c1, type: 3}
       propertyPath: m_LocalPosition.x

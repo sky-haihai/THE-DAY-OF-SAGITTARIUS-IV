@@ -62,7 +62,7 @@ MonoBehaviour:
     shipOwner: "\u30B3\u30F3\u30D7\u30FC\u30BF\u30FC\u7814"
     priority: 0
     viewRadius: 1.75
-    attackRadius: 5.25
+    attackRadius: 8.75
     tolerantAngle: 5
     offense: 200
     defense: 200

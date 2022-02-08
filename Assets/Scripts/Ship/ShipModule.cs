@@ -110,7 +110,7 @@ public class ShipModule : GameModule {
     }
 
     public void ApplyAttack(ShipBase from, ShipBase to) {
-        var damage = from.shipData.offense / to.shipData.defense * Time.deltaTime;
+        var damage = from.shipData.offense / to.shipData.defense * 10f * Time.deltaTime;
         to.ReceiveDamage(damage);
 
         //m_DamageDisplayStructs.Add(new DamageDisplayStruct(from.transform.position, to.transform.position));

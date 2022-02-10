@@ -20,7 +20,7 @@ public class HUDBehaviour : UIBehaviour {
     public Text defense;
 
     //condition
-
+    public Text motherShipHpTxt;
 
     //command
     public Button sendScoutBtn;
@@ -49,14 +49,14 @@ public class HUDBehaviour : UIBehaviour {
 
         //map
         m_BattleCam = GameObject.FindGameObjectWithTag("BattleCam").GetComponent<Camera>();
-        
+
         //status
-        var pName=Game.Blackboard.GetData<string>("PlayerName");
-        this.playerName.text= pName;
-        
-        var cName=Game.Blackboard.GetData<string>("ClubName");
-        this.clubName.text= cName;
-        
+        var pName = Game.Blackboard.GetData<string>("PlayerName");
+        this.playerName.text = pName;
+
+        var cName = Game.Blackboard.GetData<string>("ClubName");
+        this.clubName.text = cName;
+
         //command
         sendScoutBtn.onClick.AddListener(OnSendScoutBtn);
         retrieveScoutBtn.onClick.AddListener(OnRetrieveScoutBtn);
@@ -118,16 +118,26 @@ public class HUDBehaviour : UIBehaviour {
     // }
 
     private void Update() {
-        
-
         if (m_PlayerInitData == null) {
             m_PlayerInitData = Game.Blackboard.GetData<ShipData>("PlayerInitialData");
         }
-        
+
         UpdateStatus();
+        UpdateCondition();
+
 
         var zoom = 5 / m_BattleCam.orthographicSize;
         mapZoomTxt.text = "Map   ( x " + zoom.ToString("0.0") + " )";
+    }
+
+    private void UpdateCondition() {
+        var data = GameManager.GetModule<ShipModule>().GetPlayerShip();
+        if (data == null) {
+            motherShipHpTxt.text = 0.ToString();
+            return;
+        }
+
+        motherShipHpTxt.text = data.runtimeData.hp.ToString("0");
     }
 
     private void UpdateStatus() {
@@ -139,7 +149,7 @@ public class HUDBehaviour : UIBehaviour {
             defense.text = string.Empty;
             return;
         }
-        
+
         shipLeft.text = Mathf.Floor(data.hp) + "   /    " + Mathf.Floor(m_PlayerInitData.initialHp);
         speed.text = data.thrustLevel.ToString();
         offense.text = data.offense.ToString();

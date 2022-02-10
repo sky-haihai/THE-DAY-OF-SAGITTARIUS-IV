@@ -67,9 +67,11 @@ public class PlayerMiniShip : ShipBase {
     }
 
     void CombineToMother() {
-        m_MotherShip.runtimeData.hp += this.runtimeData.hp;
-        m_MotherShip.runtimeData.offense += runtimeData.offense;
-        m_MotherShip.runtimeData.defense += runtimeData.defense;
+        m_MotherShip.runtimeData.hp += runtimeData.hp;
+        // m_MotherShip.runtimeData.offense += runtimeData.offense;
+        // m_MotherShip.runtimeData.defense += runtimeData.defense;
+        m_MotherShip.runtimeData.offense += 5f;
+        m_MotherShip.runtimeData.defense += 5f;
         m_MotherShip.runtimeData.moveSpeed += m_MotherShip.shipData.moveSpeed / 20f;
 
 

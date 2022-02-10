@@ -130,8 +130,10 @@ public class PlayerMotherShip : ShipBase {
         go.name = Game.Blackboard.GetData<string>("PlayerName") + "分" + m_MiniShipCount;
         go.Setup(this, m_MiniShipCount);
         runtimeData.hp -= shipData.initialHp / 20f;
-        runtimeData.offense -= shipData.offense / 20f;
-        runtimeData.defense -= shipData.defense / 20f;
+        // runtimeData.offense -= shipData.offense / 20f;
+        // runtimeData.defense -= shipData.defense / 20f;
+        runtimeData.offense -= 5f;
+        runtimeData.defense -= 5f;
         runtimeData.moveSpeed -= shipData.moveSpeed / 20f;
     }
 
